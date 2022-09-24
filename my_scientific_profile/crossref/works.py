@@ -7,8 +7,10 @@ from requests import get
 
 from my_scientific_profile.crossref.utils import (
     CrossrefAssertion,
+    CrossrefAuthor,
     CrossrefContentDomain,
     CrossrefDate,
+    CrossrefFunder,
     CrossrefLink,
     CrossrefReference,
     get_crossref_request_endpoint_template,
@@ -17,7 +19,7 @@ from my_scientific_profile.crossref.utils import (
 logger = logging.getLogger(__name__)
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefWork(JSONSerializable):
     status: str
     message_type: str
@@ -25,7 +27,7 @@ class CrossrefWork(JSONSerializable):
     message: "CrossrefWorkMessage"
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefWorkMessage(JSONSerializable):
     indexed: CrossrefDate
     reference_count: int
@@ -40,7 +42,7 @@ class CrossrefWorkMessage(JSONSerializable):
     title: List[str]
     prefix: str
     volume: int
-    author: List["CrossrefAuthor"]
+    author: List[CrossrefAuthor]
     member: int
     container_title: List[str]
     original_title: List[str]
@@ -57,7 +59,7 @@ class CrossrefWorkMessage(JSONSerializable):
     language: Optional[str] = field(default=None)
     abstract: Optional[str] = field(default=None)
     update_policy: Optional[str] = field(default=None)
-    funder: Optional[List["CrossrefFunder"]] = field(default=None)
+    funder: Optional[List[CrossrefFunder]] = field(default=None)
     published_print: Optional[CrossrefDate] = field(default=None)
     assertion: Optional[List[CrossrefAssertion]] = field(default=None)
     reference: Optional[List[CrossrefReference]] = field(default=None, repr=False)

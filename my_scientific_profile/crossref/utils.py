@@ -20,7 +20,7 @@ __all__ = [
 ]
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefDate(JSONSerializable):
     date_parts: List[List[int]] = field(repr=False)
     timestamp: Optional[int] = field(default=None, repr=False)
@@ -35,20 +35,20 @@ class CrossrefDate(JSONSerializable):
             )
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefFunder(JSONSerializable):
     name: str
     DOI: Optional[str] = field(default=None)
     doi_asserted_by: Optional[str] = field(default=None)
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefContentDomain(JSONSerializable):
     domain: List[str]
     crossmark_restriction: bool
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefAuthor(JSONSerializable):
     given: str
     family: str
@@ -58,12 +58,12 @@ class CrossrefAuthor(JSONSerializable):
     authenticated_orcid: Optional[bool] = field(default=None)
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefAffiliation(JSONSerializable):
     name: str
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefReference(JSONSerializable):
     key: str
     doi: Optional[str] = json_field("DOI", default=None)
@@ -75,7 +75,7 @@ class CrossrefReference(JSONSerializable):
     year: Optional[int] = field(default=None)
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefLink(JSONSerializable):
     url: str
     content_type: str
@@ -83,7 +83,7 @@ class CrossrefLink(JSONSerializable):
     intended_application: str
 
 
-@dataclass(frozen=True)
+@dataclass(eq=True, frozen=True)
 class CrossrefAssertion(JSONSerializable):
     name: str
     date: str = json_field("value")
