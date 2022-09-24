@@ -6,9 +6,12 @@ import pandas as pd
 from dataclass_wizard import JSONSerializable, json_field
 from decouple import config as environ
 
+import my_scientific_profile.utils  # noqa
+
 __all__ = [
     "OrcidDate",
     "IntValue",
+    "StrValue",
     "get_orcid_request_headers",
     "get_orcid_request_endpoint_template",
 ]
@@ -29,6 +32,11 @@ class OrcidDate(JSONSerializable):
 @dataclass(frozen=True)
 class IntValue(JSONSerializable):
     value: Optional[int] = field(default=None)
+
+
+@dataclass(frozen=True)
+class StrValue(JSONSerializable):
+    value: str
 
 
 def get_orcid_request_endpoint_template() -> str:

@@ -1,6 +1,7 @@
 import datetime as dt
+import logging
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import List, Optional
 
 import pandas as pd
 from dataclass_wizard import JSONSerializable, json_field
@@ -9,6 +10,7 @@ from requests import get
 from my_scientific_profile.orcid.utils import (
     IntValue,
     OrcidDate,
+    StrValue,
     get_orcid_request_endpoint_template,
     get_orcid_request_headers,
 )
@@ -17,6 +19,7 @@ __all__ = [
     "OrcidDetailedWork",
     "ExternalId",
     "ExternalIds",
+    "ExternalIdCollection",
     "Source",
     "SourceClientId",
     "Title",
@@ -24,6 +27,8 @@ __all__ = [
     "PublicationDate",
     "get_detailed_work",
 ]
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -33,13 +38,42 @@ class OrcidDetailedWork(JSONSerializable):
     last_modified_date: OrcidDate
     source: "Source"
     path: str
-    title: "Title"
-    journal_title: "TitleField"
-    citation: "Citation"
+    title: "TitleField"
     type: str
     publication_date: "PublicationDate"
-    external_ids: "ExternalIds"
+    external_ids: "ExternalIdCollection"
+    contributors: "Contributors"
+    journal_title: "Title"
+    url: Optional["StrValue"] = field(default=None)
+    citation: Optional["Citation"] = field(default=None)
+    language_code: Optional[str] = field(default=None)
+    country: Optional[str] = field(default=None)
+    visibility: Optional[str] = field(default=None)
     short_description: Optional[str] = field(default=None)
+
+
+@dataclass(frozen=True)
+class Contributors(JSONSerializable):
+    contributor: List["Contributor"]
+
+
+@dataclass(frozen=True)
+class Contributor(JSONSerializable):
+    credit_name: StrValue
+    contributor_attributes: Optional["ContributorAttributes"] = field(default=None)
+    contributor_email: Optional[str] = field(default=None)
+    contributor_orcid: Optional[str] = field(default=None)
+
+
+@dataclass(frozen=True)
+class ContributorAttributes(JSONSerializable):
+    contributor_role: str
+    contributor_sequence: Optional[str] = field(default=None)
+
+
+@dataclass(frozen=True)
+class ExternalIdCollection(JSONSerializable):
+    external_id: List["ExternalIds"]
 
 
 @dataclass(frozen=True)
@@ -108,10 +142,10 @@ class Citation(JSONSerializable):
 
 
 def get_detailed_work(put_code: int) -> OrcidDetailedWork:
+    logger.info(f"fetching detailed work for put code {put_code}")
     endpoint = f"{get_orcid_request_endpoint_template()}/work/{put_code}"
     response = get(endpoint, headers=get_orcid_request_headers())
     assert (
         response.status_code == 200
     ), f"unexpected status code {response.status_code}: {response.text}"
-    # return OrcidWorks.from_dict(response.json())
-    return response.json()
+    return OrcidDetailedWork.from_dict(response.json())

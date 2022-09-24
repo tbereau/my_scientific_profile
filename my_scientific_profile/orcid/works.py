@@ -1,15 +1,18 @@
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from dataclass_wizard import JSONSerializable
 from requests import get
 
 from my_scientific_profile.orcid.detailed_work import (
+    ExternalIdCollection,
     ExternalIds,
+    OrcidDetailedWork,
     PublicationDate,
     Source,
     Title,
     TitleField,
+    get_detailed_work,
 )
 from my_scientific_profile.orcid.utils import (
     OrcidDate,
@@ -20,7 +23,6 @@ from my_scientific_profile.orcid.utils import (
 __all__ = [
     "OrcidWorks",
     "OrcidWork",
-    "ExternalIdCollection",
     "ExternalIds",
     "WorkSummary",
 ]
@@ -38,11 +40,6 @@ class OrcidWork(JSONSerializable):
     last_modified_date: "OrcidDate"
     external_ids: "ExternalIdCollection"
     work_summary: List["WorkSummary"]
-
-
-@dataclass(frozen=True)
-class ExternalIdCollection(JSONSerializable):
-    external_id: List["ExternalIds"]
 
 
 @dataclass(frozen=True)
@@ -69,3 +66,30 @@ def get_works() -> OrcidWorks:
         response.status_code == 200
     ), f"unexpected status code {response.status_code}: {response.text}"
     return OrcidWorks.from_dict(response.json())
+
+
+def get_doi_to_put_code_map() -> Dict[str, int]:
+    works = get_works()
+    work_summaries = [
+        summary for work_group in works.group for summary in work_group.work_summary
+    ]
+    return {
+        val.external_ids.external_id[0].external_id_value: key.put_code
+        for key, val in zip(work_summaries, work_summaries)
+    }
+
+
+def get_put_code_to_doi_map() -> Dict[str, int]:
+    works = get_works()
+    work_summaries = [
+        summary for work_group in works.group for summary in work_group.work_summary
+    ]
+    return {
+        key.put_code: val.external_ids.external_id[0].external_id_value
+        for key, val in zip(work_summaries, work_summaries)
+    }
+
+
+def get_all_detailed_works() -> List[OrcidDetailedWork]:
+    doi_to_put_code_map = get_doi_to_put_code_map()
+    return [get_detailed_work(put_code) for put_code in doi_to_put_code_map.values()]
