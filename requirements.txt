@@ -28,6 +28,7 @@ executing==1.0.0
 fastjsonschema==2.16.2
 filelock==3.8.0
 flake8==3.7.8
+flask==2.2.2
 html5lib==1.1
 idna==3.4
 imagesize==1.4.1

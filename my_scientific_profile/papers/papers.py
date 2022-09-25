@@ -41,6 +41,9 @@ class Paper:
 @dataclass(frozen=True)
 class JournalInfo:
     name: str
+    issue: str
+    volume: int
+    pages: str
     abbreviation: str
     url: str
 
@@ -51,6 +54,9 @@ def fetch_paper_info(doi: str) -> Paper:
     bib_info = fetch_bib(doi)
     journal_info = JournalInfo(
         crossref_info.message.container_title[0],
+        crossref_info.message.issue,
+        crossref_info.message.volume,
+        crossref_info.message.page,
         crossref_info.message.short_container_title[0],
         crossref_info.message.url,
     )
