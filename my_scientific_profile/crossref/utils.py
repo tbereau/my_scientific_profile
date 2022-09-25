@@ -57,6 +57,13 @@ class CrossrefAuthor(JSONSerializable):
     orcid: Optional[str] = field(default=None)
     authenticated_orcid: Optional[bool] = field(default=None)
 
+    def __post_init__(self):
+        if self.orcid:
+            orcid = self.orcid.removeprefix("http://orcid.org/").removeprefix(
+                "https://orcid.org/"
+            )
+            object.__setattr__(self, "orcid", orcid)
+
 
 @dataclass(eq=True, frozen=True)
 class CrossrefAffiliation(JSONSerializable):

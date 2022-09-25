@@ -2,7 +2,6 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 from dataclass_wizard import JSONSerializable
-from requests import get
 
 from my_scientific_profile.orcid.detailed_work import (
     ExternalIdCollection,
@@ -14,17 +13,17 @@ from my_scientific_profile.orcid.detailed_work import (
     TitleField,
     get_detailed_work,
 )
-from my_scientific_profile.orcid.utils import (
-    OrcidDate,
-    get_orcid_request_endpoint_template,
-    get_orcid_request_headers,
-)
+from my_scientific_profile.orcid.utils import OrcidDate, get_orcid_query
 
 __all__ = [
     "OrcidWorks",
     "OrcidWork",
     "ExternalIds",
     "WorkSummary",
+    "get_put_code_to_doi_map",
+    "get_doi_to_put_code_map",
+    "get_works",
+    "get_all_detailed_works",
 ]
 
 
@@ -60,12 +59,8 @@ class WorkSummary(JSONSerializable):
 
 
 def get_works() -> OrcidWorks:
-    endpoint = f"{get_orcid_request_endpoint_template()}/works"
-    response = get(endpoint, headers=get_orcid_request_headers())
-    assert (
-        response.status_code == 200
-    ), f"unexpected status code {response.status_code}: {response.text}"
-    return OrcidWorks.from_dict(response.json())
+    response = get_orcid_query("works")
+    return OrcidWorks.from_dict(response)
 
 
 def get_doi_to_put_code_map() -> Dict[str, int]:

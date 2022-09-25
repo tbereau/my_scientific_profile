@@ -5,14 +5,17 @@ from typing import List, Optional
 
 import pandas as pd
 from dataclass_wizard import JSONSerializable, json_field
-from requests import get
 
 from my_scientific_profile.orcid.utils import (
+    ExternalId,
+    ExternalIdCollection,
+    ExternalIds,
     IntValue,
     OrcidDate,
+    Source,
+    SourceClientId,
     StrValue,
-    get_orcid_request_endpoint_template,
-    get_orcid_request_headers,
+    get_orcid_query,
 )
 
 __all__ = [
@@ -72,44 +75,6 @@ class ContributorAttributes(JSONSerializable):
 
 
 @dataclass(frozen=True)
-class ExternalIdCollection(JSONSerializable):
-    external_id: List["ExternalIds"]
-
-
-@dataclass(frozen=True)
-class ExternalIds(JSONSerializable):
-    external_id_type: str
-    external_id_value: str
-    external_id_normalized: "ExternalId"
-    external_id_normalized_error: str
-    external_id_relationship: str
-    external_id_url: Optional["ExternalId"] = field(default=None)
-
-
-@dataclass(frozen=True)
-class ExternalId(JSONSerializable):
-    value: str
-    transient: Optional[bool] = field(default=None)
-
-
-@dataclass(frozen=True)
-class Source(JSONSerializable):
-    source_orcid: str
-    source_name: ExternalId
-    source_client_id: Optional["SourceClientId"] = field(default=None)
-    assertion_origin_orcid: Optional[str] = field(default=None)
-    assertion_origin_client_id: Optional[str] = field(default=None)
-    assertion_origin_name: Optional[str] = field(default=None)
-
-
-@dataclass(frozen=True)
-class SourceClientId(JSONSerializable):
-    uri: str
-    path: str
-    host: str
-
-
-@dataclass(frozen=True)
 class TitleField(JSONSerializable):
     title: "Title"
 
@@ -142,10 +107,5 @@ class Citation(JSONSerializable):
 
 
 def get_detailed_work(put_code: int) -> OrcidDetailedWork:
-    logger.info(f"fetching detailed work for put code {put_code}")
-    endpoint = f"{get_orcid_request_endpoint_template()}/work/{put_code}"
-    response = get(endpoint, headers=get_orcid_request_headers())
-    assert (
-        response.status_code == 200
-    ), f"unexpected status code {response.status_code}: {response.text}"
-    return OrcidDetailedWork.from_dict(response.json())
+    response = get_orcid_query("work", suffix=str(put_code))
+    return OrcidDetailedWork.from_dict(response)
