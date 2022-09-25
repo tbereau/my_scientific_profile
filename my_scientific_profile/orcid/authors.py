@@ -1,5 +1,7 @@
 import logging
+import re
 from dataclasses import dataclass, field
+from functools import lru_cache
 from typing import List, Optional
 
 from dataclass_wizard import JSONSerializable, json_field
@@ -38,11 +40,15 @@ class OrcidAuthor(JSONSerializable):
         return get_last_organization(self.employment)
 
 
+@lru_cache()
 def search_for_author_by_name(given_name: str, family_name: str) -> List[OrcidAuthor]:
     responses = get_orcid_query(
         "expanded-search",
         orcid_id=None,
-        suffix=f"?q=given-names:{given_name}+AND+family-name:{family_name}",
+        suffix=(
+            f"?q=given-names:{re.escape(given_name)}"
+            f"+AND+family-name:{re.escape(family_name)}"
+        ),
     )
     num_response = int(responses["num-found"])
     logger.info(f"Entries received: {num_response}")
@@ -53,6 +59,7 @@ def search_for_author_by_name(given_name: str, family_name: str) -> List[OrcidAu
     )
 
 
+@lru_cache()
 def search_for_author_by_orcid_id(orcid_id: str) -> List[OrcidAuthor]:
     responses = get_orcid_query(
         "expanded-search", orcid_id=None, suffix=f"?q=orcid:{orcid_id}"

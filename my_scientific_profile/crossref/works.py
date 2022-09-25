@@ -1,5 +1,6 @@
 import logging
 from dataclasses import dataclass, field
+from functools import lru_cache
 from typing import List, Optional
 
 from dataclass_wizard import JSONSerializable
@@ -65,6 +66,7 @@ class CrossrefWorkMessage(JSONSerializable):
     reference: Optional[List[CrossrefReference]] = field(default=None, repr=False)
 
 
+@lru_cache()
 def get_crossref_work_by_doi(doi: str) -> CrossrefWork:
     logger.info(f"fetching Crossref info for doi {doi}")
     endpoint = f"{get_crossref_request_endpoint_template()}/works/{doi}"

@@ -30,6 +30,9 @@ class Paper:
     bib_entry: str
     tldr: Optional[str]
 
+    def __post_init__(self):
+        object.__setattr__(self, "title", " ".join(self.title.split()))
+
     @property
     def year(self) -> int:
         return self.publication_date.year
@@ -69,5 +72,5 @@ def fetch_paper_info(doi: str) -> Paper:
         crossref_info.message.is_referenced_by_count,
         open_access_info,
         bib_entry=bib_info,
-        tldr=semantic_info.tldr.text if semantic_info.tldr else None,
+        tldr=semantic_info.tldr.text if semantic_info and semantic_info.tldr else None,
     )

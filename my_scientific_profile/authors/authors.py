@@ -22,10 +22,10 @@ class Author:
     affiliation: "Affiliation"
     orcid: Optional[str] = field(default=None)
     email: Optional[str] = field(default=None)
-    picture_path: Optional[str] = field(default=None)
-    twitter: Optional[str] = field(default=None)
-    google_scholar: Optional[str] = field(default=None)
-    research_gate: Optional[str] = field(default=None)
+
+    def __post_init__(self):
+        object.__setattr__(self, "given", self.given.title())
+        object.__setattr__(self, "family", self.family.title())
 
     @property
     def full_name(self) -> str:

@@ -1,4 +1,5 @@
 import logging
+from functools import lru_cache
 from typing import Optional
 
 from my_scientific_profile.semantic_scholar.utils import (
@@ -9,6 +10,7 @@ from my_scientific_profile.semantic_scholar.utils import (
 logger = logging.getLogger(__name__)
 
 
+@lru_cache()
 def get_paper_info(paper_id: str) -> Optional[SemanticScholarPaper]:
     fields = ["title", "authors", "abstract", "venue", "year", "isOpenAccess", "tldr"]
     info = fetch_info_by_id(paper_id, "paper", fields=fields)

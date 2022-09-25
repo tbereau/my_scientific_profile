@@ -44,7 +44,7 @@ class OrcidEmploymentSummary(JSONSerializable):
     source: Source
     put_code: int
     organization: "OrcidOrganization"
-    start_date: OrcidDate
+    start_date: Optional[OrcidDate] = field(default=None)
     end_date: Optional[OrcidDate] = field(default=None)
     role_title: Optional[str] = field(default=None)
     department_name: Optional[str] = field(default=None)
