@@ -1,6 +1,6 @@
 import datetime as dt
-from dataclasses import dataclass
-from typing import List, Optional
+
+from pydantic.dataclasses import dataclass
 
 from my_scientific_profile.authors.authors import (
     Author,
@@ -17,27 +17,6 @@ from my_scientific_profile.semantic_scholar.papers import (
 )
 
 
-@dataclass
-class Paper:
-    doi: str
-    title: str
-    abstract: str
-    journal: "JournalInfo"
-    publication_date: dt.datetime
-    authors: List[Author]
-    citation_count: int
-    open_access: OpenAccessPaperInfo
-    bib_entry: str
-    tldr: Optional[str]
-
-    def __post_init__(self):
-        object.__setattr__(self, "title", " ".join(self.title.split()))
-
-    @property
-    def year(self) -> int:
-        return self.publication_date.year
-
-
 @dataclass(frozen=True)
 class JournalInfo:
     name: str
@@ -48,17 +27,39 @@ class JournalInfo:
     url: str
 
 
+@dataclass
+class Paper:
+    doi: str
+    title: str
+    journal: JournalInfo
+    publication_date: dt.datetime
+    authors: list[Author]
+    citation_count: int
+    open_access: OpenAccessPaperInfo
+    bib_entry: str
+    abstract: str = None
+    tldr: str = None
+
+    def __post_init__(self):
+        object.__setattr__(self, "title", " ".join(self.title.split()))
+
+    @property
+    def year(self) -> int:
+        return self.publication_date.year
+
+
 def fetch_paper_info(doi: str) -> Paper:
     crossref_info = get_crossref_work_by_doi(doi)
     semantic_info = get_semantic_scholar_paper_info(doi)
     bib_info = fetch_bib(doi)
+    url = crossref_info.message.url or f"https://doi.org/{doi}"
     journal_info = JournalInfo(
         crossref_info.message.container_title[0],
         crossref_info.message.issue,
         crossref_info.message.volume,
         crossref_info.message.page,
         crossref_info.message.short_container_title[0],
-        crossref_info.message.url,
+        url,
     )
     abstract = (
         semantic_info.abstract if semantic_info else crossref_info.message.abstract
@@ -71,12 +72,12 @@ def fetch_paper_info(doi: str) -> Paper:
     return Paper(
         doi,
         crossref_info.message.title[0],
-        abstract,
         journal_info,
         crossref_info.message.created.date_time,
         authors,
         crossref_info.message.is_referenced_by_count,
         open_access_info,
         bib_entry=bib_info,
+        abstract=abstract,
         tldr=semantic_info.tldr.text if semantic_info and semantic_info.tldr else None,
     )

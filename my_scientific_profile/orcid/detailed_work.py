@@ -1,10 +1,9 @@
 import datetime as dt
 import logging
-from dataclasses import dataclass, field
-from typing import List, Optional
 
 import pandas as pd
-from dataclass_wizard import JSONSerializable, json_field
+from pydantic import Field, parse_obj_as
+from pydantic.dataclasses import dataclass
 
 from my_scientific_profile.orcid.utils import (
     ExternalId,
@@ -13,7 +12,6 @@ from my_scientific_profile.orcid.utils import (
     IntValue,
     OrcidDate,
     Source,
-    SourceClientId,
     StrValue,
     get_orcid_query,
 )
@@ -23,8 +21,6 @@ __all__ = [
     "ExternalId",
     "ExternalIds",
     "ExternalIdCollection",
-    "Source",
-    "SourceClientId",
     "Title",
     "TitleField",
     "PublicationDate",
@@ -35,77 +31,82 @@ logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
-class OrcidDetailedWork(JSONSerializable):
-    put_code: int
-    created_date: OrcidDate
-    last_modified_date: OrcidDate
-    source: "Source"
-    path: str
-    title: "TitleField"
-    type: str
-    publication_date: "PublicationDate"
-    external_ids: "ExternalIdCollection"
-    contributors: "Contributors"
-    journal_title: "Title"
-    url: Optional["StrValue"] = field(default=None)
-    citation: Optional["Citation"] = field(default=None)
-    language_code: Optional[str] = field(default=None)
-    country: Optional[str] = field(default=None)
-    visibility: Optional[str] = field(default=None)
-    short_description: Optional[str] = field(default=None)
-
-
-@dataclass(frozen=True)
-class Contributors(JSONSerializable):
-    contributor: List["Contributor"]
-
-
-@dataclass(frozen=True)
-class Contributor(JSONSerializable):
-    credit_name: StrValue
-    contributor_attributes: Optional["ContributorAttributes"] = field(default=None)
-    contributor_email: Optional[str] = field(default=None)
-    contributor_orcid: Optional[str] = field(default=None)
-
-
-@dataclass(frozen=True)
-class ContributorAttributes(JSONSerializable):
-    contributor_role: str
-    contributor_sequence: Optional[str] = field(default=None)
-
-
-@dataclass(frozen=True)
-class TitleField(JSONSerializable):
-    title: "Title"
-
-
-@dataclass(frozen=True)
-class Title(JSONSerializable):
+class Title:
     value: str
-    subtitle: Optional[str] = field(default=None)
-    translated_title: Optional[str] = field(default=None)
+    subtitle: str = None
+    translated_title: str = None
 
 
 @dataclass(frozen=True)
-class PublicationDate(JSONSerializable):
-    year: "IntValue" = json_field("year", repr=None)
-    month: Optional["IntValue"] = json_field("month", repr=None, default=None)
-    day: Optional["IntValue"] = json_field("day", repr=None, default=None)
-    datetime: dt.datetime = field(init=False)
-
-    def __post_init__(self):
-        datetime = "-".join(
-            [str(x.value) for x in [self.year, self.month, self.day] if x is not None]
-        )
-        object.__setattr__(self, "datetime", pd.to_datetime(datetime))
+class TitleField:
+    title: Title
 
 
 @dataclass(frozen=True)
-class Citation(JSONSerializable):
+class Citation:
     citation_type: str
     citation_value: str
 
 
+@dataclass(frozen=True)
+class ContributorAttributes:
+    contributor_role: str
+    contributor_sequence: str = None
+
+
+@dataclass(frozen=True)
+class Contributor:
+    credit_name: StrValue
+    contributor_attributes: ContributorAttributes = None
+    contributor_email: str = None
+    contributor_orcid: str = None
+
+
+@dataclass(frozen=True)
+class Contributors:
+    contributor: list[Contributor]
+
+
+@dataclass(frozen=True)
+class PublicationDate:
+    year: IntValue = Field(..., repr=False)
+    month: IntValue = Field(repr=False, default=None)
+    day: IntValue = Field(repr=False, default=None)
+
+    @property
+    def datetime(self) -> dt.datetime:
+        return pd.to_datetime(
+            "-".join(
+                [
+                    str(x.value)
+                    for x in [self.year, self.month, self.day]
+                    if x is not None
+                ]
+            )
+        )
+
+
+@dataclass(frozen=True)
+class OrcidDetailedWork:
+    put_code: int
+    created_date: OrcidDate
+    last_modified_date: OrcidDate
+    source: Source
+    path: str
+    title: TitleField
+    type: str
+    publication_date: PublicationDate
+    external_ids: ExternalIdCollection
+    contributors: Contributors
+    journal_title: Title
+    url: StrValue = None
+    citation: Citation = None
+    language_code: str = None
+    country: str = None
+    visibility: str = None
+    short_description: str = None
+
+
 def get_detailed_work(put_code: int) -> OrcidDetailedWork:
     response = get_orcid_query("work", suffix=str(put_code))
-    return OrcidDetailedWork.from_dict(response)
+    return parse_obj_as(OrcidDetailedWork, response)

@@ -1,19 +1,24 @@
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict
 
-from dataclass_wizard import JSONSerializable
+from humps import dekebabize
+from pydantic import parse_obj_as
+from pydantic.dataclasses import dataclass
 
 from my_scientific_profile.orcid.detailed_work import (
     ExternalIdCollection,
     ExternalIds,
     OrcidDetailedWork,
     PublicationDate,
-    Source,
     Title,
     TitleField,
     get_detailed_work,
 )
-from my_scientific_profile.orcid.utils import OrcidDate, get_orcid_query
+from my_scientific_profile.orcid.utils import (
+    OrcidDate,
+    Source,
+    UrlValue,
+    get_orcid_query,
+)
 
 __all__ = [
     "OrcidWorks",
@@ -28,39 +33,39 @@ __all__ = [
 
 
 @dataclass(frozen=True)
-class OrcidWorks(JSONSerializable):
-    last_modified_date: "OrcidDate"
-    group: List["OrcidWork"]
-    path: str
-
-
-@dataclass(frozen=True)
-class OrcidWork(JSONSerializable):
-    last_modified_date: "OrcidDate"
-    external_ids: "ExternalIdCollection"
-    work_summary: List["WorkSummary"]
-
-
-@dataclass(frozen=True)
-class WorkSummary(JSONSerializable):
+class WorkSummary:
     put_code: int
     created_date: OrcidDate
     last_modified_date: OrcidDate
-    source: "Source"
-    title: "TitleField"
-    external_ids: "ExternalIdCollection"
-    url: str
+    source: Source
+    title: TitleField
+    external_ids: ExternalIdCollection
     type: str
-    publication_date: "PublicationDate"
+    publication_date: PublicationDate
     visibility: str
     path: str
     display_index: int
-    journal_title: Optional[Title] = field(default=None)
+    url: UrlValue = None
+    journal_title: Title = None
+
+
+@dataclass(frozen=True)
+class OrcidWork:
+    last_modified_date: OrcidDate
+    external_ids: ExternalIdCollection
+    work_summary: list[WorkSummary]
+
+
+@dataclass(frozen=True)
+class OrcidWorks:
+    group: list[OrcidWork]
+    path: str
+    last_modified_date: OrcidDate = None
 
 
 def get_works() -> OrcidWorks:
     response = get_orcid_query("works")
-    return OrcidWorks.from_dict(response)
+    return parse_obj_as(OrcidWorks, dekebabize(response))
 
 
 def get_doi_to_put_code_map() -> Dict[str, int]:
@@ -85,6 +90,6 @@ def get_put_code_to_doi_map() -> Dict[str, int]:
     }
 
 
-def get_all_detailed_works() -> List[OrcidDetailedWork]:
+def get_all_detailed_works() -> list[OrcidDetailedWork]:
     doi_to_put_code_map = get_doi_to_put_code_map()
     return [get_detailed_work(put_code) for put_code in doi_to_put_code_map.values()]

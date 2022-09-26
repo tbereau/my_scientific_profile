@@ -1,6 +1,6 @@
 import logging
-from dataclasses import dataclass, field
-from typing import Optional
+
+from pydantic.dataclasses import dataclass
 
 from my_scientific_profile.crossref.utils import CrossrefAuthor
 from my_scientific_profile.orcid.authors import (
@@ -16,12 +16,19 @@ logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
+class Affiliation:
+    name: str = None
+    city: str = None
+    country: str = None
+
+
+@dataclass(frozen=True)
 class Author:
     given: str
     family: str
-    affiliation: "Affiliation"
-    orcid: Optional[str] = field(default=None)
-    email: Optional[str] = field(default=None)
+    affiliation: Affiliation
+    orcid: str = None
+    email: str = None
 
     def __post_init__(self):
         object.__setattr__(self, "given", self.given.title())
@@ -30,13 +37,6 @@ class Author:
     @property
     def full_name(self) -> str:
         return " ".join([self.given, self.family])
-
-
-@dataclass(frozen=True)
-class Affiliation:
-    name: Optional[str] = field(default=None)
-    city: Optional[str] = field(default=None)
-    country: Optional[str] = field(default=None)
 
 
 def get_author_from_crossref(author_info: CrossrefAuthor) -> Author:
@@ -53,15 +53,15 @@ def get_author_from_crossref(author_info: CrossrefAuthor) -> Author:
 
 def convert_orcid_author_to_author(orcid_author: OrcidAuthor) -> Author:
     return Author(
-        orcid_author.given,
-        orcid_author.family,
+        orcid_author.given_names,
+        orcid_author.family_names,
         affiliation=get_affiliation_from_orcid(orcid_author.last_organization),
-        orcid=orcid_author.orcid,
+        orcid=orcid_author.orcid_id,
         email=orcid_author.email[0] if orcid_author.email else None,
     )
 
 
-def search_crossref_author_in_orcid(author_info: CrossrefAuthor) -> Optional[Author]:
+def search_crossref_author_in_orcid(author_info: CrossrefAuthor) -> Author | None:
     if author_info.orcid:
         orcid_search = search_for_author_by_orcid_id(author_info.orcid)
     else:

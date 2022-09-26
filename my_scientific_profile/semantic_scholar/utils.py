@@ -1,8 +1,8 @@
 import logging
-from dataclasses import dataclass, field
 from typing import List, Optional
 
-from dataclass_wizard import JSONSerializable
+import humps
+from pydantic.dataclasses import dataclass
 from requests import get
 
 import my_scientific_profile.utils  # noqa
@@ -21,44 +21,44 @@ MY_SEMANTIC_ID = 1969822
 
 
 @dataclass(frozen=True)
-class SemanticScholarAuthorDefault(JSONSerializable):
+class SemanticScholarAuthorDefault:
     author_id: int
     name: str
 
 
 @dataclass(frozen=True)
-class SemanticScholarPaperDefault(JSONSerializable):
+class SemanticScholarPaperDefault:
     paper_id: str
     title: str
 
 
 @dataclass(frozen=True)
-class SemanticScholarAuthor(JSONSerializable):
+class SemanticScholarAuthor:
     author_id: str
-    name: Optional[str] = field(default=None)
-    url: Optional[str] = field(default=None)
-    citation_count: Optional[int] = field(default=None)
-    h_index: Optional[int] = field(default=None)
-    aliases: Optional[List[str]] = field(default=None)
-    papers: Optional[List["SemanticScholarPaperDefault"]] = field(default=None)
+    name: str = None
+    url: str = None
+    citation_count: int = None
+    h_index: int = None
+    aliases: List[str] = None
+    papers: List["SemanticScholarPaperDefault"] = None
 
 
 @dataclass(frozen=True)
-class SemanticScholarPaper(JSONSerializable):
-    paper_id: str
-    title: Optional[str] = field(default=None)
-    authors: Optional[List[SemanticScholarAuthorDefault]] = field(default=None)
-    abstract: Optional[str] = field(default=None)
-    year: Optional[int] = field(default=None)
-    venue: Optional[str] = field(default=None)
-    is_open_access: Optional[bool] = field(default=None)
-    tldr: Optional["SemanticScholarTldr"] = field(default=None)
-
-
-@dataclass(frozen=True)
-class SemanticScholarTldr(JSONSerializable):
+class SemanticScholarTldr:
     model: str
     text: str
+
+
+@dataclass(frozen=True)
+class SemanticScholarPaper:
+    paper_id: str
+    title: str = None
+    authors: List[SemanticScholarAuthorDefault] = None
+    abstract: str = None
+    year: int = None
+    venue: str = None
+    is_open_access: bool = None
+    tldr: SemanticScholarTldr = None
 
 
 def get_semantic_scholar_request_endpoint_template() -> str:
@@ -77,4 +77,4 @@ def fetch_info_by_id(
     response = get(endpoint)
     if response.status_code != 200:
         return {}
-    return response.json()
+    return humps.decamelize(response.json())

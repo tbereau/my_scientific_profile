@@ -15,12 +15,14 @@
         <div class="float-end">
             <div data-badge-type='donut' class='altmetric-embed' data-badge-popover='left' data-doi={{paper.doi}}></div>
         </div>
-        {% for author in paper.authors %}
-        <h6 class="card-subtitle mb-2 text-muted">{{ author.full_name }}{% if author.orcid %} <a
+        <h6 class="card-subtitle mb-2 text-muted">
+            {% for author in paper.authors %}
+            {{ author.full_name }}{% if author.orcid %} <a
             href="https://orcid.org/{{ author.orcid }}"><img
             src="{{url_for('static', filename='orcid.svg')}}" width="16" height="16"></a>{%
-            endif%}</h6>
-        {% endfor %}
+            endif%}
+            {% endfor %}
+        </h6>
         <p><em>{{paper.journal.name}}</em> <strong>{{paper.journal.issue}}</strong>{% if paper.journal.pages %},
             {{paper.journal.pages}}{% endif %}
             ({{paper.year}})</p>

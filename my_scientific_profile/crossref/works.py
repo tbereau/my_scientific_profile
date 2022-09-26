@@ -1,9 +1,9 @@
 import logging
-from dataclasses import dataclass, field
 from functools import lru_cache
-from typing import List, Optional
 
-from dataclass_wizard import JSONSerializable
+from humps import dekebabize
+from pydantic import parse_obj_as
+from pydantic.dataclasses import Field, dataclass
 from requests import get
 
 from my_scientific_profile.crossref.utils import (
@@ -21,49 +21,49 @@ logger = logging.getLogger(__name__)
 
 
 @dataclass(eq=True, frozen=True)
-class CrossrefWork(JSONSerializable):
-    status: str
-    message_type: str
-    message_version: str
-    message: "CrossrefWorkMessage"
-
-
-@dataclass(eq=True, frozen=True)
-class CrossrefWorkMessage(JSONSerializable):
+class CrossrefWorkMessage:
     indexed: CrossrefDate
     reference_count: int
     publisher: str
     content_domain: CrossrefContentDomain
-    short_container_title: List[str]
-    doi: str
+    short_container_title: list[str]
     type: str
     created: CrossrefDate
     source: str
     is_referenced_by_count: int
-    title: List[str]
+    title: list[str]
     prefix: str
     volume: int
-    author: List[CrossrefAuthor]
+    author: list[CrossrefAuthor]
     member: int
-    container_title: List[str]
-    original_title: List[str]
-    link: List[CrossrefLink]
+    container_title: list[str]
+    original_title: list[str]
+    link: list[CrossrefLink]
     deposited: CrossrefDate
     score: int
-    subtitle: List[str]
-    short_title: List[str]
+    subtitle: list[str]
+    short_title: list[str]
     issued: CrossrefDate
-    url: str
-    issn: List[str]
-    issue: Optional[str] = field(default=None)
-    page: Optional[str] = field(default=None)
-    language: Optional[str] = field(default=None)
-    abstract: Optional[str] = field(default=None)
-    update_policy: Optional[str] = field(default=None)
-    funder: Optional[List[CrossrefFunder]] = field(default=None)
-    published_print: Optional[CrossrefDate] = field(default=None)
-    assertion: Optional[List[CrossrefAssertion]] = field(default=None)
-    reference: Optional[List[CrossrefReference]] = field(default=None, repr=False)
+    issn: list[str] = Field(None, alias="ISSN")
+    doi: str = Field(None, alias="DOI")
+    url: str = Field(None, alias="URL")
+    issue: str = None
+    page: str = None
+    language: str = None
+    abstract: str = None
+    update_policy: str = None
+    funder: list[CrossrefFunder] = None
+    published_print: CrossrefDate = None
+    assertion: list[CrossrefAssertion] = None
+    reference: list[CrossrefReference] = Field(default=None, repr=False)
+
+
+@dataclass(eq=True, frozen=True)
+class CrossrefWork:
+    status: str
+    message_type: str
+    message_version: str
+    message: CrossrefWorkMessage
 
 
 @lru_cache()
@@ -74,4 +74,4 @@ def get_crossref_work_by_doi(doi: str) -> CrossrefWork:
     assert (
         response.status_code == 200
     ), f"unexpected status code {response.status_code}: {response.text}"
-    return CrossrefWork.from_dict(response.json())
+    return parse_obj_as(CrossrefWork, dekebabize(response.json()))

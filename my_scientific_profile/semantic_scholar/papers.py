@@ -1,6 +1,7 @@
 import logging
 from functools import lru_cache
-from typing import Optional
+
+from pydantic import parse_obj_as
 
 from my_scientific_profile.semantic_scholar.utils import (
     SemanticScholarPaper,
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 @lru_cache()
-def get_paper_info(paper_id: str) -> Optional[SemanticScholarPaper]:
+def get_paper_info(paper_id: str) -> SemanticScholarPaper | None:
     fields = ["title", "authors", "abstract", "venue", "year", "isOpenAccess", "tldr"]
     info = fetch_info_by_id(paper_id, "paper", fields=fields)
-    return SemanticScholarPaper.from_dict(info) if info else None
+    return parse_obj_as(SemanticScholarPaper, info) if info else None

@@ -1,9 +1,8 @@
 import datetime as dt
-from dataclasses import dataclass, field
-from typing import List, Optional
 
 import pandas as pd
-from dataclass_wizard import JSONSerializable, json_field
+from pydantic import Field
+from pydantic.dataclasses import dataclass
 
 import my_scientific_profile.utils  # noqa
 
@@ -21,10 +20,10 @@ __all__ = [
 
 
 @dataclass(eq=True, frozen=True)
-class CrossrefDate(JSONSerializable):
-    date_parts: List[List[int]] = field(repr=False)
-    timestamp: Optional[int] = field(default=None, repr=False)
-    date_time: Optional[dt.datetime] = field(default=None)
+class CrossrefDate:
+    date_parts: list[list[int]] = Field(..., repr=False)
+    timestamp: int = Field(default=None, repr=False)
+    date_time: dt.datetime = None
 
     def __post_init__(self):
         if self.date_time is None:
@@ -36,26 +35,31 @@ class CrossrefDate(JSONSerializable):
 
 
 @dataclass(eq=True, frozen=True)
-class CrossrefFunder(JSONSerializable):
+class CrossrefFunder:
     name: str
-    DOI: Optional[str] = field(default=None)
-    doi_asserted_by: Optional[str] = field(default=None)
+    DOI: str = None
+    doi_asserted_by: str = None
 
 
 @dataclass(eq=True, frozen=True)
-class CrossrefContentDomain(JSONSerializable):
-    domain: List[str]
+class CrossrefContentDomain:
+    domain: list[str]
     crossmark_restriction: bool
 
 
 @dataclass(eq=True, frozen=True)
-class CrossrefAuthor(JSONSerializable):
+class CrossrefAffiliation:
+    name: str
+
+
+@dataclass(eq=True, frozen=True)
+class CrossrefAuthor:
     given: str
     family: str
     sequence: str
-    affiliation: List["CrossrefAffiliation"]
-    orcid: Optional[str] = field(default=None)
-    authenticated_orcid: Optional[bool] = field(default=None)
+    affiliation: list[CrossrefAffiliation]
+    orcid: str = None
+    authenticated_orcid: bool = None
 
     def __post_init__(self):
         if self.orcid:
@@ -66,36 +70,31 @@ class CrossrefAuthor(JSONSerializable):
 
 
 @dataclass(eq=True, frozen=True)
-class CrossrefAffiliation(JSONSerializable):
-    name: str
-
-
-@dataclass(eq=True, frozen=True)
-class CrossrefReference(JSONSerializable):
+class CrossrefReference:
     key: str
-    doi: Optional[str] = json_field("DOI", default=None)
-    doi_asserted_by: Optional[str] = field(default=None)
-    unstructured: Optional[str] = field(default=None)
-    first_page: Optional[str] = field(default=None)
-    volume_title: Optional[str] = field(default=None)
-    author: Optional[str] = field(default=None)
-    year: Optional[int] = field(default=None)
+    doi: str = Field(None, alias="DOI")
+    doi_asserted_by: str = None
+    unstructured: str = None
+    first_page: str = None
+    volume_title: str = None
+    author: str = None
+    year: int = None
 
 
 @dataclass(eq=True, frozen=True)
-class CrossrefLink(JSONSerializable):
-    url: str
+class CrossrefLink:
     content_type: str
     content_version: str
     intended_application: str
+    url: str = None
 
 
 @dataclass(eq=True, frozen=True)
-class CrossrefAssertion(JSONSerializable):
+class CrossrefAssertion:
     name: str
-    date: str = json_field("value")
-    label: Optional[str] = field(default=None)
-    order: Optional[int] = field(default=None)
+    date: str = Field(None, alias="value")
+    label: str = None
+    order: int = None
 
 
 def get_crossref_request_endpoint_template() -> str:

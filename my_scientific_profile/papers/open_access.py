@@ -1,6 +1,6 @@
-from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional
+
+from pydantic.dataclasses import dataclass
 
 from my_scientific_profile.unpaywall.works import get_unpaywall_work_by_doi
 
@@ -17,9 +17,9 @@ class OpenAccessStatus(Enum):
 @dataclass(frozen=True)
 class OpenAccessPaperInfo:
     is_open_access: bool
-    open_access_status: Optional[OpenAccessStatus] = field(default=None)
-    landing_page_url: Optional[str] = field(default=None)
-    pdf_url: Optional[str] = field(default=None)
+    open_access_status: OpenAccessStatus = None
+    landing_page_url: str = None
+    pdf_url: str = None
 
 
 def get_open_access_paper_info(doi: str) -> OpenAccessPaperInfo:
