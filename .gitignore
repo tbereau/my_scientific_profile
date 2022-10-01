@@ -107,3 +107,8 @@ ENV/
 
 # whoosh
 notebooks/indexdir/
+
+# pymupdf
+notebooks/test_pymupdf/
+
+.DS_Store

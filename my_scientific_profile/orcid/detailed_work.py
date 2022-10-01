@@ -1,7 +1,9 @@
 import datetime as dt
 import logging
+from functools import lru_cache
 
 import pandas as pd
+from humps import dekebabize
 from pydantic import Field, parse_obj_as
 from pydantic.dataclasses import dataclass
 
@@ -12,6 +14,7 @@ from my_scientific_profile.orcid.utils import (
     IntValue,
     OrcidDate,
     Source,
+    SourceClientId,
     StrValue,
     get_orcid_query,
 )
@@ -59,7 +62,7 @@ class Contributor:
     credit_name: StrValue
     contributor_attributes: ContributorAttributes = None
     contributor_email: str = None
-    contributor_orcid: str = None
+    contributor_orcid: SourceClientId | str = None
 
 
 @dataclass(frozen=True)
@@ -107,6 +110,7 @@ class OrcidDetailedWork:
     short_description: str = None
 
 
+@lru_cache
 def get_detailed_work(put_code: int) -> OrcidDetailedWork:
     response = get_orcid_query("work", suffix=str(put_code))
-    return parse_obj_as(OrcidDetailedWork, response)
+    return parse_obj_as(OrcidDetailedWork, dekebabize(response))

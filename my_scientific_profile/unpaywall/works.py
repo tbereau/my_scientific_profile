@@ -1,7 +1,7 @@
 import datetime as dt
 import logging
 
-from pydantic import parse_obj_as
+from pydantic import parse_obj_as, validator
 from pydantic.dataclasses import dataclass
 from requests import get
 
@@ -28,7 +28,6 @@ class UnpaywallOALocation:
     url: str
     url_for_landing_page: str
     evidence: str
-    version: str
     host_type: str
     is_best: bool
     updated: dt.datetime = None
@@ -38,6 +37,17 @@ class UnpaywallOALocation:
     endpoint_id: str = None
     repository_institution: str = None
     oa_date: dt.datetime = None
+    version: str = None
+
+    class Config:
+        json_encoders = {
+            dt.datetime: lambda v: v.isoformat(),
+        }
+
+    @validator("updated", "oa_date", pre=True)
+    def time_validate(cls, v):
+        if v is not None:
+            return dt.datetime.fromisoformat(v)
 
 
 @dataclass(frozen=True)

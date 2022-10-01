@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from pydantic import parse_obj_as
 from pydantic.dataclasses import dataclass
 
@@ -62,6 +64,7 @@ class OrcidEmployment:
     affiliation_group: list[OrcidAffiliationGroup] = None
 
 
+@lru_cache
 def fetch_employment_for_orcid_id(orcid_id: str) -> OrcidEmployment:
     record = get_orcid_query("employments", orcid_id=orcid_id, suffix=None)
     return parse_obj_as(OrcidEmployment, record)

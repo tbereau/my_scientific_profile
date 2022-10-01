@@ -1,3 +1,4 @@
+from functools import lru_cache
 from typing import Dict
 
 from humps import dekebabize
@@ -63,11 +64,13 @@ class OrcidWorks:
     last_modified_date: OrcidDate = None
 
 
+@lru_cache
 def get_works() -> OrcidWorks:
     response = get_orcid_query("works")
     return parse_obj_as(OrcidWorks, dekebabize(response))
 
 
+@lru_cache
 def get_doi_to_put_code_map() -> Dict[str, int]:
     works = get_works()
     work_summaries = [
@@ -79,6 +82,7 @@ def get_doi_to_put_code_map() -> Dict[str, int]:
     }
 
 
+@lru_cache
 def get_put_code_to_doi_map() -> Dict[str, int]:
     works = get_works()
     work_summaries = [
@@ -90,6 +94,7 @@ def get_put_code_to_doi_map() -> Dict[str, int]:
     }
 
 
+@lru_cache
 def get_all_detailed_works() -> list[OrcidDetailedWork]:
     doi_to_put_code_map = get_doi_to_put_code_map()
     return [get_detailed_work(put_code) for put_code in doi_to_put_code_map.values()]

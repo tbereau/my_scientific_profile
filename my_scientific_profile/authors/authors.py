@@ -68,7 +68,8 @@ def search_crossref_author_in_orcid(author_info: CrossrefAuthor) -> Author | Non
         orcid_search = search_for_author_by_name(author_info.given, author_info.family)
     if len(orcid_search) != 1:
         logger.info(
-            f"ORCID search results returned {len(orcid_search)} results\n{orcid_search}"
+            f"ORCID search results returned {len(orcid_search)} "
+            f"results\n{orcid_search[:3]} {'...' if len(orcid_search) > 3 else ''}"
         )
         return None
     return convert_orcid_author_to_author(orcid_search[0])

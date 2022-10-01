@@ -3,13 +3,12 @@ import os
 
 from flask import Flask, render_template
 
-from my_scientific_profile.papers.papers import fetch_paper_info
+from my_scientific_profile.papers.papers import fetch_all_paper_infos, fetch_paper_info
 
 logger = logging.getLogger(__name__)
 
 
 def create_app(test_config=None):
-    # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY="dev",
@@ -17,20 +16,23 @@ def create_app(test_config=None):
     )
 
     if test_config is None:
-        # load the instance config, if it exists, when not testing
         app.config.from_pyfile("config.py", silent=True)
     else:
-        # load the test config if passed in
         app.config.from_mapping(test_config)
 
-    # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
 
+    @app.route("/papers")
+    def all_papers():
+        papers = fetch_all_paper_infos().copy()
+        logger.info(papers)
+        return render_template("papers.html", papers=papers)
+
     @app.route("/papers/<doi>")
-    def hello(doi: str):
+    def individual_paper(doi: str):
         paper = fetch_paper_info(doi.replace("-", "/"))
         logger.info(paper)
         return render_template("paper.html", paper=paper)

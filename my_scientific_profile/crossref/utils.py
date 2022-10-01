@@ -4,7 +4,7 @@ import pandas as pd
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
-import my_scientific_profile.utils  # noqa
+from my_scientific_profile.config.config import find_author_in_config
 
 __all__ = [
     "CrossrefDate",
@@ -67,6 +67,12 @@ class CrossrefAuthor:
                 "https://orcid.org/"
             )
             object.__setattr__(self, "orcid", orcid)
+        else:
+            author = find_author_in_config(self.given, self.family, self.orcid)
+            if author:
+                object.__setattr__(self, "given", author["given"])
+                object.__setattr__(self, "family", author["family"])
+                object.__setattr__(self, "orcid", author["orcid"])
 
 
 @dataclass(eq=True, frozen=True)
