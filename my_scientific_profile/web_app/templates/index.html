@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Welcome{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+    <h4>
+        Search through publications
+    </h4>
+
+    <form action="{{ url_for('search_papers') }}" method="POST">
+        <div class="mb-3">
+            {{ form.search(class="form-control") }}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Publications{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    {% for paper in papers %}
+    <div class="card-header text-truncate">
+        <span class="h5">Publication</span>
+        <a href="{{ url_for('individual_paper', doi=paper.doi | replace('/', '_') ) }}" class="link-primary">
+            {{ paper.title }}
+        </a>
+        <p></p>
+        <span class="card-subtitle mb-2 text-muted">
+            {{paper.authors[0].family }}{% if paper.authors | length > 1 %}<em> et al.</em>{% endif %},
+        </span>
+        <em>{{paper.journal.abbreviation}}</em>
+        ({{paper.year}})
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

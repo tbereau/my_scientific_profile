@@ -152,3 +152,9 @@ Werkzeug==2.2.2
 widgetsnbextension==4.0.3
 wrapt==1.14.1
 wsproto==1.2.0
+Flask-s3~=0.3
+setuptools~=65.4.1
+lunr~=0.6.2
+
+boto3~=1.24.84
+pymongo~=4.2.0

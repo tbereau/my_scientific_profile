@@ -85,13 +85,13 @@ def fetch_paper_info(doi: str) -> Paper:
     ]
     open_access_info = get_open_access_paper_info(doi)
     return Paper(
-        doi,
-        crossref_info.message.title[0],
-        journal_info,
-        crossref_info.message.created.date_time,
-        authors,
-        crossref_info.message.is_referenced_by_count,
-        open_access_info,
+        doi=doi,
+        title=crossref_info.message.title[0],
+        journal=journal_info,
+        publication_date=crossref_info.message.created.date_time,
+        authors=authors,
+        citation_count=crossref_info.message.is_referenced_by_count,
+        open_access=open_access_info,
         bib_entry=bib_info,
         abstract=abstract,
         tldr=semantic_info.tldr.text if semantic_info and semantic_info.tldr else None,

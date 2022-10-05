@@ -15,12 +15,14 @@
         <div class="float-end">
             <div data-badge-type='donut' class='altmetric-embed' data-badge-popover='left' data-doi={{paper.doi}}></div>
         </div>
-        <h6 class="card-subtitle mb-2 text-muted">
+        <h6 class="card-subtitle mb-2 text-muted breadcrumb">
             {% for author in paper.authors %}
-            {{ author.full_name }}{% if author.orcid %} <a
-            href="https://orcid.org/{{ author.orcid }}"><img
-            src="{{url_for('static', filename='orcid.svg')}}" width="16" height="16"></a>{%
-            endif%}
+            <li class="breadcrumb-item">
+                {{ author.full_name }}{% if author.orcid %} <a
+                href="https://orcid.org/{{ author.orcid }}"><img
+                src="{{static_url}}static/orcid.png" width="16" height="16"></a>{%
+                endif%}
+            </li>
             {% endfor %}
         </h6>
         <p><em>{{paper.journal.name}}</em> <strong>{{paper.journal.issue}}</strong>{% if paper.journal.pages %},
@@ -77,7 +79,7 @@
             <div class="tab-pane fade" id="pills-oa" role="tabpanel" aria-labelledby="pills-oa-tab"
                  tabindex="0">
                 <div class="float-end">
-                    <img src="{{url_for('static', filename='open_access.svg')}}" height="64">
+                    <img src="{{static_url}}static/open_access.png" height="64">
                 </div>
                 <a class="btn btn-outline-primary" href="{{ paper.open_access.landing_page_url}}" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
