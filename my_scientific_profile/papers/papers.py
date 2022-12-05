@@ -51,13 +51,11 @@ class Paper:
     bib_entry: str
     abstract: str = None
     tldr: str = None
+    year: int = None
 
     def __post_init__(self):
         object.__setattr__(self, "title", " ".join(self.title.split()))
-
-    @property
-    def year(self) -> int:
-        return self.publication_date.year
+        object.__setattr__(self, "year", self.publication_date.year)
 
 
 @lru_cache

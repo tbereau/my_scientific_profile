@@ -16,6 +16,7 @@ def get_search_index() -> Any:
         fields=[
             "title",
             "abstract",
+            "year",
             dict(field_name="journal_name", extractor=lambda d: d["journal"]["name"]),
             dict(
                 field_name="journal_abbreviation",

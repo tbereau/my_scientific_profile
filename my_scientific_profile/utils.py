@@ -10,7 +10,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.setLevel(logging.DEBUG)
 
-logger_blocklist = ["urllib3", "matplotlib"]
+logger_blocklist = ["urllib3", "matplotlib", "parso"]
 for module in logger_blocklist:
     logging.getLogger(module).setLevel(logging.WARNING)
 

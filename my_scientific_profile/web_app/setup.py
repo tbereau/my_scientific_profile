@@ -7,7 +7,6 @@ from flask import Flask, render_template, request
 from my_scientific_profile.database.papers import load_all_papers_from_s3
 from my_scientific_profile.search.search import get_search_index
 from my_scientific_profile.web_app.extensions import S3_BUCKET, s3, s3_client
-from my_scientific_profile.web_app.forms import SearchForm
 
 logger = logging.getLogger(__name__)
 
@@ -37,35 +36,55 @@ def create_app(test_config=None):
     app.config["AWS_DEFAULT_REGION"] = environ("AWS_DEFAULT_REGION")
     app.config["FLASKS3_BUCKET_NAME"] = environ("AWS_STORAGE_BUCKET_NAME")
 
+    search_index = get_search_index()
+
     with app.app_context():
         s3.init_app(app)
 
     @app.route("/papers")
-    def all_papers():
+    def papers_all():
         return render_template("papers.html", papers=PAPERS)
 
-    @app.route("/papers/<doi>")
+    @app.route("/papers/<dois>")
+    def papers(dois):
+        logger.info(f"papers dois {dois}")
+        _dois = [doi.replace("_", "/") for doi in dois.split(",")]
+        logger.info(f"dois {_dois}")
+        _papers = [paper for paper in PAPERS if paper.doi in _dois]
+        return render_template("papers.html", papers=_papers)
+
+    @app.route("/paper/<doi>")
     def individual_paper(doi: str):
-        paper = next(paper for paper in PAPERS if paper.doi == (doi.replace("_", "/")))
+        try:
+            paper = next(
+                paper for paper in PAPERS if paper.doi == (doi.replace("_", "/"))
+            )
+        except StopIteration:
+            return f"cannot find DOI {doi.replace('_', '/')}"
         logger.info(paper)
         return render_template("paper.html", paper=paper)
 
-    @app.route("/search-papers", methods=["GET", "POST"])
-    def search_papers():
-        if request.method == "POST":
-            result = dict(request.form)
-            logger.info(f"result {dict(result)}")
-            search_index = get_search_index()
+    @app.route("/search", methods=["POST"])
+    def search():
+        logger.info(f"requests {request.args}")
+        logger.info(f"form {request.form}")
+        result = dict(request.form)
+        try:
             results = search_index.search(result["search"])
-            logger.info(f"search results {results}")
-            dois = [entry["ref"] for entry in results]
-            papers = [paper for paper in PAPERS if paper.doi in dois]
-            return render_template("papers.html", papers=papers)
+        except KeyError:
+            return {}
+        logger.info(f"search results {len(results)}")
+        dois = [entry["ref"] for entry in results]
+        dois = ",".join([doi.replace("/", "_") for doi in dois])
+        logger.info(f"search dois {dois}")
+        return dois
 
-    @app.route("/")
-    def index():
-        form = SearchForm()
-        return render_template("index.html", form=form)
+    @app.route("/", methods=["GET"], defaults={"dois": [p.doi for p in PAPERS][:5]})
+    @app.route("/<dois>", methods=["GET"])
+    def index(dois: str):
+        _dois = ",".join([doi.replace("/", "_") for doi in dois])
+        logger.info(f"index.html {_dois}")
+        return render_template("index.html", dois=_dois)
 
     @app.context_processor
     def inject_static_url():

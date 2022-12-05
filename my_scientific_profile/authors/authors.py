@@ -1,4 +1,5 @@
 import logging
+import uuid
 
 from pydantic.dataclasses import dataclass
 
@@ -29,14 +30,14 @@ class Author:
     affiliation: Affiliation
     orcid: str = None
     email: str = None
+    full_name: str = None
+    uuid: str = None
 
     def __post_init__(self):
         object.__setattr__(self, "given", self.given.title())
         object.__setattr__(self, "family", self.family.title())
-
-    @property
-    def full_name(self) -> str:
-        return " ".join([self.given, self.family])
+        object.__setattr__(self, "full_name", " ".join([self.given, self.family]))
+        object.__setattr__(self, "uuid", str(uuid.uuid1()))
 
 
 def get_author_from_crossref(author_info: CrossrefAuthor) -> Author:

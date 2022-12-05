@@ -1,20 +1,58 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Welcome{% endblock %}</h1>
+    <h1>{% block title %}Welcome{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-<div>
-    <h4>
-        Search through publications
-    </h4>
+    <div>
+        <h4>
+            Search through publications
+        </h4>
 
-    <form action="{{ url_for('search_papers') }}" method="POST">
         <div class="mb-3">
-            {{ form.search(class="form-control") }}
+            <input type="text" placeholder="search here..." id="search-text-field" class="form-control">
         </div>
-        {{ form.submit(class="btn btn-primary") }}
-    </form>
-</div>
+
+    </div>
+
+    <br>
+
+    <div id="papers">
+    </div>
+    <script>
+        function getPapers(dois) {
+            fetch(new Request("/papers/" + dois))
+                .then(response => response.text())
+                .then(text => {
+                    document.getElementById("papers").innerHTML = text;
+                })
+        }
+
+        getPapers({{ dois | tojson }});
+    </script>
+
+    <script>
+        const input = document.querySelector("#search-text-field");
+        input.addEventListener('input', searchPapers);
+
+        function searchPapers() {
+            const search = document.getElementById("search-text-field");
+            let data = new FormData();
+            data.append("search", search.value);
+            const request1 = new Request(
+                "{{ url_for('search') }}", {
+                    method: "POST",
+                    body: data,
+                }
+            )
+            fetch(request1)
+                .then(response => response.text())
+                .then(newDOIs => {
+                    getPapers(newDOIs);
+                })
+        }
+
+    </script>
+
 {% endblock %}
