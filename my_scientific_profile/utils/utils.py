@@ -1,5 +1,6 @@
 import logging
 import os
+from pathlib import Path
 
 __all__ = ["ROOT_DIR"]
 
@@ -14,4 +15,4 @@ logger_blocklist = ["urllib3", "matplotlib", "parso"]
 for module in logger_blocklist:
     logging.getLogger(module).setLevel(logging.WARNING)
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = Path(os.path.dirname(os.path.abspath(__file__))).parent.absolute()

@@ -104,4 +104,4 @@ class CrossrefAssertion:
 
 
 def get_crossref_request_endpoint_template() -> str:
-    return f"https://api.crossref.org/v1"
+    return "https://api.crossref.org/v1"

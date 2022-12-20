@@ -50,7 +50,7 @@ class OrcidDate:
             return pd.to_datetime(self.timestamp, unit="ms")
         else:
             date_in_str = f"{self.year.value}"
-            date_in_str += f"".join(
+            date_in_str += "".join(
                 [f"-{str(x.value)}" for x in [self.month, self.day] if x]
             )
             return pd.to_datetime(date_in_str)
@@ -112,7 +112,7 @@ class Source:
 
 
 def get_orcid_request_endpoint_prefix() -> str:
-    return f"https://pub.orcid.org/v3.0"
+    return "https://pub.orcid.org/v3.0"
 
 
 def get_orcid_request_endpoint_template(orcid_id: str | None = MY_ORCID) -> str:

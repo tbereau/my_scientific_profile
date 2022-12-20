@@ -4,7 +4,7 @@ import os
 import yaml
 from yaml import YAMLObject
 
-from my_scientific_profile.utils import ROOT_DIR
+from my_scientific_profile.utils.utils import ROOT_DIR
 
 __all__ = ["CONFIG_PATH", "get_author_configs", "find_author_in_config"]
 
@@ -18,7 +18,7 @@ def get_author_configs() -> list:
         try:
             config = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
-            logger.error(f"error in configuration file")
+            logger.error("error in configuration file")
             raise exc
     return config
 

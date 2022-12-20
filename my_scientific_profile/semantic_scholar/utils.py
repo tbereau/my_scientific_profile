@@ -62,7 +62,7 @@ class SemanticScholarPaper:
 
 
 def get_semantic_scholar_request_endpoint_template() -> str:
-    return f"https://api.semanticscholar.org/graph/v1"
+    return "https://api.semanticscholar.org/graph/v1"
 
 
 def fetch_info_by_id(

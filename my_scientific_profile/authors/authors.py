@@ -10,6 +10,7 @@ from my_scientific_profile.orcid.authors import (
     search_for_author_by_orcid_id,
 )
 from my_scientific_profile.orcid.employments import OrcidOrganization
+from my_scientific_profile.utils.singletons import AuthorSingleton
 
 __all__ = ["Author", "get_author_from_crossref", "get_author_from_orcid_or_crossref"]
 
@@ -24,7 +25,7 @@ class Affiliation:
 
 
 @dataclass(frozen=True)
-class Author:
+class Author(object, metaclass=AuthorSingleton):
     given: str
     family: str
     affiliation: Affiliation
@@ -38,6 +39,27 @@ class Author:
         object.__setattr__(self, "family", self.family.title())
         object.__setattr__(self, "full_name", " ".join([self.given, self.family]))
         object.__setattr__(self, "uuid", str(uuid.uuid1()))
+
+    def __eq__(self, other: "Author") -> bool:
+        return self.family == other.family and self.given[0] == other.given[0]
+
+    def combine_with_other_author(self, other: "Author") -> "Author":
+        assert self.given[0] == other.given[0], f"mismatch {self} vs {other}"
+        assert self.family == other.family, f"mismatch {self} vs {other}"
+        given = max(self.given, other.given, key=lambda x: len(x))
+        family = self.family
+        params = {
+            "given": given,
+            "family": family,
+            "full_name": " ".join([given, family]),
+            "affiliation": self.affiliation,
+            "orcid": self.orcid or other.orcid,
+            "email": self.email or other.email,
+            "uuid": min(self.uuid, other.uuid),
+        }
+        for instance in [self, other]:
+            for key, value in params.items():
+                object.__setattr__(instance, key, value)
 
 
 def get_author_from_crossref(author_info: CrossrefAuthor) -> Author:
