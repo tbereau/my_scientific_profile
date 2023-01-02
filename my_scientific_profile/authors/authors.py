@@ -23,12 +23,19 @@ class Affiliation:
     city: str = None
     country: str = None
 
+    @property
+    def is_empty(self) -> bool:
+        return all(
+            object.__getattribute__(self, key) is None
+            for key in ["name", "city", "country"]
+        )
+
 
 @dataclass(frozen=True)
 class Author(object, metaclass=AuthorSingleton):
     given: str
     family: str
-    affiliation: Affiliation
+    affiliation: Affiliation = None
     orcid: str = None
     email: str = None
     full_name: str = None
@@ -48,11 +55,15 @@ class Author(object, metaclass=AuthorSingleton):
         assert self.family == other.family, f"mismatch {self} vs {other}"
         given = max(self.given, other.given, key=lambda x: len(x))
         family = self.family
+        affiliation = (
+            self.affiliation if other.affiliation.is_empty else other.affiliation
+        )
+        logger.info(f"affiliation {self.affiliation} {other.affiliation} {affiliation}")
         params = {
             "given": given,
             "family": family,
             "full_name": " ".join([given, family]),
-            "affiliation": self.affiliation,
+            "affiliation": affiliation,
             "orcid": self.orcid or other.orcid,
             "email": self.email or other.email,
             "uuid": min(self.uuid, other.uuid),
@@ -75,6 +86,8 @@ def get_author_from_crossref(author_info: CrossrefAuthor) -> Author:
 
 
 def convert_orcid_author_to_author(orcid_author: OrcidAuthor) -> Author:
+    logger.info(f"convert {orcid_author}")
+    logger.info(f"convert {orcid_author.last_organization}")
     return Author(
         orcid_author.given_names,
         orcid_author.family_names,

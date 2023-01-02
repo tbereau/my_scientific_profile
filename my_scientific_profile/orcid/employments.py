@@ -7,6 +7,7 @@ from my_scientific_profile.orcid.utils import (
     ExternalIdCollection,
     OrcidDate,
     Source,
+    UrlValue,
     get_orcid_query,
 )
 
@@ -20,9 +21,9 @@ __all__ = [
 
 @dataclass(frozen=True)
 class OrcidAddress:
-    city: str
-    region: str
     country: str
+    city: str | None = None
+    region: str | None = None
 
 
 @dataclass(frozen=True)
@@ -38,11 +39,11 @@ class OrcidEmploymentSummary:
     source: Source
     put_code: int
     organization: OrcidOrganization
-    start_date: OrcidDate = None
-    end_date: OrcidDate = None
-    role_title: str = None
-    department_name: str = None
-    url: str = None
+    start_date: OrcidDate | None = None
+    end_date: OrcidDate | None = None
+    role_title: str | None = None
+    department_name: str | None = None
+    url: UrlValue | None = None
 
 
 @dataclass(frozen=True)
@@ -60,8 +61,8 @@ class OrcidAffiliationGroup:
 @dataclass(frozen=True)
 class OrcidEmployment:
     path: str
-    last_modified_date: OrcidDate = None
-    affiliation_group: list[OrcidAffiliationGroup] = None
+    last_modified_date: OrcidDate | None = None
+    affiliation_group: list[OrcidAffiliationGroup] | None = None
 
 
 @lru_cache

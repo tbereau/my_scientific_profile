@@ -45,12 +45,12 @@ def search_for_author_by_name(given_name: str, family_name: str) -> list[OrcidAu
             f"+AND+family-name:{re.escape(family_name)}"
         ),
     )
-    num_response = int(responses["num-found"])
+    num_response = int(responses["num_found"])
     logger.info(f"Entries received: {num_response}")
     return (
         [
             parse_obj_as(OrcidAuthor, dekebabize(response))
-            for response in responses["expanded-result"]
+            for response in responses["expanded_result"]
         ]
         if num_response > 0
         else []
@@ -62,12 +62,12 @@ def search_for_author_by_orcid_id(orcid_id: str) -> list[OrcidAuthor]:
     responses = get_orcid_query(
         "expanded-search", orcid_id=None, suffix=f"?q=orcid:{orcid_id}"
     )
-    num_response = int(responses["num-found"])
+    num_response = int(responses["num_found"])
     logger.info(f"Entries received: {num_response}")
     return (
         [
             parse_obj_as(OrcidAuthor, dekebabize(response))
-            for response in responses["expanded-result"]
+            for response in responses["expanded_result"]
         ]
         if num_response == 1
         else []

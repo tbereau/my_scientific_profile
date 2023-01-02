@@ -3,7 +3,7 @@ import logging
 
 import pandas as pd
 from decouple import config as environ
-from humps import decamelize
+from humps import dekebabize
 from pydantic import Field, HttpUrl
 from pydantic.dataclasses import dataclass
 from requests import get
@@ -128,7 +128,9 @@ def get_orcid_request_headers() -> dict:
 
 
 def get_orcid_query(
-    query_type: str, orcid_id: str | None = MY_ORCID, suffix: str = None
+    query_type: str,
+    orcid_id: str | None = MY_ORCID,
+    suffix: str = None,
 ) -> dict:
     logger.info(f"fetching {query_type} {suffix}")
     endpoint = get_orcid_request_endpoint_template(orcid_id)
@@ -138,4 +140,4 @@ def get_orcid_query(
     assert (
         response.status_code == 200
     ), f"unexpected status code {response.status_code}: {response.text}"
-    return decamelize(response.json())
+    return dekebabize(response.json())
