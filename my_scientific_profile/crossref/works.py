@@ -33,7 +33,6 @@ class CrossrefWorkMessage:
     is_referenced_by_count: int
     title: list[str]
     prefix: str
-    volume: int
     author: list[CrossrefAuthor]
     member: int
     container_title: list[str]
@@ -44,6 +43,7 @@ class CrossrefWorkMessage:
     subtitle: list[str]
     short_title: list[str]
     issued: CrossrefDate
+    volume: int = None
     issn: list[str] = Field(None, alias="ISSN")
     doi: str = Field(None, alias="DOI")
     url: str = Field(None, alias="URL")

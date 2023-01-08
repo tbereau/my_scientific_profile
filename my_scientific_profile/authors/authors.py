@@ -58,7 +58,9 @@ class Author(object, metaclass=AuthorSingleton):
         affiliation = (
             self.affiliation if other.affiliation.is_empty else other.affiliation
         )
-        logger.info(f"affiliation {self.affiliation} {other.affiliation} {affiliation}")
+        logger.debug(
+            f"affiliation {self.affiliation} {other.affiliation} {affiliation}"
+        )
         params = {
             "given": given,
             "family": family,
@@ -71,6 +73,15 @@ class Author(object, metaclass=AuthorSingleton):
         for instance in [self, other]:
             for key, value in params.items():
                 object.__setattr__(instance, key, value)
+
+    @classmethod
+    def get_existing_author(cls, author: CrossrefAuthor) -> "Author" or None:
+        matching_authors = (
+            a
+            for a in AuthorSingleton._instances
+            if a.family == author.family and a.given[0] == author.given[0]
+        )
+        return next(matching_authors, None)
 
 
 def get_author_from_crossref(author_info: CrossrefAuthor) -> Author:
@@ -86,8 +97,8 @@ def get_author_from_crossref(author_info: CrossrefAuthor) -> Author:
 
 
 def convert_orcid_author_to_author(orcid_author: OrcidAuthor) -> Author:
-    logger.info(f"convert {orcid_author}")
-    logger.info(f"convert {orcid_author.last_organization}")
+    logger.debug(f"convert {orcid_author}")
+    logger.debug(f"convert {orcid_author.last_organization}")
     return Author(
         orcid_author.given_names,
         orcid_author.family_names,
@@ -98,6 +109,8 @@ def convert_orcid_author_to_author(orcid_author: OrcidAuthor) -> Author:
 
 
 def search_crossref_author_in_orcid(author_info: CrossrefAuthor) -> Author | None:
+    if author := Author.get_existing_author(author_info):
+        return author
     if author_info.orcid:
         orcid_search = search_for_author_by_orcid_id(author_info.orcid)
     else:

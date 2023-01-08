@@ -20,3 +20,15 @@ class AuthorSingleton(type):
             instance = candidate_instance
         cls._instances.append(candidate_instance)
         return instance
+
+
+class PaperSingleton(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        key = kwargs.get("doi") or args[0]
+        if key in cls._instances.keys():
+            return cls._instances[key]
+        else:
+            cls._instances[key] = super(PaperSingleton, cls).__call__(*args, **kwargs)
+            return cls._instances[key]

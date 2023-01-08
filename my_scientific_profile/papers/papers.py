@@ -19,6 +19,7 @@ from my_scientific_profile.papers.open_access import (
 from my_scientific_profile.semantic_scholar.papers import (
     get_paper_info as get_semantic_scholar_paper_info,
 )
+from my_scientific_profile.utils.singletons import PaperSingleton
 
 __all__ = [
     "JournalInfo",
@@ -32,15 +33,15 @@ __all__ = [
 @dataclass(frozen=True)
 class JournalInfo:
     name: str
-    volume: int
     url: str
     issue: str = None
     abbreviation: str = None
     pages: str = None
+    volume: int = None
 
 
 @dataclass
-class Paper:
+class Paper(object, metaclass=PaperSingleton):
     doi: str
     title: str
     journal: JournalInfo
@@ -57,9 +58,15 @@ class Paper:
         object.__setattr__(self, "title", " ".join(self.title.split()))
         object.__setattr__(self, "year", self.publication_date.year)
 
+    @classmethod
+    def get_existing_paper(cls, doi: str) -> "Paper":
+        return PaperSingleton._instances.get(doi)
+
 
 @lru_cache
 def fetch_paper_info(doi: str) -> Paper:
+    if existing_paper := Paper.get_existing_paper(doi):
+        return existing_paper
     crossref_info = get_crossref_work_by_doi(doi)
     semantic_info = get_semantic_scholar_paper_info(doi)
     orcid_info = get_detailed_work(get_doi_to_put_code_map()[doi])

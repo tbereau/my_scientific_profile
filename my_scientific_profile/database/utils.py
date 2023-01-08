@@ -7,7 +7,7 @@ from typing import Any
 from bson.json_util import dumps as mongo_dumps
 from bson.json_util import loads as mongo_loads
 
-from my_scientific_profile.utils import ROOT_DIR
+from my_scientific_profile.utils.utils import ROOT_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -31,5 +31,5 @@ def read_dataclass_records_from_s3(
     key = f"database/records_{dataclass.__name__.lower()}.gz"
     raw_response = s3_client.get_object(Bucket=s3_bucket, Key=key)["Body"].read()
     response = mongo_loads(decompress(raw_response).decode("utf-8"))
-    logger.info(f"response {response}")
+    logger.debug(f"response {response}")
     return [dataclass(**r) for r in response]

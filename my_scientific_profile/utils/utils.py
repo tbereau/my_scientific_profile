@@ -9,7 +9,7 @@ handler = logging.StreamHandler()
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler.setFormatter(formatter)
 logger.addHandler(handler)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 logger_blocklist = ["urllib3", "matplotlib", "parso"]
 for module in logger_blocklist:
