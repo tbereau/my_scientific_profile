@@ -17,16 +17,26 @@
     </div>
 
     <br>
+    {% for topic_number, topic_name in topics.items() %}
+        <a href="{{ url_for('filter_topic', topic_number=topic_number) }}" class="link-primary">
+            <button type="button" class="btn btn-secondary btn-sm">{{ topic_name }}</button></a>
+        &nbsp;
+    {% endfor %}
+    <p></p>
 
     <div id="papers">
     </div>
     <script>
         function getPapers(dois) {
-            fetch(new Request("/papers/" + dois))
-                .then(response => response.text())
-                .then(text => {
-                    document.getElementById("papers").innerHTML = text;
-                })
+            if (dois == "") {
+                document.getElementById("papers").innerHTML = "No result";
+            } else {
+                fetch(new Request("/papers/" + dois))
+                    .then(response => response.text())
+                    .then(text => {
+                        document.getElementById("papers").innerHTML = text;
+                    })
+            }
         }
 
         getPapers({{ dois | tojson }});

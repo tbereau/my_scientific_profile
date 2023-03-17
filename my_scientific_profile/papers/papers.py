@@ -8,6 +8,7 @@ from my_scientific_profile.authors.authors import (
     Author,
     get_author_from_orcid_or_crossref,
 )
+from my_scientific_profile.config.config import get_abstract_from_config
 from my_scientific_profile.crossref.works import get_crossref_work_by_doi
 from my_scientific_profile.doi2bib.doi2bib import fetch_bib
 from my_scientific_profile.orcid.detailed_work import get_detailed_work
@@ -23,6 +24,7 @@ from my_scientific_profile.utils.singletons import PaperSingleton
 
 __all__ = [
     "JournalInfo",
+    "Embedding",
     "Paper",
     "fetch_all_paper_infos",
     "fetch_paper_info",
@@ -41,6 +43,14 @@ class JournalInfo:
 
 
 @dataclass
+class Embedding:
+    x: float
+    y: float
+    topic_number: int
+    topic_name: str
+
+
+@dataclass
 class Paper(object, metaclass=PaperSingleton):
     doi: str
     title: str
@@ -53,6 +63,7 @@ class Paper(object, metaclass=PaperSingleton):
     abstract: str = None
     tldr: str = None
     year: int = None
+    embedding: Embedding = None
 
     def __post_init__(self):
         object.__setattr__(self, "title", " ".join(self.title.split()))
@@ -82,8 +93,10 @@ def fetch_paper_info(doi: str) -> Paper:
         url=url,
     )
     abstract = (
-        semantic_info.abstract if semantic_info else None
-    ) or crossref_info.message.abstract
+        semantic_info.abstract
+        if semantic_info
+        else crossref_info.message.abstract or get_abstract_from_config(doi)
+    )
     authors = [
         get_author_from_orcid_or_crossref(author)
         for author in crossref_info.message.author

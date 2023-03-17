@@ -14,11 +14,19 @@ CONFIG_PATH = os.path.join(ROOT_DIR, "config")
 
 
 def get_author_configs() -> list:
-    with open(os.path.join(CONFIG_PATH, "authors.yaml"), "r") as stream:
+    return get_config("authors.yaml")
+
+
+def get_paper_configs() -> list:
+    return get_config("papers.yaml")
+
+
+def get_config(yaml_file: str) -> list:
+    with open(os.path.join(CONFIG_PATH, yaml_file), "r") as stream:
         try:
             config = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
-            logger.error("error in configuration file")
+            logger.error(f"error in configuration file {yaml_file}")
             raise exc
     return config
 
@@ -35,3 +43,11 @@ def find_author_in_config(
             if author["family"] == family and author["given"] == given:
                 return author
     return {}
+
+
+def get_abstract_from_config(doi: str) -> str:
+    paper_configs = get_paper_configs()
+    papers = [p for p in paper_configs if p["doi"] == doi]
+    if len(papers) > 0:
+        return papers[0]["abstract"]
+    return ""
