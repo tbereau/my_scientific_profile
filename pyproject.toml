@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "my-scientific-profile"
+version = "0.1.0"
+description = ""
+authors = ["Tristan Bereau <tristan.bereau@gmail.com>"]
+readme = "README.md"
+packages = [{include = "my_scientific_profile"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+isort = "^5.12.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
