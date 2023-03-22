@@ -59,6 +59,7 @@
     categories:
         - alumnus
         - postdoc
+    image: "girard.png"
 -
     given: "Yasemin"
     family: "Bozkurt Varolgüneş"
@@ -82,6 +83,7 @@
 -
     given: "Atreyee"
     family: "Banerjee"
+    orcid: "0000-0002-0518-609X"
     categories:
         - alumnus
         - postdoc
@@ -118,12 +120,14 @@
     categories:
         - alumnus
         - phd student
+    image: "liu.png"
 -
     given: "Roberto"
     family: "Menichetti"
     categories:
         - alumnus
         - postdoc
+    image: "menichetti.png"
 -
     given: "Clemens"
     family: "Rauer"
@@ -137,7 +141,7 @@
     categories:
         - alumnus
         - postdoc
-    image: "rudzinski.jpg"
+    image: "rudzinski.png"
 -
     given: "René"
     family: "Scheid"

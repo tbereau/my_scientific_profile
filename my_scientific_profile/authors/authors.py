@@ -2,6 +2,7 @@ import logging
 import uuid
 
 from pydantic.dataclasses import dataclass
+from unidecode import unidecode
 
 from my_scientific_profile.crossref.utils import CrossrefAuthor
 from my_scientific_profile.orcid.authors import (
@@ -12,7 +13,13 @@ from my_scientific_profile.orcid.authors import (
 from my_scientific_profile.orcid.employments import OrcidOrganization
 from my_scientific_profile.utils.singletons import AuthorSingleton
 
-__all__ = ["Author", "get_author_from_crossref", "get_author_from_orcid_or_crossref"]
+__all__ = [
+    "Author",
+    "get_author_from_crossref",
+    "get_author_from_orcid_or_crossref",
+    "search_crossref_author_in_orcid",
+    "search_author_from_config_info",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -75,13 +82,37 @@ class Author(object, metaclass=AuthorSingleton):
                 object.__setattr__(instance, key, value)
 
     @classmethod
-    def get_existing_author(cls, author: CrossrefAuthor) -> "Author" or None:
+    def get_existing_crossref_author(cls, author: CrossrefAuthor) -> "Author" or None:
         matching_authors = (
             a
             for a in AuthorSingleton._instances
             if a.family == author.family and a.given[0] == author.given[0]
         )
         return next(matching_authors, None)
+
+    @classmethod
+    def get_existing_author(cls, author_info: dict) -> "Author" or None:
+        matching_authors = (
+            a
+            for a in AuthorSingleton._instances
+            if (
+                author_info.get("orcid")
+                and a.orcid == author_info.get("orcid")  # noqa
+                or (  # noqa
+                    author_info.get("family") == a.family  # noqa
+                    and author_info.get("given")[0] == a.given[0]  # noqa
+                )
+            )
+        )
+        return next(matching_authors, None)
+
+    @property
+    def lower_case_snake_name(self) -> str:
+        return unidecode(
+            "_".join([self.given.lower(), self.family.lower()])
+            .replace(".", "")
+            .replace(" ", "_")
+        )
 
 
 def get_author_from_crossref(author_info: CrossrefAuthor) -> Author:
@@ -109,7 +140,7 @@ def convert_orcid_author_to_author(orcid_author: OrcidAuthor) -> Author:
 
 
 def search_crossref_author_in_orcid(author_info: CrossrefAuthor) -> Author | None:
-    if author := Author.get_existing_author(author_info):
+    if author := Author.get_existing_crossref_author(author_info):
         return author
     if author_info.orcid:
         orcid_search = search_for_author_by_orcid_id(author_info.orcid)
@@ -139,3 +170,21 @@ def get_affiliation_from_orcid(orcid_organization: OrcidOrganization) -> Affilia
         if orcid_organization
         else Affiliation()
     )
+
+
+def search_author_from_config_info(author_info: dict) -> Author:
+    if author := Author.get_existing_author(author_info):
+        return author
+    if author_info.get("orcid"):
+        orcid_search = search_for_author_by_orcid_id(author_info.get("orcid"))
+    else:
+        orcid_search = search_for_author_by_name(
+            author_info.get("given"), author_info.get("family")
+        )
+    if len(orcid_search) != 1:
+        logger.info(
+            f"ORCID search results returned {len(orcid_search)} "
+            f"results\n{orcid_search[:3]} {'...' if len(orcid_search) > 3 else ''}"
+        )
+        return None
+    return convert_orcid_author_to_author(orcid_search[0])

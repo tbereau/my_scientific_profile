@@ -1,0 +1,101 @@
+---
+title: "Research landscape"
+format:
+  html:
+    toc: false
+    echo: false
+    keep-hidden: true
+    code-tools: true
+---
+```{ojs}
+//| panel: input
+viewof visible_topics = Inputs.checkbox(
+  topic_names,
+  { value: topic_names,
+    label: "Topics:"
+  }
+)
+```
+
+::: {.panel-tabset}
+
+## Plot
+
+```{ojs}
+Plot.plot({
+  grid: true,
+  color: {
+    scheme: "spectral",
+    domain: topic_names,
+    legend: true
+  },
+  x: {
+    label: ""
+  },
+  y: {
+    label: ""
+  },
+  marks: [
+    Plot.dot(
+        filtered,
+        {
+            x: "embedding.x",
+            y: "embedding.y",
+            title: (d) =>
+        `${d.doi}\n ${d.title}\n ${d['journal.abbreviation']} ${d['journal.volume']} (${d['year']})`,
+            fill: "embedding.topic_name",
+            r: 6,
+        }
+    )
+  ],
+  tooltip: {
+    stroke: "blue",
+  }
+})
+```
+
+## Data
+
+```{ojs}
+Inputs.table(filtered, {
+  columns: [
+    "doi",
+    "title",
+    "journal.name",
+    "journal.volume",
+    "year",
+  ],
+  header: {
+    "journal.name": "journal",
+    "journal.volume": "volume",
+  },
+  format: {
+    doi: doi => htl.html`<a href=https://doi.org/${doi} target=_blank>${doi}</a>`,
+    title: title => htl.html`${title}`,
+    "journal.volume": volume => htl.html`<b>${volume}</b>`,
+    year: year => htl.html`${year}`,
+  },
+  width: {
+    "title": 10
+  },
+  layout: "fixed",
+})
+```
+
+:::
+
+
+```{ojs}
+import {Plot} from "@mkfreeman/plot-tooltip"
+papers = FileAttachment("data/all_papers.csv").csv({ typed: true })
+
+topic_names = Array.from(new Set(papers.map(d => d["embedding.topic_name"])))
+
+filtered = papers.filter(function(p) {
+  return visible_topics.includes(p["embedding.topic_name"]);
+})
+```
+
+:::{.callout-note}
+This represents a two-dimensional embedding of all the group's publications, clustered in topics. Publication abstracts are lemmatized and clustered using [BERTopic](https://github.com/MaartenGr/BERTopic) with a UMAP dimensionality reduction.
+:::

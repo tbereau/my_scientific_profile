@@ -1,4 +1,14 @@
+import logging
+
 from my_scientific_profile.papers.papers import Paper
+
+logger = logging.getLogger(__name__)
+
+
+def save_quarto_paper_page_to_file(paper: Paper, filename: str) -> None:
+    logger.info(f"saving quarto author page for {paper.title} to {filename}")
+    with open(filename, "w") as stream:
+        stream.write(generate_quarto_paper_page(paper))
 
 
 def generate_quarto_paper_page(paper: Paper) -> str:

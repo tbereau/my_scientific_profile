@@ -6,7 +6,12 @@ from yaml import YAMLObject
 
 from my_scientific_profile.utils.utils import ROOT_DIR
 
-__all__ = ["CONFIG_PATH", "get_author_configs", "find_author_in_config"]
+__all__ = [
+    "CONFIG_PATH",
+    "get_author_configs",
+    "find_author_in_config",
+    "get_authors_with_categories",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -51,3 +56,11 @@ def get_abstract_from_config(doi: str) -> str:
     if len(papers) > 0:
         return papers[0]["abstract"]
     return ""
+
+
+def get_authors_with_categories() -> list[dict]:
+    authors = []
+    for author in get_author_configs():
+        if author.get("categories"):
+            authors.append(author)
+    return authors

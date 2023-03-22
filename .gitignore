@@ -112,3 +112,10 @@ notebooks/indexdir/
 notebooks/test_pymupdf/
 
 .DS_Store
+
+quarto_website/.quarto
+quarto_website/_site
+quarto_website/team/
+quarto_website/papers/
+quarto_website/data/
+

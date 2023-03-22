@@ -1,0 +1,11 @@
+---
+title: "Team"
+listing:
+  contents: team
+  categories: unnumbered
+  type: default
+  fields: [image, title, categories, status]
+  sort:
+    - title
+---
+

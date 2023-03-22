@@ -1,0 +1,13 @@
+---
+title: "Papers"
+listing:
+  contents: papers
+  type: table
+  date-format: iso
+  filter-ui: [title, authors, description, year]
+  fields: [title, authors, description, date]
+  sort:
+    - "date desc"
+    - "title desc"
+---
+

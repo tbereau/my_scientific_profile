@@ -1,0 +1,20 @@
+---
+title: "About"
+---
+
+::: {.content-block}
+
+Like some of our research, much of this website is data driven. Publication information is fetched using various APIs:
+
+- General info: [Orcid](https://orcid.org)
+- General info: [CrossRef](https://www.crossref.org)
+- General info, TL;DR: [Semantic Scholar](https://www.semanticscholar.org)
+- Attention metrics: [Altmetrics](https://www.altmetric.com)
+- Open-access info: [Unpaywall](https://unpaywall.org)
+- BibTeX references: [doi2bib](https://www.doi2bib.org)
+
+The map (see [Contact](/contact.html)) was generated from the [prettymapp](https://github.com/chrieke/prettymapp) webapp.
+
+The backend was written in Python, while the frontend relies on [Quarto](https://quarto.org).
+
+:::
