@@ -11,7 +11,7 @@ from my_scientific_profile.web_quarto.authors import save_quarto_author_page_to_
 from my_scientific_profile.web_quarto.papers import save_quarto_paper_page_to_file
 
 path = Path(ROOT_DIR).parent
-team_path = path.joinpath("quarto_website").joinpath("team")
+team_path = path.joinpath("quarto_website").joinpath("group")
 existing_files = os.listdir(team_path)
 
 for file_name in existing_files:

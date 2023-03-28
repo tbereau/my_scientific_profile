@@ -1,7 +1,7 @@
 ---
-title: "Team"
+title: "Group"
 listing:
-  contents: team
+  contents: group
   categories: unnumbered
   type: default
   fields: [image, title, categories, status]

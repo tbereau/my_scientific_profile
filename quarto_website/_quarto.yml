@@ -1,34 +1,57 @@
 project:
-  type: website
-  output-dir: _site
+    type: website
+    output-dir: _site
 
 website:
-  title: "Bereau group"
-  navbar:
-    background: light
-    left:
-      - href: index.qmd
-        text: Home
-      - research_landscape.qmd
-      - papers.qmd
-      - team.qmd
-      - about.qmd
-      - contact.qmd
+    title: "Tristan Bereau"
+    google-analytics:
+        tracking-id: "G-L497XDKR0R"
+        storage: none
+        anonymize-ip: true
+    search:
+        type: overlay
+        location: navbar
+    navbar:
+        background: light
+        left:
+            -   href: index.qmd
+                text: Home
+            -   text: Research
+                menu:
+                    -   text: Landscape
+                        icon: geo-alt
+                        href: research_landscape.qmd
+                    -   text: Publications
+                        icon: file-earmark-text
+                        href: papers.qmd
+                    -   text: Notes
+                        icon: journal-text
+                        href: notes.qmd
+            - group.qmd
+            - about.qmd
+            - contact.qmd
+        right:
+            -   icon: twitter
+                href: https://twitter.com/tristanbereau
+    page-footer:
+        center: |
+            Computational Soft Matter at the [Institute for Theoretical Physics](https://www.thphys.uni-heidelberg.de),
+            [Heidelberg University](https://www.uni-heidelberg.de/en)
 
 format:
-  html:
-    toc: true
-    theme:
-      light:
-        - cosmo
-        - theme.scss
-    code-copy: true
-    code-overflow: wrap
-    css: styles.css
-    include-after-body: js.html
-    grid:
-      sidebar-width: 250px
-      body-width: 900px
-      margin-width: 300px
+    html:
+        toc: true
+        theme:
+            light:
+                - cosmo
+                - theme.scss
+        code-copy: true
+        code-overflow: wrap
+        css: styles.css
+        include-after-body: js.html
+        grid:
+            sidebar-width: 250px
+            body-width: 900px
+            margin-width: 300px
 
 

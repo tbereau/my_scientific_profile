@@ -1,0 +1,13 @@
+---
+title: "Research notes"
+listing:
+  contents: notes
+  type: table
+  date-format: iso
+  filter-ui: [title, description, year]
+  fields: [title, description, date]
+  sort:
+    - "date desc"
+    - "title desc"
+---
+

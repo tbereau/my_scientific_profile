@@ -13,7 +13,7 @@ def save_quarto_author_page_to_file(author: Author, filename: str) -> None:
 
 
 def generate_quarto_author_page(author: Author) -> str:
-    author_info = find_author_in_config(author.given, author.family)
+    author_info = find_author_in_config(author.given, author.family, author.orcid)
     icon_links = get_icon_links_for_author(author_info)
     image = f"../static/{author_info.get('image') or 'cgmol.jpg'}"
     categories = get_author_categories(author)

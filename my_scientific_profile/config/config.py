@@ -41,7 +41,7 @@ def find_author_in_config(
 ) -> YAMLObject | dict:
     author_configs = get_author_configs()
     for author in author_configs:
-        if orcid is not None:
+        if orcid is not None and author.get("orcid"):
             if author["orcid"] == orcid:
                 return author
         else:

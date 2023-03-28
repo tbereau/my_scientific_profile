@@ -13,15 +13,24 @@ image: /static/membrane.jpg
 
 # Welcome!
 
-### Computational Soft Matter at the [Institute for Theoretical Physics](https://www.thphys.uni-heidelberg.de) of the [University of Heidelberg](https://www.uni-heidelberg.de/en)
+### Computational Soft Matter at the [Institute for Theoretical Physics](https://www.thphys.uni-heidelberg.de), [Heidelberg University](https://www.uni-heidelberg.de/en)
+
+Our research focuses on the development and application of multiscale molecular simulations methods for
+soft-condensed-matter materials. Current activities revolve around the development of computational
+high-throughput screening methods from molecular dynamics, aimed at the generation of large databases of
+thermodynamic properties.
+Interfaces with recent machine-learning architectures help streamline and accelerate the process.
+Further activities aim at improving dynamical properties of coarse-grained models.
 
 - Multiscale modeling of soft and biomolecular materials
 - Impact of coarse-graining on chemical-space exploration
 - Physics-infused machine learning for molecular systems
 
+
+
 ::: {.hero-buttons}
 [Research landscape](research_landscape.html){.btn-action-primary .btn-action .btn .btn-success .btn-lg role="button"}
-[Team](team.html){#btn-guide .btn-action .btn .btn-info .btn-lg role="button"}
+[Group](group.html){#btn-guide .btn-action .btn .btn-info .btn-lg role="button"}
 :::
 
 :::
@@ -31,3 +40,4 @@ image: /static/membrane.jpg
 :::
 
 :::
+

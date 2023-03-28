@@ -9,7 +9,7 @@
     categories:
         - current
         - group leader
-    summary: "Tristan Bereau heads the group. Besides from science and data, Tristan enjoys spending time outside and playing jazz piano."
+    summary: "Tristan heads the group. Besides from science and data, he enjoys spending time outside and playing jazz piano."
     experience:
         - "Professor @ Uni. Heidelberg | 2023 -"
         - "Quant @ IMC Trading | 2022"
@@ -87,6 +87,7 @@
     categories:
         - alumnus
         - postdoc
+    image: "banerjee.png"
 -
     given: "Marius"
     family: "Bause"
