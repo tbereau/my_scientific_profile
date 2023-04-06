@@ -4,7 +4,7 @@ title: "About"
 
 ::: {.content-block}
 
-Like some of our research, much of this website is data driven. Publication information is fetched using various APIs:
+Publication information is fetched using various APIs:
 
 - General info: [Orcid](https://orcid.org)
 - General info: [CrossRef](https://www.crossref.org)

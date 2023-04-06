@@ -73,6 +73,23 @@ class Paper(object, metaclass=PaperSingleton):
     def get_existing_paper(cls, doi: str) -> "Paper":
         return PaperSingleton._instances.get(doi)
 
+    def to_yaml(self) -> str:
+        authors = ""
+        authors_list = [a.full_name for a in self.authors]
+        for author in authors_list[:-1]:
+            authors += author + ", "
+        authors += authors_list[-1]
+        return f"""- authors: {authors}
+  title: "{self.title}"
+  journal: "{self.journal.abbreviation}"
+  volume: {self.journal.volume or ""}
+  year: {self.year}
+  open_access_flag: {self.open_access.is_open_access}
+  open_access_url: {self.open_access.landing_page_url or ""}
+  open_access_pdf: {self.open_access.pdf_url or ""}
+  doi: "{self.doi}"
+"""
+
 
 @lru_cache
 def fetch_paper_info(doi: str) -> Paper:

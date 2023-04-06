@@ -1,6 +1,8 @@
 project:
     type: website
     output-dir: _site
+    resources:
+        - "files/*"
 
 website:
     title: "Tristan Bereau"
@@ -33,10 +35,17 @@ website:
         right:
             -   icon: twitter
                 href: https://twitter.com/tristanbereau
+            -   icon: google
+                href: https://scholar.google.com/citations?user=9cYdrBUAAAAJ
+            -   icon: file-earmark-person
+                href: /files/bereau_cv.pdf
     page-footer:
-        center: |
-            Computational Soft Matter at the [Institute for Theoretical Physics](https://www.thphys.uni-heidelberg.de),
-            [Heidelberg University](https://www.uni-heidelberg.de/en)
+        right: |
+            Tristan Bereau, [Institute for Theoretical Physics](https://www.thphys.uni-heidelberg.de),
+            [Heidelberg University](https://www.uni-heidelberg.de/en),
+            Philosophenweg 19,
+            69120 Heidelberg,
+            Germany
 
 format:
     html:

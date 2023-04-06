@@ -67,8 +67,8 @@ release = my_scientific_profile.__version__
 # Usually you set "language" from the command line for these cases.
 language = None
 
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
+# List of patterns, relative to source directory, that match www and
+# directories to ignore when looking for source www.
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
@@ -92,8 +92,8 @@ html_theme = "alabaster"
 #
 # html_theme_options = {}
 
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
+# Add any paths that contain custom static www (such as style sheets) here,
+# relative to this directory. They are copied after the builtin static www,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
@@ -121,7 +121,7 @@ latex_elements = {
     # 'figure_align': 'htbp',
 }
 
-# Grouping the document tree into LaTeX files. List of tuples
+# Grouping the document tree into LaTeX www. List of tuples
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
@@ -152,7 +152,7 @@ man_pages = [
 
 # -- Options for Texinfo output ----------------------------------------
 
-# Grouping the document tree into Texinfo files. List of tuples
+# Grouping the document tree into Texinfo www. List of tuples
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
