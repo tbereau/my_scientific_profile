@@ -6,10 +6,6 @@ project:
 
 website:
     title: "Tristan Bereau"
-    google-analytics:
-        tracking-id: "G-L497XDKR0R"
-        storage: none
-        anonymize-ip: true
     search:
         type: overlay
         location: navbar
@@ -62,5 +58,8 @@ format:
             sidebar-width: 250px
             body-width: 900px
             margin-width: 300px
+        include-in-header:
+            -   file: header_goatcounter.html
 
-
+execute:
+    freeze: auto
