@@ -38,10 +38,7 @@ website:
     page-footer:
         right: |
             Tristan Bereau, [Institute for Theoretical Physics](https://www.thphys.uni-heidelberg.de),
-            [Heidelberg University](https://www.uni-heidelberg.de/en),
-            Philosophenweg 19,
-            69120 Heidelberg,
-            Germany
+            [Heidelberg University](https://www.uni-heidelberg.de/en)
 
 format:
     html:
