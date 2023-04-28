@@ -1,0 +1,4 @@
+- source: project
+  netlify:
+    - id: 155c8f22-4d16-4d7f-9e2a-66aa42bd0773
+      url: 'https://peaceful-custard-3e807b.netlify.app'
