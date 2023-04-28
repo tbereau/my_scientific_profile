@@ -26,9 +26,3 @@ repos:
         rev: 6.0.0
         hooks:
             -   id: flake8
-
-    -   repo: https://github.com/kynan/nbstripout
-        rev: 0.3.9
-        hooks:
-            -   id: nbstripout
-
