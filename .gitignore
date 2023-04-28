@@ -117,7 +117,3 @@ node_modules/
 
 quarto_website/.quarto
 quarto_website/_site
-quarto_website/group/
-quarto_website/papers/
-quarto_website/data/
-
