@@ -113,6 +113,8 @@ notebooks/test_pymupdf/
 
 .DS_Store
 
+node_modules/
+
 quarto_website/.quarto
 quarto_website/_site
 quarto_website/group/
