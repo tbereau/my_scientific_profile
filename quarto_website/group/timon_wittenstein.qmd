@@ -1,0 +1,135 @@
+
+---
+title: "Timon Wittenstein"
+format:
+  html:
+    echo: false
+    keep-hidden: true
+categories:
+  - alumnus
+  - master student
+image: ../static/cgmol.jpg
+about:
+  id: hero-heading
+  template: solana
+  image: ../static/cgmol.jpg
+
+---
+
+
+:::{#hero-heading}
+
+
+
+
+
+
+:::
+
+## Publications
+
+```{ojs}
+import {Plot} from "@mkfreeman/plot-tooltip"
+import {map} from "@martien/ramda"
+
+papers_r = FileAttachment("../data/all_papers.json").json()
+n_columns = Object.entries(papers_r["doi"]).length
+index_array = Array.from({length: n_columns}, (_, i) => i)
+papers = map(i => map(x => x[i], papers_r), index_array)
+
+my_papers = papers.filter(function(p) {
+    return p.authors.map(a => a.full_name).includes("Timon Wittenstein")
+})
+
+Inputs.table(my_papers, {
+    columns: [
+    "doi",
+    "title",
+    "journal.name",
+    "journal.volume",
+    "journal.issue",
+    "journal.pages",
+    "year",
+    "embedding.topic_name"
+  ],
+  header: {
+    "journal.name": "journal",
+    "journal.volume": "volume",
+    "journal.issue": "issue",
+    "journal.pages": "pages",
+    "embedding.topic_name": "topic",
+  },
+  format: {
+    doi: doi => htl.html`<a href=https://doi.org/${doi} target=_blank>${doi}</a>`,
+    title: title => htl.html`${title}`,
+    "journal.volume": volume => htl.html`<b>${volume}</b>`,
+    year: year => htl.html`${year}`,
+  },
+  width: {
+    "title": 10
+  },
+  layout: "auto",
+})
+```
+
+## Collaborators
+
+```{ojs}
+collaborators = Array.from(
+    new Set(
+        my_papers.flatMap(p => p.authors)
+        .filter(function(a) {
+            return a.full_name != "Timon Wittenstein"
+            }
+        )
+    )
+)
+
+list_of_collaborators = (
+    Array.from(d3.group(collaborators, a => a.full_name).keys())
+)
+dict_of_collaborators = (
+    collaborators.reduce(
+        (acc, x) => (
+            {...acc, [x.full_name]:
+                {
+                    "given": x.given,
+                    "family": x.family,
+                    "affiliation_city": x.affiliation.city,
+                    "affiliation_name": x.affiliation.name,
+                    "affiliation_country": x.affiliation.country,
+                    "orcid": x.orcid,
+                }
+            }
+        ),
+        {}
+    )
+)
+
+Inputs.table(
+    list_of_collaborators.map(c => dict_of_collaborators[c]),
+    {
+        columns: [
+            "given",
+            "family",
+            "orcid",
+            "affiliation_country",
+            "affiliation_city",
+            "affiliation_name",
+        ],
+        header: {
+            "affiliation_country": "country",
+            "affiliation_city": "city",
+            "affiliation_name": "affiliation",
+        },
+        multiple: false,
+        sort: "family",
+        layout: "fixed",
+        format: {
+            orcid: orcid =>
+            htl.html`<a href=https://orcid.org/${orcid} target=_blank>${orcid}</a>`
+        },
+    }
+)
+```
+
