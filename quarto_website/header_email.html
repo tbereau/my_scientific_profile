@@ -1,0 +1,13 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var user = 'bereau';
+        var domain = 'thphys.uni-heidelberg.de';
+        var email = user + '@' + domain;
+        var emailLink = '<a href="mailto:' + email + '">' + email + '</a>';
+
+        var emailPlaceholder = document.getElementById('email-placeholder');
+        if (emailPlaceholder) {
+            emailPlaceholder.innerHTML = emailLink;
+        }
+    });
+</script>

@@ -1,7 +1,16 @@
 ---
 title: "Contact"
+format:
+    html:
+        include-in-header:
+            -   file: header_email.html
 ---
 
+{{< fa phone >}} +49-6221-54-9448
+
+{{< fa at >}} <span id="email-placeholder"></span>
+
+{{< fa envelope >}}
 ```
 Institute for Theoretical Physics
 Heidelberg University
