@@ -1,0 +1,116 @@
+---
+title: "Generative learning and non-equilibrium statistical mechanics"
+format:
+  html:
+    echo: false
+    keep-hidden: true
+    include-in-header:
+            -   file: ../header_email.html
+categories:
+  - postdoc
+  - active
+image: ../static/pos_st_diffusion.png
+about:
+  id: hero-heading
+  template: solana
+  image: ../static/pos_st_diffusion.png
+---
+
+
+:::{#hero-heading}
+
+
+:::
+
+A fully funded postdoctoral position is available in the group of Prof. Tristan Bereau ([tristanbereau.com](https://tristanbereau.com)) at the Institute for Theoretical Physics, Heidelberg University. We invite applications for a position at the intersection of generative deep learning and non-equilibrium statistical mechanics. The initial appointment will be for two years, with a possible extension of one year. The starting date is negotiable, preferably Fall 2023. The position is funded according to the German public service scale (TV-L E13) commensurate with experience. It includes funds for travel, visits, and publications. Both CPU and GPU computing resources are available.
+
+
+**About the Role**
+
+The successful candidate will focus on employing and advancing deep diffusion probabilistic machine learning techniques to understand and predict the behavior of molecular systems. Connections to non-equilibrium statistical mechanics will play a central role.
+
+Relevant group publications around generative learning, non-equilibrium statistical mechanics:
+
+```{ojs}
+import {Plot} from "@mkfreeman/plot-tooltip"
+import {map} from "@martien/ramda"
+
+papers_r = FileAttachment("../data/all_papers.json").json()
+n_columns = Object.entries(papers_r["doi"]).length
+index_array = Array.from({length: n_columns}, (_, i) => i)
+papers = map(i => map(x => x[i], papers_r), index_array)
+
+function displayTable(papers_) {
+    return Inputs.table(papers_, {
+        columns: [
+        "doi",
+        "title",
+        "journal.name",
+        "journal.volume",
+        "year",
+      ],
+      header: {
+        "journal.name": "journal",
+        "journal.volume": "volume",
+      },
+      format: {
+        doi: doi => htl.html`<a href=https://doi.org/${doi} target=_blank>${doi}</a>`,
+        title: title => htl.html`${title}`,
+        "journal.volume": volume => htl.html`<b>${volume}</b>`,
+        year: year => htl.html`${year}`,
+      },
+      width: {
+        "title": 10
+      },
+      layout: "auto",
+    })
+}
+
+displayTable(
+    papers.filter(function(p) {
+        return (
+            p.authors.map(a => a.full_name).includes("Marc Stieffenhofer")
+            || p.authors.map(a => a.full_name).includes("Marius Bause")
+            || p.authors.map(a => a.full_name).includes("Kirill Shmilovich")
+        )
+    })
+)
+```
+
+**About You**
+
+The ideal candidate will possess:
+
+1. A Ph.D. in Physics, Computer Science, Applied Mathematics, or a related field.
+2. Ideally both, but at least either of:
+    1. Strong theoretical background in statistical mechanics, particularly in non-equilibrium systems.
+    3. Proficiency in machine learning, including experience with deep learning frameworks such as TensorFlow or PyTorch.
+4. Excellent programming skills in Python or a similar high-level language.
+5. Evidence of high-quality scientific publications.
+6. Excellent communication skills in English, both written and oral.
+
+**Why Join Us**
+
+As the oldest university in Germany, Heidelberg University is a world-leading institution and provides an internationally recognised and collaborative environment. Joining Heidelberg University's Institute for Theoretical Physics will give you the opportunity to:
+
+1. Work on exciting topics at the intersection of statistical mechanics and machine learning.
+1. Access state-of-the-art facilities and resources.
+1. Engage with a vibrant intellectual community in Heidelberg, including [Simplaix](https://www.h-its.org/research/simplaix/), the [Interdisciplinary Center for Scientific Computing (IWR)](https://typo.iwr.uni-heidelberg.de/home), the [cluster of excellence STRUCTURES](https://www.structures.uni-heidelberg.de/index.php), [ELLIS](https://www.ellis-life-heidelberg.eu), the [Heidelberg Institute for Theoretical Studies](https://www.h-its.org), and [Scientific Machine Learning](https://www.mlai.uni-heidelberg.de/en).
+1. Live in the beautiful and historic city of Heidelberg.
+
+We welcome applications from all individuals, regardless of their gender, ethnicity, disability, or any other protected characteristic. We encourage diversity and foster a culture of inclusion where everyone feels welcome.
+
+**Application Process**
+
+Interested candidates should submit the following via email as a single PDF:
+
+1. Curriculum Vitae;
+1. List of publications;
+1. Contact information of two supervisors/collaborators to request recommendation letters;
+1. Brief summary of previous research projects (one or two pages).
+
+Applications submitted by July 31, 2023 will receive full consideration.
+
+For more information or to apply, please contact Prof. Tristan Bereau at <span id="email-placeholder"></span>
+
+

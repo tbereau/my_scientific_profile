@@ -5,6 +5,8 @@ project:
         - "files/*"
 
 website:
+    twitter-card: true
+    site-url: https://tristanbereau.com
     title: "Tristan Bereau"
     search:
         type: overlay
@@ -19,13 +21,23 @@ website:
                     -   text: Landscape
                         icon: geo-alt
                         href: research_landscape.qmd
+                    -   text: Topics
+                        icon: lightbulb
+                        href: research_topics.qmd
                     -   text: Publications
                         icon: file-earmark-text
                         href: papers.qmd
                     -   text: Notes
                         icon: journal-text
                         href: notes.qmd
-            - group.qmd
+            -   text: Group
+                menu:
+                    -   text: Members
+                        icon: file-person
+                        href: group_members.qmd
+                    -   text: Positions
+                        icon: person-plus
+                        href: positions.qmd
             - about.qmd
             - contact.qmd
         right:

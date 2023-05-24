@@ -98,4 +98,6 @@ filtered = papers.filter(function(p) {
 
 :::{.callout-note}
 This represents a two-dimensional embedding of all the group's publications, clustered in topics. Publication abstracts are lemmatized and clustered using [BERTopic](https://github.com/MaartenGr/BERTopic) with a UMAP dimensionality reduction.
+
+For a more detailed description of our research, see [Topics](/research_topics.html).
 :::

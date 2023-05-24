@@ -1,0 +1,19 @@
+---
+title: "Open positions"
+listing:
+  contents: positions
+  categories: unnumbered
+  type: default
+  fields: [image, title, categories, status]
+  sort:
+    - title
+---
+
+Current students of Heidelberg University are always welcome to reach out to discuss
+projects for their **Master thesis**. Topics include (but are not limited to)
+multiscale molecular simulations, machine learning, and statistical mechanics.
+Please contact me directly
+([Contact](contact.html)).
+
+## Announcements
+

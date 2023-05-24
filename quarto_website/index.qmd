@@ -26,7 +26,7 @@ postdocs, and collaborators I've had the chance to work with.
 
 ::: {.hero-buttons}
 [Research landscape](research_landscape.html){.btn-action-primary .btn-action .btn .btn-success .btn-lg role="button"}
-[Group](group.html){#btn-guide .btn-action .btn .btn-info .btn-lg role="button"}
+[Open positions](positions.html){#btn-guide .btn-action .btn .btn-info .btn-lg role="button"}
 :::
 
 :::

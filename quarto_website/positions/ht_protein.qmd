@@ -1,0 +1,114 @@
+---
+title: "Multiscale and high-throughput exploration of protein-ligand binding"
+format:
+  html:
+    echo: false
+    keep-hidden: true
+    include-in-header:
+            -   file: ../header_email.html
+categories:
+  - phd student
+  - active
+image: ../static/pos_ht_protein.png
+about:
+  id: hero-heading
+  template: solana
+  image: ../static/pos_ht_protein.png
+---
+
+
+:::{#hero-heading}
+
+
+:::
+
+A fully funded PhD position is available in the group of Prof. Tristan Bereau ([tristanbereau.com](https://tristanbereau.com)) at the Institute for Theoretical Physics, Heidelberg University. We invite applications for a position at the intersection of multiscale modeling, high-throughput molecular dynamics simulations, and machine learning to efficiently explore the chemical space of thermodynamic properties. The project will focus on protein-ligand binding, estimating ligand-binding stability for large subsets of chemical space. The starting date is negotiable, preferably Fall 2023. The position includes funds for travel, visits, and publications. Both CPU and GPU computing resources are available.
+
+
+**About the Role**
+
+The successful candidate will focus on the development of methodologies and applications to explore the chemical space of thermodynamic properties. Our approach uses multiscale modeling, especially transferable coarse-grained models, to efficiently reduce and navigate chemical space. The project will focus on protein-ligand binding, with ample methodological development to help solve key challenges along the way.
+
+Relevant group publications around multiscale chemical-space exploration:
+
+```{ojs}
+import {Plot} from "@mkfreeman/plot-tooltip"
+import {map} from "@martien/ramda"
+
+papers_r = FileAttachment("../data/all_papers.json").json()
+n_columns = Object.entries(papers_r["doi"]).length
+index_array = Array.from({length: n_columns}, (_, i) => i)
+papers = map(i => map(x => x[i], papers_r), index_array)
+
+function displayTable(papers_) {
+    return Inputs.table(papers_, {
+        columns: [
+        "doi",
+        "title",
+        "journal.name",
+        "journal.volume",
+        "year",
+      ],
+      header: {
+        "journal.name": "journal",
+        "journal.volume": "volume",
+      },
+      format: {
+        doi: doi => htl.html`<a href=https://doi.org/${doi} target=_blank>${doi}</a>`,
+        title: title => htl.html`${title}`,
+        "journal.volume": volume => htl.html`<b>${volume}</b>`,
+        year: year => htl.html`${year}`,
+      },
+      width: {
+        "title": 10
+      },
+      layout: "auto",
+    })
+}
+
+displayTable(
+    papers.filter(function(p) {
+        return (
+            p.authors.map(a => a.full_name).includes("Bernadette Mohr")
+            || p.authors.map(a => a.full_name).includes("Roberto Menichetti")
+        )
+    })
+)
+```
+
+**About You**
+
+The ideal candidate will possess:
+
+1. A Master degree or a four or five-year Bachelor degree in Physics, Chemistry, Computer Science or related fields.
+1. Motivation to tackle challenging scientific projects, Openness to trying out new ideas and concepts, Strong determination
+1. Teamwork, strong communication skills, and inclusive culture
+1. English proficiency, both written and oral
+1. Programming and machine learning experience
+
+**Doing a PhD at Heidelberg University**
+
+As the oldest university in Germany, Heidelberg University is a world-leading institution and provides an internationally recognised and collaborative environment. Joining Heidelberg University's Institute for Theoretical Physics will give you the opportunity to:
+
+1. Work on exciting topics at the intersection of molecular modeling and machine learning.
+1. Access state-of-the-art facilities and resources.
+1. Engage with a vibrant intellectual community in Heidelberg, including [Simplaix](https://www.h-its.org/research/simplaix/), the [Interdisciplinary Center for Scientific Computing (IWR)](https://typo.iwr.uni-heidelberg.de/home), the [cluster of excellence STRUCTURES](https://www.structures.uni-heidelberg.de/index.php), [ELLIS](https://www.ellis-life-heidelberg.eu), the [Heidelberg Institute for Theoretical Studies](https://www.h-its.org), and [Scientific Machine Learning](https://www.mlai.uni-heidelberg.de/en).
+1. Live in the beautiful and historic city of Heidelberg.
+
+We welcome applications from all individuals, regardless of their gender, ethnicity, disability, or any other protected characteristic. We encourage diversity and foster a culture of inclusion where everyone feels welcome.
+
+**Application procedure**
+
+Interested candidates should submit the following via email as a single PDF:
+
+1. Curriculum Vitae;
+1. Contact information of two supervisors/collaborators to request recommendation letters;
+1. Brief summary of past research projects (one or two pages).
+
+Applications submitted by July 31, 2023 will receive full consideration.
+
+PhD positions require acceptance to the [Heidelberg Graduate School for Physics](https://hgsfp.uni-heidelberg.de) doctoral program of the Physics department. The webpage contains a more detailed list of requirements for enrollment in the doctoral program.
+
+For more information or to apply, please contact Prof. Tristan Bereau at <span id="email-placeholder"></span>
+
+

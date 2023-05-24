@@ -4,11 +4,15 @@ format:
     html:
         include-in-header:
             -   file: header_email.html
+        keep-hidden: true
+        echo: false
 ---
 
 {{< fa phone >}} +49-6221-54-9448
 
 {{< fa at >}} <span id="email-placeholder"></span>
+
+{{< fa door-open >}} Philo 19; Room: 206
 
 {{< fa envelope >}}
 ```
@@ -19,4 +23,17 @@ Philosophenweg 19
 Germany
 ```
 
-![](static/hd_map.png)
+```{python}
+#| column: screen
+
+from ipyleaflet import Map, Marker, basemaps, basemap_to_tiles
+
+center = (49.415, 8.698)
+m = Map(
+  basemap=basemap_to_tiles(basemaps.OpenStreetMap.Mapnik),
+  center=center,
+  zoom=15
+)
+m.add_layer(Marker(location=center))
+m
+```

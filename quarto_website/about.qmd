@@ -13,8 +13,6 @@ Publication information is fetched using various APIs:
 - Open-access info: [Unpaywall](https://unpaywall.org)
 - BibTeX references: [doi2bib](https://www.doi2bib.org)
 
-The map (see [Contact](/contact.html)) was generated from the [prettymapp](https://github.com/chrieke/prettymapp) webapp.
-
-The backend was written in Python, while the frontend relies on [Quarto](https://quarto.org).
+The backend was written in Python. The frontend uses [Quarto](https://quarto.org).
 
 :::

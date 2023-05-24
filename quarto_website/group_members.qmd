@@ -1,0 +1,11 @@
+---
+title: "Group members"
+listing:
+  contents: group
+  categories: unnumbered
+  type: default
+  fields: [image, title, categories, status]
+  sort:
+    - title
+---
+
