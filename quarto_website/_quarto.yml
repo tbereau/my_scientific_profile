@@ -7,7 +7,7 @@ project:
 website:
     twitter-card:
         creator: "@tbereau"
-        image: "static/membrane.jpg"
+        image: "https://tristanbereau.com/static/membrane.jpg"
     site-url: https://tristanbereau.com
     title: "Tristan Bereau"
     search:
