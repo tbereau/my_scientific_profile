@@ -5,7 +5,9 @@ project:
         - "files/*"
 
 website:
-    twitter-card: true
+    twitter-card:
+        creator: "@tbereau"
+        image: "static/membrane.jpg"
     site-url: https://tristanbereau.com
     title: "Tristan Bereau"
     search:
