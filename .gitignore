@@ -117,3 +117,5 @@ node_modules/
 
 quarto_website/.quarto
 quarto_website/_site
+
+/.luarc.json

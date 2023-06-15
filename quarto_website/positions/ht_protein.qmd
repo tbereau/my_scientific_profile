@@ -80,11 +80,11 @@ displayTable(
 
 The ideal candidate will possess:
 
-1. A Master degree or a four or five-year Bachelor degree in Physics, Chemistry, Computer Science or related fields.
-1. Motivation to tackle challenging scientific projects, Openness to trying out new ideas and concepts, Strong determination
-1. Teamwork, strong communication skills, and inclusive culture
-1. English proficiency, both written and oral
-1. Programming and machine learning experience
+1. A Master degree or a four or five-year Bachelor degree in Physics or related field. Exposure to the core Phyics courses is required for the PhD degree.
+2. Motivation to tackle challenging scientific projects, Openness to trying out new ideas and concepts, Strong determination
+3. Teamwork, strong communication skills, and inclusive culture
+4. English proficiency, both written and oral
+5. Programming and machine learning experience
 
 **Doing a PhD at Heidelberg University**
 
