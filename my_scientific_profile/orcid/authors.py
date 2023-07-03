@@ -1,9 +1,9 @@
 import logging
 import re
 from functools import lru_cache
+from typing import Optional
 
 from humps import dekebabize
-from pydantic import parse_obj_as
 from pydantic.dataclasses import dataclass
 
 from my_scientific_profile.orcid.employments import (
@@ -21,10 +21,10 @@ logger = logging.getLogger(__name__)
 class OrcidAuthor:
     given_names: str
     family_names: str
-    orcid_id: str = None
-    credit_name: str = None
-    other_name: list[str] = None
-    email: list[str] = None
+    orcid_id: Optional[str] = None
+    credit_name: Optional[str] = None
+    other_name: Optional[list[str]] = None
+    email: Optional[list[str]] = None
 
     @property
     def employment(self) -> OrcidEmployment:
@@ -49,7 +49,7 @@ def search_for_author_by_name(given_name: str, family_name: str) -> list[OrcidAu
     logger.info(f"Entries received: {num_response}")
     return (
         [
-            parse_obj_as(OrcidAuthor, dekebabize(response))
+            OrcidAuthor(**dekebabize(response))
             for response in responses["expanded_result"]
         ]
         if num_response > 0
@@ -66,7 +66,7 @@ def search_for_author_by_orcid_id(orcid_id: str) -> list[OrcidAuthor]:
     logger.info(f"Entries received: {num_response}")
     return (
         [
-            parse_obj_as(OrcidAuthor, dekebabize(response))
+            OrcidAuthor(**dekebabize(response))
             for response in responses["expanded_result"]
         ]
         if num_response == 1

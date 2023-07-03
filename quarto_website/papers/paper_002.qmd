@@ -2,7 +2,7 @@
 ---
 title: "Interplay between Secondary and Tertiary Structure Formation in Protein Folding Cooperativity"
 doi: "10.1021/ja105206w"
-date: "2010-09-07 16:34:41"
+date: "2010-09-07 20:34:41"
 date-format: iso
 authors: "Bereau, Bachmann, Deserno"
 description: "_J. Am. Chem. Soc._ **132** (2010)"
@@ -92,8 +92,8 @@ It is found that the interplay between secondary structure and the loss of non-n
         Webpage
     </a>
     <a class="btn btn-outline-primary
-      disabled"
-        href="None" role="button">
+      "
+        href="https://pubs.acs.org/doi/pdf/10.1021/ja105206w" role="button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-file-pdf" viewBox="0 0 16 16">
     <path

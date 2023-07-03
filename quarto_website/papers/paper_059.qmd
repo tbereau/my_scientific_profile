@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-The plasma membrane is the interface between cells and exterior media. Although its existence has been known for a long time, organization of its constituent lipids remain a challenge. Recently, we have proposed that lipid populations may be controlled by chemical potentials of different lipid species, resulting in semigrand canonical thermodynamic ensembles. However, the currently available molecular dynamics software packages do not facilitate the control of chemical potentials at the molecular level. Here, we propose a variation of existing algorithms that efficiently characterizes and controls the chemical nature of each lipid. Additionally, we allow coupling with collective variables and show that it can be used to dynamically create asymmetric membranes. This algorithm is openly available as a plugin for the HOOMD-Blue molecular dynamics engine.
+None
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &

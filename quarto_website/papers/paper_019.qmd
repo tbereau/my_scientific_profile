@@ -57,7 +57,6 @@ This work proposes a method that reweights the microscopic transitions of the sy
 	publisher = {{AIP} Publishing},
 	volume = {144},
 	number = {5},
-	pages = {051102},
 	author = {Joseph F. Rudzinski and Kurt Kremer and Tristan Bereau},
 	title = {Communication: Consistent interpretation of molecular simulation kinetics using Markov state models biased with external information},
 	journal = {The Journal of Chemical Physics}

@@ -2,7 +2,7 @@
 ---
 title: "Solvation of fluoro-acetonitrile in water by 2D-IR spectroscopy: A combined experimental-computational study"
 doi: "10.1063/1.4916630"
-date: "2015-04-07 13:00:19"
+date: "2015-04-07 17:00:19"
 date-format: iso
 authors: "Cazade, Tran, Bereau, Das, Kläsi, Hamm, Meuwly"
 description: "_The Journal of Chemical Physics_ **142** (2015)"

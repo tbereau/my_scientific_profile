@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-We propose a new algorithm for solving the weighted histogram analysis method (WHAM) equations to estimate free energies out of a set of Monte Carlo (MC) or molecular dynamics (MD) simulations. The algorithm, based on free-energy differences, provides a more natural way of approaching the problem and improves convergence compared to the widely used direct iteration method. We also study how parameters (temperature, pressure, etc.) of the independent simulations should be chosen to optimize the accuracy of the set of free energies.
+None
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &

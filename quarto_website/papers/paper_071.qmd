@@ -1,12 +1,12 @@
 
 ---
-title: "Molecular dynamics trajectories for 630 coarse-grained drug-membrane permeations"
-doi: "10.1038/s41597-020-0391-0"
-date: "2020-02-13 11:03:11"
+title: "Inverse design of viral infectivity-enhancing peptide fibrils from continuous protein-vector embeddings"
+doi: "10.1039/D3BM00412K"
+date: "2023-06-15 11:01:18"
 date-format: iso
-authors: "Hoffmann, Centi, Menichetti, Bereau"
-description: "_Sci Data_ **7** (2020)"
-year: 2020
+authors: "Kaygisiz, Dutta, Rauch-Wirth, Synatschke, Münch, Bereau, Weil"
+description: "_Biomater. Sci._ **None** (2023)"
+year: 2023
 format:
   html:
     toc: false
@@ -18,7 +18,7 @@ format:
 ```{=html}
 <div class="float-end">
     <div data-badge-type='donut' class='altmetric-embed'
-    data-badge-popover='left' data-doi="10.1038/s41597-020-0391-0"></div>
+    data-badge-popover='left' data-doi="10.1039/D3BM00412K"></div>
 </div>
 <script type='text/javascript'
   src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-None
+Amyloid-like nanofibers from self-assembling peptides can promote viral gene transfer for therapeutic applications. Traditionally, new sequences are discovered either from screening large libraries or by creating derivatives of known active peptides. However, the discovery of de novo peptides, which are sequence-wise not related to any known active peptides, is limited by the difficulty to rationally predict structure-activity relationships because their activities typically have multi-scale and multi-parameter dependencies. Here, we used a small library of 163 peptides as a training set to predict de novo sequences for viral infectivity enhancement using a machine learning (ML) approach based on natural language processing. Specifically, we trained an ML model using continuous vector representations of the peptides, which were previously shown to retain relevant information embedded in the sequences. We used the trained ML model to sample the sequence space of peptides with 6 amino acids to identify promising candidates. These 6-mers were then further screened for charge and aggregation propensity. The resulting 16 new 6-mers were tested and found to be active with a 25% hit rate. Strikingly, these de novo sequences are the shortest active peptides for infectivity enhancement reported so far and show no sequence relation to the training set. Moreover, by screening the sequence space, we discovered the first hydrophobic peptide fibrils with a moderately negative surface charge that can enhance infectivity. Hence, this ML strategy is a time- and cost-efficient way for expanding the sequence space of short functional self-assembling peptides exemplified for therapeutic viral gene delivery.
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &
@@ -39,7 +39,7 @@ None
 
 ## TL;DR
 
-The present database contains trajectories from 15,120 molecular dynamics simulation trajectories using the coarse-grained Martini force field, and may serve the further identification of structure-property relationships between compound chemistry and drug permeability.
+These de novo sequences are the shortest active peptides for infectivity enhancement reported so far and show no sequence relation to the training set, and by screening the sequence space, are the first hydrophobic peptide fibrils with a moderately negative surface charge that can enhance infectivity.
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Semantic Scholar</cite>
@@ -49,17 +49,14 @@ The present database contains trajectories from 15,120 molecular dynamics simula
 ## BibTeX
 
 ```{bibtex}
-@article{Hoffmann_2020,
-	doi = {10.1038/s41597-020-0391-0},
-	url = {https://doi.org/10.1038%2Fs41597-020-0391-0},
-	year = 2020,
-	month = {feb},
-	publisher = {Springer Science and Business Media {LLC}},
-	volume = {7},
-	number = {1},
-	author = {Christian Hoffmann and Alessia Centi and Roberto Menichetti and Tristan Bereau},
-	title = {Molecular dynamics trajectories for 630 coarse-grained drug-membrane permeations},
-	journal = {Scientific Data}
+@article{Kaygisiz_2023,
+	doi = {10.1039/d3bm00412k},
+	url = {https://doi.org/10.1039%2Fd3bm00412k},
+	year = 2023,
+	publisher = {Royal Society of Chemistry ({RSC})},
+	author = {Kübra Kaygisiz and Arghya Dutta and Lena Rauch-Wirth and Christopher V. Synatschke and Jan Münch and Tristan Bereau and Tanja Weil},
+	title = {Inverse design of viral infectivity-enhancing peptide fibrils from continuous protein-vector embeddings},
+	journal = {Biomaterials Science}
 }
 ```
 ```{=html}
@@ -75,7 +72,7 @@ The present database contains trajectories from 15,120 molecular dynamics simula
 </div>
 <a class="btn btn-outline-primary
   "
-        href="https://doi.org/10.1038/s41597-020-0391-0" role="button">
+        href="https://doi.org/10.1039/d3bm00412k" role="button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-browser-chrome" viewBox="0 0 16 16">
     <path fill-rule="evenodd"
@@ -92,7 +89,7 @@ The present database contains trajectories from 15,120 molecular dynamics simula
     </a>
     <a class="btn btn-outline-primary
       "
-        href="https://www.nature.com/articles/s41597-020-0391-0.pdf" role="button">
+        href="https://pubs.rsc.org/en/content/articlepdf/2023/bm/d3bm00412k" role="button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-file-pdf" viewBox="0 0 16 16">
     <path

@@ -1,4 +1,5 @@
 import datetime as dt
+import logging
 from functools import lru_cache
 from itertools import chain
 
@@ -31,15 +32,17 @@ __all__ = [
     "fetch_all_paper_authors",
 ]
 
+logger = logging.getLogger(__name__)
+
 
 @dataclass(frozen=True)
 class JournalInfo:
     name: str
     url: str
-    issue: str = None
-    abbreviation: str = None
-    pages: str = None
-    volume: int = None
+    issue: str | None = None
+    abbreviation: str | None = None
+    pages: str | None = None
+    volume: int | None = None
 
 
 @dataclass
@@ -60,10 +63,10 @@ class Paper(object, metaclass=PaperSingleton):
     citation_count: int
     open_access: OpenAccessPaperInfo
     bib_entry: str
-    abstract: str = None
-    tldr: str = None
-    year: int = None
-    embedding: Embedding = None
+    abstract: str | None = None
+    tldr: str | None = None
+    year: int | None = None
+    embedding: Embedding | None = None
 
     def __post_init__(self):
         object.__setattr__(self, "title", " ".join(self.title.split()))
@@ -92,7 +95,7 @@ class Paper(object, metaclass=PaperSingleton):
 
 
 @lru_cache
-def fetch_paper_info(doi: str) -> Paper:
+def fetch_paper_info(doi: str) -> Paper | None:
     if existing_paper := Paper.get_existing_paper(doi):
         return existing_paper
     crossref_info = get_crossref_work_by_doi(doi)
@@ -106,7 +109,7 @@ def fetch_paper_info(doi: str) -> Paper:
         issue=crossref_info.message.issue,
         volume=crossref_info.message.volume,
         pages=crossref_info.message.page,
-        abbreviation=crossref_info.message.short_container_title[0],
+        abbreviation=crossref_info.message.short_title,
         url=url,
     )
     abstract = (
@@ -135,7 +138,13 @@ def fetch_paper_info(doi: str) -> Paper:
 
 def fetch_all_paper_infos() -> list[Paper]:
     dois = get_doi_to_put_code_map().keys()
-    return [fetch_paper_info(doi) for doi in dois]
+    papers = []
+    for doi in dois:
+        try:
+            papers.append(fetch_paper_info(doi))
+        except AssertionError:
+            logger.info(f"WARNING! Cannot parse doi {doi}")
+    return papers
 
 
 def fetch_all_paper_authors() -> list[Author]:

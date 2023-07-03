@@ -1,5 +1,6 @@
 import datetime as dt
 import logging
+from typing import Optional
 
 import pandas as pd
 from decouple import config as environ
@@ -33,15 +34,15 @@ MY_ORCID = "0000-0001-9945-1271"
 
 @dataclass(frozen=True)
 class IntValue:
-    value: int = None
+    value: int | None = None
 
 
 @dataclass(frozen=True)
 class OrcidDate:
-    year: IntValue = Field(alias="year", default=None, repr=False)
-    month: IntValue = Field(alias="month", default=None, repr=False)
-    day: IntValue = Field(alias="day", default=None, repr=False)
-    timestamp: int = Field(alias="value", default=None, repr=False)
+    year: IntValue | None = Field(alias="year", default=None, repr=False)
+    month: IntValue | None = Field(alias="month", default=None, repr=False)
+    day: IntValue | None = Field(alias="day", default=None, repr=False)
+    timestamp: int | None = Field(alias="value", default=None, repr=False)
 
     @property
     def datetime(self) -> dt.datetime:
@@ -77,9 +78,9 @@ class ExternalIds:
     external_id_type: str
     external_id_value: str
     external_id_normalized: ExternalId
-    external_id_normalized_error: str = None
-    external_id_relationship: str = None
-    external_id_url: ExternalId = None
+    external_id_normalized_error: Optional[str] = None
+    external_id_relationship: Optional[str] = None
+    external_id_url: Optional[ExternalId] = None
 
 
 @dataclass(frozen=True)
@@ -104,11 +105,11 @@ class Origin:
 @dataclass(frozen=True)
 class Source:
     source_name: ExternalId
-    source_orcid: Origin = None
-    source_client_id: SourceClientId = None
-    assertion_origin_orcid: Origin = None
-    assertion_origin_client_id: Origin = None
-    assertion_origin_name: StrValue = None
+    source_orcid: Optional[Origin] = None
+    source_client_id: Optional[SourceClientId] = None
+    assertion_origin_orcid: Optional[Origin] = None
+    assertion_origin_client_id: Optional[Origin] = None
+    assertion_origin_name: Optional[StrValue] = None
 
 
 def get_orcid_request_endpoint_prefix() -> str:

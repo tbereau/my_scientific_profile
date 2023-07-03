@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-Two-state cooperativity is an important characteristic in protein folding. It is defined by a depletion of states that lie energetically between folded and unfolded conformations. There are different ways to test for two-state cooperativity; however, most of these approaches probe indirect proxies of this depletion. Generalized-ensemble computer simulations allow us to unambiguously identify this transition by a microcanonical analysis on the basis of the density of states. Here, we present a detailed characterization of several helical peptides obtained by coarse-grained simulations. The level of resolution of the coarse-grained model allowed to study realistic structures ranging from small α-helices to a de novo three-helix bundle without biasing the force field toward the native state of the protein. By linking thermodynamic and structural features, we are able to show that whereas short α-helices exhibit two-state cooperativity, the type of transition changes for longer chain lengths because the chain forms multiple helix nucleation sites, stabilizing a significant population of intermediate states. The helix bundle exhibits signs of two-state cooperativity owing to favorable helix-helix interactions, as predicted from theoretical models. A detailed analysis of secondary and tertiary structure formation fits well into the framework of several folding mechanisms and confirms features that up to now have been observed only in lattice models.
+None
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &

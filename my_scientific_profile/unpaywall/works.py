@@ -1,7 +1,7 @@
 import datetime as dt
 import logging
 
-from pydantic import parse_obj_as, validator
+from pydantic import validator
 from pydantic.dataclasses import dataclass
 from requests import get
 
@@ -20,7 +20,7 @@ class UnpaywallAuthor:
     given: str
     family: str
     sequence: str
-    affiliation: list[UnpaywallAffiliation] = None
+    affiliation: list[UnpaywallAffiliation] | None = None
 
 
 @dataclass(frozen=True)
@@ -30,14 +30,14 @@ class UnpaywallOALocation:
     evidence: str
     host_type: str
     is_best: bool
-    updated: dt.datetime = None
-    url_for_pdf: str = None
-    license: str = None
-    pmh_id: str = None
-    endpoint_id: str = None
-    repository_institution: str = None
-    oa_date: dt.datetime = None
-    version: str = None
+    updated: dt.datetime | None = None
+    url_for_pdf: str | None = None
+    license: str | None = None
+    pmh_id: str | None = None
+    endpoint_id: str | None = None
+    repository_institution: str | None = None
+    oa_date: dt.datetime | None = None
+    version: str | None = None
 
     class Config:
         json_encoders = {
@@ -69,9 +69,9 @@ class UnpaywallWork:
     has_repository_copy: bool
     updated: dt.datetime
     z_authors: list[UnpaywallAuthor]
-    best_oa_location: UnpaywallOALocation = None
-    first_oa_location: UnpaywallOALocation = None
-    oa_locations: list[UnpaywallOALocation] = None
+    best_oa_location: UnpaywallOALocation | None = None
+    first_oa_location: UnpaywallOALocation | None = None
+    oa_locations: list[UnpaywallOALocation] | None = None
 
 
 def get_unpaywall_work_by_doi(doi: str) -> UnpaywallWork:
@@ -80,4 +80,4 @@ def get_unpaywall_work_by_doi(doi: str) -> UnpaywallWork:
     assert (
         response.status_code == 200
     ), f"unexpected status code {response.status_code}: {response.text}"
-    return parse_obj_as(UnpaywallWork, response.json())
+    return UnpaywallWork(**response.json())

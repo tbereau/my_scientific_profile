@@ -2,7 +2,6 @@ import logging
 from functools import lru_cache
 
 from humps import dekebabize
-from pydantic import parse_obj_as
 from pydantic.dataclasses import Field, dataclass
 from requests import get
 
@@ -43,19 +42,26 @@ class CrossrefWorkMessage:
     subtitle: list[str]
     short_title: list[str]
     issued: CrossrefDate
-    volume: int = None
+    volume: int | None = None
     issn: list[str] = Field(None, alias="ISSN")
     doi: str = Field(None, alias="DOI")
     url: str = Field(None, alias="URL")
-    issue: str = None
-    page: str = None
-    language: str = None
-    abstract: str = None
-    update_policy: str = None
-    funder: list[CrossrefFunder] = None
-    published_print: CrossrefDate = None
-    assertion: list[CrossrefAssertion] = None
-    reference: list[CrossrefReference] = Field(default=None, repr=False)
+    issue: str | None = None
+    page: str | None = None
+    language: str | None = None
+    abstract: str | None = None
+    update_policy: str | None = None
+    funder: list[CrossrefFunder] | None = None
+    published_print: CrossrefDate | None = None
+    assertion: list[CrossrefAssertion] | None = None
+    reference: list[CrossrefReference] | None = Field(default=None, repr=False)
+
+    @property
+    def short_title(self) -> str:
+        if len(self.short_container_title) > 0:
+            return self.short_container_title[0]
+        else:
+            return self.container_title[0]
 
 
 @dataclass(eq=True, frozen=True)
@@ -74,4 +80,4 @@ def get_crossref_work_by_doi(doi: str) -> CrossrefWork:
     assert (
         response.status_code == 200
     ), f"unexpected status code {response.status_code}: {response.text}"
-    return parse_obj_as(CrossrefWork, dekebabize(response.json()))
+    return CrossrefWork(**dekebabize(response.json()))

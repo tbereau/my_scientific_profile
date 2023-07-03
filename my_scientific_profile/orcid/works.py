@@ -1,8 +1,7 @@
 from functools import lru_cache
-from typing import Dict
+from typing import Dict, Optional
 
 from humps import dekebabize
-from pydantic import parse_obj_as
 from pydantic.dataclasses import dataclass
 
 from my_scientific_profile.orcid.detailed_work import (
@@ -46,8 +45,8 @@ class WorkSummary:
     visibility: str
     path: str
     display_index: int
-    url: UrlValue = None
-    journal_title: Title = None
+    url: Optional[UrlValue] = None
+    journal_title: Optional[Title] = None
 
 
 @dataclass(frozen=True)
@@ -67,7 +66,7 @@ class OrcidWorks:
 @lru_cache
 def get_works() -> OrcidWorks:
     response = get_orcid_query("works")
-    return parse_obj_as(OrcidWorks, dekebabize(response))
+    return OrcidWorks(**dekebabize(response))
 
 
 @lru_cache

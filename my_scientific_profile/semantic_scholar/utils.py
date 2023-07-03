@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional
+from typing import List
 
 import humps
 from pydantic.dataclasses import dataclass
@@ -54,11 +54,11 @@ class SemanticScholarPaper:
     paper_id: str
     title: str = None
     authors: List[SemanticScholarAuthorDefault] = None
-    abstract: str = None
-    year: int = None
-    venue: str = None
-    is_open_access: bool = None
-    tldr: SemanticScholarTldr = None
+    abstract: str | None = None
+    year: int | None = None
+    venue: str | None = None
+    is_open_access: bool | None = None
+    tldr: SemanticScholarTldr | None = None
 
 
 def get_semantic_scholar_request_endpoint_template() -> str:
@@ -66,7 +66,7 @@ def get_semantic_scholar_request_endpoint_template() -> str:
 
 
 def fetch_info_by_id(
-    info_id: str, info_type: str, fields: Optional[List[str]] = None
+    info_id: str, info_type: str, fields: List[str] | None = None
 ) -> dict:
     logger.info(f"fetching Semantic Scholar {info_type} info {info_id}")
     endpoint = (

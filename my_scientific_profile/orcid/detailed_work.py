@@ -1,11 +1,12 @@
 import datetime as dt
 import logging
 from functools import lru_cache
+from typing import Optional
 
 import pandas as pd
 from humps import dekebabize
-from pydantic import Field, parse_obj_as
 from pydantic.dataclasses import dataclass
+from pydantic.fields import Field
 
 from my_scientific_profile.orcid.utils import (
     ExternalId,
@@ -37,7 +38,7 @@ logger = logging.getLogger(__name__)
 class Title:
     value: str
     subtitle: str = None
-    translated_title: str = None
+    translated_title: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -54,15 +55,15 @@ class Citation:
 @dataclass(frozen=True)
 class ContributorAttributes:
     contributor_role: str
-    contributor_sequence: str = None
+    contributor_sequence: Optional[str] = None
 
 
 @dataclass(frozen=True)
 class Contributor:
     credit_name: StrValue
-    contributor_attributes: ContributorAttributes = None
-    contributor_email: str = None
-    contributor_orcid: SourceClientId | str = None
+    contributor_attributes: Optional[ContributorAttributes] = None
+    contributor_email: Optional[str] = None
+    contributor_orcid: Optional[SourceClientId | str] = None
 
 
 @dataclass(frozen=True)
@@ -73,8 +74,8 @@ class Contributors:
 @dataclass(frozen=True)
 class PublicationDate:
     year: IntValue = Field(..., repr=False)
-    month: IntValue = Field(repr=False, default=None)
-    day: IntValue = Field(repr=False, default=None)
+    month: Optional[IntValue] = Field(repr=False, default=None)
+    day: Optional[IntValue] = Field(repr=False, default=None)
 
     @property
     def datetime(self) -> dt.datetime:
@@ -102,15 +103,15 @@ class OrcidDetailedWork:
     external_ids: ExternalIdCollection
     contributors: Contributors
     journal_title: Title
-    url: StrValue = None
-    citation: Citation = None
-    language_code: str = None
-    country: str = None
-    visibility: str = None
-    short_description: str = None
+    url: Optional[StrValue] = None
+    citation: Optional[Citation] = None
+    language_code: Optional[str] = None
+    country: Optional[str] = None
+    visibility: Optional[str] = None
+    short_description: Optional[str] = None
 
 
 @lru_cache
 def get_detailed_work(put_code: int) -> OrcidDetailedWork:
     response = get_orcid_query("work", suffix=str(put_code))
-    return parse_obj_as(OrcidDetailedWork, dekebabize(response))
+    return OrcidDetailedWork(**dekebabize(response))

@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-The lipid-raft hypothesis postulates that cell membranes possess some degree of lateral organization. The hypothesis has attracted much attention while remaining controversial, with an underlying mechanism that remains elusive. One idea that supports rafts relies on the membrane lying near a critical point. Although supported by experimental evidence, holding a many-component membrane at criticality requires a delicate tuning of all components—a daunting task. Here, we propose a coherent framework to reconcile critical behavior and lipid regulation. Using a lattice model, we show that lipid regulation of a complex membrane, i.e., allowing composition to fluctuate based on relative chemical potentials, can lead to critical behavior. The results are robust against specific values of the chemical potentials. Instead of a conventional transition point, criticality is observed over a large temperature range. This surprising behavior arises from finite-size effects, causing nonequivalent time and space averages. The instantaneous lipid distribution effectively develops a translational symmetry, which we relate to long-wavelength Goldstone modes. The framework is robust and reproduces important experimental trends; membrane-demixing temperature closely follows cell-growth temperature. It also ensures criticality of fixed-composition extracts, such as giant plasma membrane vesicles. Our clear picture provides a strong argument in favor of the critical-membrane hypothesis, without the need for specific sensing mechanisms.
+None
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &

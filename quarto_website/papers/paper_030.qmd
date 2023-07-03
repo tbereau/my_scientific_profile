@@ -57,7 +57,6 @@ This work systematically vary force-field parameters and monitor their structura
 	publisher = {{AIP} Publishing},
 	volume = {148},
 	number = {20},
-	pages = {204111},
 	author = {Joseph F. Rudzinski and Tristan Bereau},
 	title = {Structural-kinetic-thermodynamic relationships identified from physics-based molecular simulation models},
 	journal = {The Journal of Chemical Physics}

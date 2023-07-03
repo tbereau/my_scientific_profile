@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-Protein structure formation in the membrane highlights a grand challenge of sampling in computer simulations, because kinetic traps and slow dynamics make it difficult to find the native state. Exploiting increased fluctuations at higher temperatures can help overcome free-energy barriers, provided the membrane’s structure remains stable. In this work, we apply Hamiltonian replica-exchange molecular dynamics, where we only tune the backbone hydrogen-bond strength to help reduce the propensity of long-lived misfolded states. Using a recently developed coarse-grained model, we illustrate the robustness of the method by folding different WALP transmembrane helical peptides starting from stretched, unstructured conformations. We show the efficiency of the method by comparing to simulations without enhanced sampling, achieving folding in one example after significantly longer simulation times. Analysis of the bilayer structure during folding provides insight into the local membrane deformation during helix formation as a function of chain length (from 16 to 23 residues). Finally, we apply our method to fold the 50-residue-long major pVIII coat protein (fd coat) of the filamentous fd bacteriophage. Our results agree well with experimental structures and atomistic simulations based on implicit membrane models, suggesting that our explicit CG folding protocol can serve as a starting point for better-refined atomistic simulations in a multiscale framework.
+None
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &

@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-The paradox of biomimetic research is to perform bio-functionality, usually associated with sophisticated structures optimized by nature, with minimal structural complexity for the ease of fabrication. Here we show that a three-particle trimer can exhibit kinesin-like autonomous walk on a track via reactive molecular dynamics simulations. The autonomous motion is due to imbalanced transitions resulting from exothermic catalytic reactions, and the spatial asymmetry from the track. This molecular design can be realized by reproducing the particle–particle interactions in functionalized nano- or colloidal particles. Our results open up the possibility of fabricating bio-mimetic nano-systems in a minimalist approach.
+None
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &

@@ -92,8 +92,8 @@ This study introduces DeepBackmap: A deep neural network based approach to direc
         Webpage
     </a>
     <a class="btn btn-outline-primary
-      disabled"
-        href="None" role="button">
+      "
+        href="https://iopscience.iop.org/article/10.1088/2632-2153/abb6d4/pdf" role="button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-file-pdf" viewBox="0 0 16 16">
     <path

@@ -5,9 +5,7 @@ format:
   html:
     echo: false
     keep-hidden: true
-categories:
-  - alumnus
-  - phd student
+
 image: ../static/bozkurt.jpg
 about:
   id: hero-heading

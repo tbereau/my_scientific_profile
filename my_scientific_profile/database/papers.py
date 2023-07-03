@@ -6,7 +6,11 @@ from my_scientific_profile.database.utils import (
 )
 from my_scientific_profile.papers.papers import Paper, fetch_all_paper_infos
 
-__all__ = ["save_dataclass_records_to_s3", "load_all_papers_from_s3"]
+__all__ = [
+    "save_dataclass_records_to_s3",
+    "load_all_papers_from_s3",
+    "save_all_papers_to_s3",
+]
 
 
 def save_all_papers_to_s3(s3_client: Any, s3_bucket: str) -> None:

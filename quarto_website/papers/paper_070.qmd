@@ -76,7 +76,7 @@ This work proposes a method that coarse-grains the sequence space to reduce its 
 </div>
 <a class="btn btn-outline-primary
   "
-        href="https://dare.uva.nl/personal/pure/en/publications/identifying-sequential-residue-patterns-in-bitter-and-umami-peptides(3c13cec7-8736-4939-8b1e-35174b59ed05).html" role="button">
+        href="https://doi.org/10.1021/acsfoodscitech.2c00251" role="button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-browser-chrome" viewBox="0 0 16 16">
     <path fill-rule="evenodd"
@@ -93,7 +93,7 @@ This work proposes a method that coarse-grains the sequence space to reduce its 
     </a>
     <a class="btn btn-outline-primary
       "
-        href="https://pure.uva.nl/ws/files/106304876/Identifying_Sequential_Residue_Patterns_in_Bitter_and_Umami_Peptides.pdf" role="button">
+        href="https://pubs.acs.org/doi/pdf/10.1021/acsfoodscitech.2c00251" role="button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-file-pdf" viewBox="0 0 16 16">
     <path

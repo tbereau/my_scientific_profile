@@ -58,8 +58,8 @@ class CrossrefAuthor:
     family: str
     sequence: str
     affiliation: list[CrossrefAffiliation]
-    orcid: str = None
-    authenticated_orcid: bool = None
+    orcid: str | None = None
+    authenticated_orcid: bool | None = None
 
     def __post_init__(self):
         if self.orcid:
@@ -72,7 +72,7 @@ class CrossrefAuthor:
             if author:
                 object.__setattr__(self, "given", author["given"])
                 object.__setattr__(self, "family", author["family"])
-                object.__setattr__(self, "orcid", author["orcid"])
+                object.__setattr__(self, "orcid", author.get("orcid", ""))
 
 
 @dataclass(eq=True, frozen=True)

@@ -57,7 +57,6 @@ The Voronoi tesselation approach to polarizabilities of atoms in molecules witho
 	publisher = {{AIP} Publishing},
 	volume = {141},
 	number = {3},
-	pages = {034101},
 	author = {Tristan Bereau and O. Anatole von Lilienfeld},
 	title = {Toward transferable interatomic van der Waals interactions without electrons: The role of multipole electrostatics and many-body dispersion},
 	journal = {The Journal of Chemical Physics}

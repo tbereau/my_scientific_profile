@@ -2,7 +2,7 @@
 ---
 title: "Resolution limit of data-driven coarse-grained models spanning chemical space"
 doi: "10.1063/1.5119101"
-date: "2019-10-22 12:04:55"
+date: "2019-10-22 16:04:55"
 date-format: iso
 authors: "Kanekal, Bereau"
 description: "_J. Chem. Phys._ **151** (2019)"

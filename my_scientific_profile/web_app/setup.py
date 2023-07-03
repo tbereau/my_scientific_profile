@@ -51,7 +51,9 @@ def create_app(test_config=None):  # noqa
         s3.init_app(app)
 
     df_b = pd.json_normalize([asdict(p) for p in PAPERS], sep="_")  # noqa
-    topics = {p.embedding.topic_number: p.embedding.topic_name for p in PAPERS}
+    topics = {
+        p.embedding.topic_number: p.embedding.topic_name for p in PAPERS if p.embedding
+    }
 
     @app.route("/papers")
     def papers_all():

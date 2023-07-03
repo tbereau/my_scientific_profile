@@ -2,7 +2,7 @@
 ---
 title: "Folding and insertion thermodynamics of the transmembrane WALP peptide"
 doi: "10.1063/1.4935487"
-date: "2015-11-13 13:00:26"
+date: "2015-11-13 18:00:26"
 date-format: iso
 authors: "Bereau, Bennett, Pfaendtner, Deserno, Karttunen"
 description: "_The Journal of Chemical Physics_ **143** (2015)"
@@ -76,7 +76,7 @@ Folding of WALP in the two environments indicates the helix as the most stable s
 </div>
 <a class="btn btn-outline-primary
   "
-        href="https://research.tue.nl/nl/publications/39a903fd-079c-453f-b819-14736fafbec0" role="button">
+        href="https://pure.tue.nl/ws/files/74777809/1.4935487.pdf" role="button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-browser-chrome" viewBox="0 0 16 16">
     <path fill-rule="evenodd"

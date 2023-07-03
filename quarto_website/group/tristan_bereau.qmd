@@ -24,13 +24,12 @@ about:
     - icon: google
       text: Google Scholar
       href: https://scholar.google.com/citations?user=9cYdrBUAAAAJ
-    - icon: file-earmark-person
-      text: CV
-      href: /files/bereau_cv.pdf
 ---
 
 
 :::{#hero-heading}
+
+Tristan heads the group. Besides from science and data, he enjoys spending time outside and playing jazz piano.
 
 ## Experience
 

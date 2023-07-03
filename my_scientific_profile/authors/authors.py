@@ -1,5 +1,6 @@
 import logging
 import uuid
+from typing import Optional
 
 from pydantic.dataclasses import dataclass
 from unidecode import unidecode
@@ -26,9 +27,9 @@ logger = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
 class Affiliation:
-    name: str = None
-    city: str = None
-    country: str = None
+    name: Optional[str] = None
+    city: Optional[str] = None
+    country: Optional[str] = None
 
     @property
     def is_empty(self) -> bool:
@@ -42,11 +43,11 @@ class Affiliation:
 class Author(object, metaclass=AuthorSingleton):
     given: str
     family: str
-    affiliation: Affiliation = None
-    orcid: str = None
-    email: str = None
-    full_name: str = None
-    uuid: str = None
+    affiliation: Optional[Affiliation] = None
+    orcid: Optional[str] = None
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    uuid: Optional[str] = None
 
     def __post_init__(self):
         object.__setattr__(self, "given", self.given.title())

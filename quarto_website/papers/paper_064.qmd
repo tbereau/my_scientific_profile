@@ -5,7 +5,7 @@ doi: "10.1016/j.bpj.2022.12.004"
 date: "2022-12-06 17:25:35"
 date-format: iso
 authors: "Girard, Bereau"
-description: "_Biophysical Journal_ **None** (2022)"
+description: "_Biophysical Journal_ **122** (2022)"
 year: 2022
 format:
   html:
@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-Lipid asymmetry in plasma membrane of eukaryotes is ubiquitous. The first measurements reported compositional asymmetry: phosphatidylethanolamine and phosphatidylserine are mostly on the cytoplasmic leafet, while phosphatidylcholine and sphingomyelin are mostly on the exoplasmic leaflet. More recent experiments using lipidomics have evidenced the presence of saturation asymmetry between the two leaflets. A question that naturally arises is why such an asymmetry? To complicate matters, it is still largely unknown in which leaflet cholesterol lies. Here, we use chemical potentials to mimic flippase proteins responsible for maintenance of compositional asymmetry in silico. We show that saturation asymmetry naturally arises as a byproduct of phospholipid number asymmetry and sphingomyelin contents, thereby showing that some reported asymmetries may naturally result from others and do not necessarily require being externally driven. We also show that plasmalogen lipids’ tendency to be highly unsaturated is also natural. Additionally, we tackle the problem of cholesterol and show that, while it is influenced by all asymmetries, the resulting cholesterol asymmetry tends to be fairly mild.
+None
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &
@@ -49,12 +49,15 @@ It is shown that saturation asymmetry naturally arises as a byproduct of phospho
 ## BibTeX
 
 ```{bibtex}
-@article{Girard_2022,
+@article{Girard_2023,
 	doi = {10.1016/j.bpj.2022.12.004},
 	url = {https://doi.org/10.1016%2Fj.bpj.2022.12.004},
-	year = 2022,
-	month = {dec},
+	year = 2023,
+	month = {jun},
 	publisher = {Elsevier {BV}},
+	volume = {122},
+	number = {11},
+	pages = {2092--2098},
 	author = {Martin Girard and Tristan Bereau},
 	title = {Induced asymmetries in membranes},
 	journal = {Biophysical Journal}

@@ -91,8 +91,8 @@ This work trained a machine learning (ML) algorithm, using a topological, path-b
         Webpage
     </a>
     <a class="btn btn-outline-primary
-      disabled"
-        href="None" role="button">
+      "
+        href="https://advances.sciencemag.org/content/advances/6/20/eaaz4301.full.pdf" role="button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-file-pdf" viewBox="0 0 16 16">
     <path

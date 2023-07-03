@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-An extension of the multiple time-step integration following Kopf et al. (1997) for the Langevin thermostat and modified Ander- sen barostat is described. Proper isothermal and isobaric properties are validated on a Lennard-Jones liquid and a coarse-grained peptide-lipid model. Measurements of the configurational temperature indicate proper canonical sampling, while folding simu- lations of unstructured peptides into transmembrane helices provide a realistic application and suggest the maximum set of time steps usable for that model.
+None
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &

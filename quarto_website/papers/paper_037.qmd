@@ -29,7 +29,7 @@ format:
 
 ## Abstract
 
-Polydispersity and random sequences are ubiquitous features of polymers, and molecular dynamics simulations can help elucidate the impact of disorder in polymer systems. However, currently available packages for building polymer topologies do not enable the user to include randomness in a straightforward fashion. Here, we introduce Hoobas, a molecular builder package that easily handles polydispersity using a prototype-builder design pattern. This enables fast and easy building of systems comprised of thousands of distinct objects. It is written in the Python programming language, which ensures compatibility with a wide range of molecular dynamics packages and tools, as well as easy integration into most workflows.
+None
 ```{=html}
 <footer class="blockquote-footer">from
 <cite title="Source Title">Orcid</cite> &
@@ -92,7 +92,7 @@ Hoobas is introduced, a molecular builder package that easily handles polydisper
     </a>
     <a class="btn btn-outline-primary
       "
-        href="https://www.sciencedirect.com/science/article/am/pii/S0927025619302745" role="button">
+        href="http://manuscript.elsevier.com/S0927025619302745/pdf/S0927025619302745.pdf" role="button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-file-pdf" viewBox="0 0 16 16">
     <path

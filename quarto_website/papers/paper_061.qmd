@@ -5,7 +5,7 @@ doi: "10.1063/5.0053931"
 date: "2021-06-29 09:46:28"
 date-format: iso
 authors: "Dutta, Vreeken, Ghiringhelli, Bereau"
-description: "_J. Chem. Phys._ **154** (2021)"
+description: "_The Journal of Chemical Physics_ **154** (2021)"
 year: 2021
 format:
   html:
@@ -57,7 +57,6 @@ None
 	publisher = {{AIP} Publishing},
 	volume = {154},
 	number = {24},
-	pages = {244114},
 	author = {Arghya Dutta and Jilles Vreeken and Luca M. Ghiringhelli and Tristan Bereau},
 	title = {Data-driven equation for drug{\textendash}membrane permeability across drugs and membranes},
 	journal = {The Journal of Chemical Physics}

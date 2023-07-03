@@ -1,6 +1,6 @@
+import logging
 from functools import lru_cache
 
-from pydantic import parse_obj_as
 from pydantic.dataclasses import dataclass
 
 from my_scientific_profile.orcid.utils import (
@@ -17,6 +17,8 @@ __all__ = [
     "fetch_employment_for_orcid_id",
     "get_last_organization",
 ]
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -68,7 +70,7 @@ class OrcidEmployment:
 @lru_cache
 def fetch_employment_for_orcid_id(orcid_id: str) -> OrcidEmployment:
     record = get_orcid_query("employments", orcid_id=orcid_id, suffix=None)
-    return parse_obj_as(OrcidEmployment, record)
+    return OrcidEmployment(**record)
 
 
 def get_last_organization(employment: OrcidEmployment) -> OrcidOrganization | None:
