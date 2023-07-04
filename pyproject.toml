@@ -30,6 +30,7 @@ numba = "^0.57.1"
 bertopic = "^0.15.0"
 scikit-learn = "1.2.2"
 setuptools = "^68.0.0"
+nbformat = "^5.9.0"
 
 
 [build-system]
