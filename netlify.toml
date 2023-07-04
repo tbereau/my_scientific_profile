@@ -1,6 +1,12 @@
 [build]
 base = "quarto_website/"
 publish = "_site/"
+command = """
+pip install -q poetry &&
+poetry export --dev --without-hashes | grep mkdocs > requirements.txt &&
+pip install -r requirements.txt &&
+mkdocs build
+"""
 
 [[plugins]]
 package = "@quarto/netlify-plugin-quarto"
