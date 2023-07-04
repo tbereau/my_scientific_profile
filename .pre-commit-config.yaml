@@ -26,3 +26,9 @@ repos:
         rev: 6.0.0
         hooks:
             -   id: flake8
+
+    -   repo: https://github.com/seandstewart/pre-commit-poetry-export
+        rev: master
+        hooks:
+            -   id: export-requirements
+            -   id: export-requirements-dev

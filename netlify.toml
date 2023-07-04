@@ -1,12 +1,6 @@
 [build]
 base = "quarto_website/"
 publish = "_site/"
-command = """
-pip3 install -q poetry &&
-poetry config virtualenvs.in-project true &&
-poetry install -v &&
-mkdocs build -d site
-"""
 
 [[plugins]]
 package = "@quarto/netlify-plugin-quarto"
