@@ -17,7 +17,7 @@ test_requirements = []
 setup(
     author="Tristan Bereau",
     author_email="tristan.bereau@gmail.com",
-    python_requires=">=3.6",
+    python_requires=">=3.11",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
@@ -27,6 +27,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.11",
     ],
     description=(
         "Python Boilerplate contains all the boilerplate "

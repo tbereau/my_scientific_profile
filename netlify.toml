@@ -1,6 +1,10 @@
 [build]
 base = "quarto_website/"
 publish = "_site/"
+command = """
+poetry install
+poetry shell
+"""
 
 [[plugins]]
 package = "@quarto/netlify-plugin-quarto"
