@@ -2,6 +2,7 @@
 base = "quarto_website/"
 publish = "_site/"
 command = """
+pip install poetry
 poetry install
 poetry shell
 """
