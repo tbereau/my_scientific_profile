@@ -5,9 +5,11 @@ from pydantic import field_validator
 from pydantic.dataclasses import dataclass
 from requests import get
 
+from my_scientific_profile.config.config import get_email_address
+
 logger = logging.getLogger(__name__)
 
-EMAIL_ADDRESS = "tristan.bereau@gmail.com"
+EMAIL_ADDRESS = get_email_address()
 
 
 @dataclass(frozen=True)

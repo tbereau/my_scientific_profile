@@ -23,6 +23,10 @@ def get_s3_bucket() -> str:
     return CONFIG["s3-bucket"].get(str)
 
 
+def get_email_address() -> str:
+    return CONFIG["email-address"].get(str)
+
+
 def get_author_configs() -> list[dict]:
     return [dict(e) for e in CONFIG["authors"].get()]
 

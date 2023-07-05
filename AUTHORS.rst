@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* Tristan Bereau <tristan.bereau@gmail.com>
+* Tristan Bereau <bereau@thphys.uni-heidelberg.de>
 
 Contributors
 ------------
