@@ -30,6 +30,8 @@ Paper(doi='10.1140/epjst/e2016-60114-5', title='Concurrent parametrization again
 
 The code goes to great efforts to avoid duplicate author entries, using singletons and relying on ORCID when available.
 
+Some more examples can be found as Jupyter notebooks in the `examples` directory.
+
 ## Installation
 
 You need the [poetry](https://python-poetry.org) package manager to install `my-scientific-profile`. You can then simply add the package using the command:
