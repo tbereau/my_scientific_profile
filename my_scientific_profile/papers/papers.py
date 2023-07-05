@@ -97,7 +97,6 @@ class Paper(object, metaclass=PaperSingleton):
 @lru_cache
 def fetch_paper_info(doi: str) -> Paper | None:
     if existing_paper := Paper.get_existing_paper(doi):
-        logger.info(f"paper {doi} exists")
         return existing_paper
     crossref_info = get_crossref_work_by_doi(doi)
     semantic_info = get_semantic_scholar_paper_info(doi)
