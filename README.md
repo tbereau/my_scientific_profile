@@ -12,7 +12,7 @@ APIs supported:
 
 The library generates `Paper` and `Author` objects that contain various information about a scientific publication and author, respectively.
 
-This library is used to automatically generate all publication and collaborator information on my [personal website](https://tristanbereau.com)] and [CV](https://tristanbereau.com/files/bereau_cv.pdf).
+This library is used to automatically generate all publication and collaborator information on my [personal website](https://tristanbereau.com) and [CV](https://tristanbereau.com/files/bereau_cv.pdf).
 
 ## Highlight
 
