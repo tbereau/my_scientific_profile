@@ -6,7 +6,7 @@ from my_scientific_profile.config.config import get_authors_with_categories
 from my_scientific_profile.database.authors import load_all_paper_authors_from_s3
 from my_scientific_profile.database.papers import load_all_papers_from_s3
 from my_scientific_profile.utils.utils import ROOT_DIR
-from my_scientific_profile.database.aws_s3 import S3_BUCKET, s3_client
+from my_scientific_profile.database.aws_s3 import S3_BUCKET, S3_CLIENT
 from my_scientific_profile.quarto.authors import save_quarto_author_page_to_file
 from my_scientific_profile.quarto.papers import save_quarto_paper_page_to_file
 
@@ -18,7 +18,7 @@ for file_name in existing_files:
     if file_name.endswith(".qmd"):
         os.remove(os.path.join(team_path, file_name))
 
-authors = load_all_paper_authors_from_s3(s3_client=s3_client, s3_bucket=S3_BUCKET)
+authors = load_all_paper_authors_from_s3(s3_client=S3_CLIENT, s3_bucket=S3_BUCKET)
 
 author_infos_with_categories = get_authors_with_categories()
 authors_with_categories = []
@@ -30,7 +30,7 @@ for author in authors_with_categories:
     )
 
 
-papers = load_all_papers_from_s3(s3_client=s3_client, s3_bucket=S3_BUCKET)
+papers = load_all_papers_from_s3(s3_client=S3_CLIENT, s3_bucket=S3_BUCKET)
 paper_path = path.joinpath("quarto_website").joinpath("papers")
 existing_files = os.listdir(paper_path)
 
