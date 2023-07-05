@@ -1,6 +1,4 @@
-=====================
-My Scientific Profile
-=====================
+# My Scientific Profile
 
 Programmatically retrieve information about your scientific publications from APIs. The code is strongly based on ORCID as well as CrossRef. For best results, make sure that most of your publications are listed there.
 
@@ -16,8 +14,7 @@ The library generates `Paper` and `Author` objects that contain various informat
 
 This library is used to automatically generate all publication and collaborator information on my [personal website](https://tristanbereau.com)] and [CV](https://tristanbereau.com/files/bereau_cv.pdf).
 
-Highlight
-----------
+## Highlight
 
 A paper can be queried simply by its DOI:
 ```python
@@ -33,8 +30,7 @@ Paper(doi='10.1140/epjst/e2016-60114-5', title='Concurrent parametrization again
 
 The code goes to great efforts to avoid duplicate author entries, using singletons and relying on ORCID when available.
 
-Installation
-------------
+## Installation
 
 You need the [poetry](https://python-poetry.org) package manager to install `my-scientific-profile`. You can then simply add the package using the command:
 ```bash
@@ -42,8 +38,7 @@ poetry add git+ssh://git@lin0.thphys.uni-heidelberg.de:bereau/my_scientific_prof
 ```
 followed by `poetry install`. `poetry shell` will activate a local environment, in which `my-scientific-profile` will be available.
 
-Configuration
--------------
+## Configuration
 
 Copy the file `my_scientific_profile/config_default.yaml` into your local config directory, e.g. `~/.config/my_scientific_profile/config.yaml`. There are several fields:
 
@@ -53,17 +48,15 @@ Copy the file `my_scientific_profile/config_default.yaml` into your local config
 - authors: you can provide the ORCID of some of your collaborators. This may help resolve some difficulties when searching by name. Leave blank (i.e., '[]') to leave empty.
 - papers: abstracts are sometimes difficult to retrieve. You can add them there, accompanied by the corresponding DOI, as a fallback.
 
-Misc
-----
+## Misc
 
 * Free software: MIT license
 * Documentation: None.
 * Tests: None (living on the edge).
 
-Credits
--------
+## Credits
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+- Cookiecutter: https://github.com/audreyr/cookiecutter
+- `audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
