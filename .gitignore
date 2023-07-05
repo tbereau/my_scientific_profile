@@ -115,6 +115,7 @@ notebooks/test_pymupdf/
 
 node_modules/
 
-quarto_website/.quarto
-quarto_website/_site
+quarto_website/*
 /.luarc.json
+config.yaml
+op.env

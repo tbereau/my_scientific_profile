@@ -97,6 +97,7 @@ class Paper(object, metaclass=PaperSingleton):
 @lru_cache
 def fetch_paper_info(doi: str) -> Paper | None:
     if existing_paper := Paper.get_existing_paper(doi):
+        logger.info(f"paper {doi} exists")
         return existing_paper
     crossref_info = get_crossref_work_by_doi(doi)
     semantic_info = get_semantic_scholar_paper_info(doi)
@@ -112,11 +113,8 @@ def fetch_paper_info(doi: str) -> Paper | None:
         abbreviation=crossref_info.message.short_title,
         url=url,
     )
-    abstract = (
-        semantic_info.abstract
-        if semantic_info
-        else crossref_info.message.abstract or get_abstract_from_config(doi)
-    )
+    abstract = semantic_info.abstract if semantic_info else None
+    abstract = abstract or crossref_info.message.abstract or get_abstract_from_config(doi)
     authors = [
         get_author_from_orcid_or_crossref(author)
         for author in crossref_info.message.author

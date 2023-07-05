@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 @lru_cache()
 def fetch_bib(doi: str) -> str:
     logger.info(f"fetching doi2bib for {doi}")
-    url = f"http://dx.doi.org/{doi}"
+    url = f"https://dx.doi.org/{doi}"
     request = Request(url)
     request.add_header("Accept", "application/x-bibtex")
     try:

@@ -1,7 +1,7 @@
 import datetime as dt
 import logging
 
-from pydantic import validator
+from pydantic import field_validator
 from pydantic.dataclasses import dataclass
 from requests import get
 
@@ -44,7 +44,7 @@ class UnpaywallOALocation:
             dt.datetime: lambda v: v.isoformat(),
         }
 
-    @validator("updated", "oa_date", pre=True)
+    @field_validator("updated", "oa_date", mode="before")
     def time_validate(cls, v):
         if v is not None:
             return dt.datetime.fromisoformat(v)

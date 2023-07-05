@@ -33,3 +33,16 @@ def read_dataclass_records_from_s3(
     response = mongo_loads(decompress(raw_response).decode("utf-8"))
     logger.debug(f"response {response}")
     return [dataclass(**r) for r in response]
+
+
+def save_text_file_to_s3(
+    filename: str,
+    text_file: Any,
+    s3_client: Any,
+    s3_bucket: str,
+    sub_directory: str = "database"
+) -> None:
+    with open(filename, "w") as file_out:
+        file_out.write(text_file)
+    s3_client.upload_file(filename, s3_bucket, f"{sub_directory}/{filename}")
+    os.remove(filename)

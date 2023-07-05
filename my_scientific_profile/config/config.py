@@ -1,39 +1,34 @@
 import logging
-import os
-
-import yaml
 from yaml import YAMLObject
 
-from my_scientific_profile.utils.utils import ROOT_DIR
+from my_scientific_profile import CONFIG
 
 __all__ = [
-    "CONFIG_PATH",
+    "get_my_orcid",
     "get_author_configs",
+    "get_paper_configs",
+    "get_abstract_from_config",
     "find_author_in_config",
     "get_authors_with_categories",
 ]
 
 logger = logging.getLogger(__name__)
 
-CONFIG_PATH = os.path.join(ROOT_DIR, "config")
+
+def get_my_orcid() -> str:
+    return CONFIG["my-orcid"].get(str)
 
 
-def get_author_configs() -> list:
-    return get_config("authors.yaml")
+def get_s3_bucket() -> str:
+    return CONFIG["s3-bucket"].get(str)
 
 
-def get_paper_configs() -> list:
-    return get_config("papers.yaml")
+def get_author_configs() -> list[dict]:
+    return [dict(e) for e in CONFIG["authors"].get()]
 
 
-def get_config(yaml_file: str) -> list:
-    with open(os.path.join(CONFIG_PATH, yaml_file), "r") as stream:
-        try:
-            config = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            logger.error(f"error in configuration file {yaml_file}")
-            raise exc
-    return config
+def get_paper_configs() -> list[dict]:
+    return [dict(e) for e in CONFIG["papers"].get()]
 
 
 def find_author_in_config(

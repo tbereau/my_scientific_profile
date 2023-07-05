@@ -16,7 +16,7 @@ test_requirements = []
 
 setup(
     author="Tristan Bereau",
-    author_email="tristan.bereau@gmail.com",
+    author_email="bereau@thphys.uni-heidelberg.de",
     python_requires=">=3.11",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
@@ -44,7 +44,7 @@ setup(
     ),
     test_suite="tests",
     tests_require=test_requirements,
-    url="https://github.com/tbereau/my_scientific_profile",
+    url="https://lin0.thphys.uni-heidelberg.de:4443/bereau/my_scientific_profile/",
     version="0.1.0",
     zip_safe=False,
 )

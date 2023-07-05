@@ -6,9 +6,9 @@ from my_scientific_profile.config.config import get_authors_with_categories
 from my_scientific_profile.database.authors import load_all_paper_authors_from_s3
 from my_scientific_profile.database.papers import load_all_papers_from_s3
 from my_scientific_profile.utils.utils import ROOT_DIR
-from my_scientific_profile.web_app.extensions import S3_BUCKET, s3_client
-from my_scientific_profile.web_quarto.authors import save_quarto_author_page_to_file
-from my_scientific_profile.web_quarto.papers import save_quarto_paper_page_to_file
+from my_scientific_profile.database.aws_s3 import S3_BUCKET, s3_client
+from my_scientific_profile.quarto.authors import save_quarto_author_page_to_file
+from my_scientific_profile.quarto.papers import save_quarto_paper_page_to_file
 
 path = Path(ROOT_DIR).parent
 team_path = path.joinpath("quarto_website").joinpath("group")

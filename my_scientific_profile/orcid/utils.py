@@ -10,6 +10,8 @@ from pydantic.dataclasses import dataclass
 from requests import get
 
 import my_scientific_profile.utils  # noqa
+from my_scientific_profile.config.required_environment_variables import assert_all_environment_variables
+from my_scientific_profile.config.config import get_my_orcid
 
 __all__ = [
     "OrcidDate",
@@ -29,7 +31,9 @@ __all__ = [
 logger = logging.getLogger(__name__)
 
 ORCID_CODE = environ("ORCID_CODE")
-MY_ORCID = "0000-0001-9945-1271"
+MY_ORCID = get_my_orcid()
+
+assert_all_environment_variables("orcid")
 
 
 @dataclass(frozen=True)

@@ -17,11 +17,12 @@ from my_scientific_profile.database.papers import (  # noqa
     save_all_papers_to_s3,
 )
 from my_scientific_profile.papers.papers import Embedding  # noqa
-from my_scientific_profile.web_app.extensions import S3_BUCKET, s3_client  # noqa
+from my_scientific_profile.database.aws_s3 import S3_BUCKET, S3_CLIENT  # noqa
 
-papers = load_all_papers_from_s3(s3_client=s3_client, s3_bucket=S3_BUCKET)
+papers = load_all_papers_from_s3(s3_client=S3_CLIENT, s3_bucket=S3_BUCKET)
 df = pd.json_normalize(list(asdict(p) for p in papers))  # noqa
 stopwords = nltk.corpus.stopwords.words("english")
+df["abstract"] = df["abstract"].fillna("")
 df["abstract_without_stopwords"] = df["abstract"].apply(
     lambda x: " ".join([w for w in x.split() if w.lower() not in stopwords])
 )
@@ -60,7 +61,8 @@ df_coord = pd.json_normalize(
     ]
 )
 df_coord["topic"] = df.iloc[df_coord["paper_id"].values].topic.values
-df_coord["topic_name"] = df_coord.apply(lambda x: topic_labels[int(x["topic"])], axis=1)
+topic_keys = list(topic_model.get_topics().keys())
+df_coord["topic_name"] = df_coord.apply(lambda x: topic_labels[topic_keys.index(x["topic"])], axis=1)
 df_coord["title"] = df_coord.apply(
     lambda x: f"{df.iloc[x['paper_id']].title[:50] + '...'}"
     if len(df.iloc[x["paper_id"]].title) > 50
@@ -77,4 +79,4 @@ for _, item in df_coord.iterrows():
         topic_name=item["topic_name"],
     )
 
-save_all_papers_to_s3(s3_client, S3_BUCKET)
+save_all_papers_to_s3(S3_CLIENT, S3_BUCKET)

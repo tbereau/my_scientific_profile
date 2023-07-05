@@ -1,0 +1,14 @@
+my-orcid: "0000-0001-9945-1271"
+s3-bucket: "my-scientific-profile"
+email-address: "bereau@thphys.uni-heidelberg.de"
+
+authors:
+    -   given: "Andrew L."
+        family: "Ferguson"
+        orcid: "0000-0002-8829-9726"
+
+papers:
+    -   doi: "10.1038/s41586-022-04501-x"
+        abstract: "The prosperity and lifestyle of our society are very much governed by achievements in condensed matter physics, chemistry and materials science, because new products for sectors such as energy, the environment, health, mobility and information technology (IT) rely largely on improved or even new materials. Examples include solid-state lighting, touchscreens, batteries, implants, drug delivery and many more. The enormous amount of research data produced every day in these fields represents a gold mine of the twenty-first century. This gold mine is, however, of little value if these data are not comprehensively characterized and made available. How can we refine this feedstock; that is, turn data into knowledge and value? For this, a FAIR (findable, accessible, interoperable and reusable) data infrastructure is a must. Only then can data be readily shared and explored using data analytics and artificial intelligence (AI) methods. Making data 'findable and AI ready' (a forward-looking interpretation of the acronym) will change the way in which science is carried out today. In this Perspective, we discuss how we can prepare to make this happen for the field of materials science."
+    -   doi: "10.1016/j.bpj.2022.12.004"
+        abstract: "Lipid asymmetry in plasma membrane of eukaryotes is ubiquitous. The first measurements reported compositional asymmetry: phosphatidylethanolamine and phosphatidylserine are mostly on the cytoplasmic leafet, while phosphatidylcholine and sphingomyelin are mostly on the exoplasmic leaflet. More recent experiments using lipidomics have evidenced the presence of saturation asymmetry between the two leaflets. A question that naturally arises is why such an asymmetry? To complicate matters, it is still largely unknown in which leaflet cholesterol lies. Here, we use chemical potentials to mimic flippase proteins responsible for maintenance of compositional asymmetry in silico. We show that saturation asymmetry naturally arises as a byproduct of phospholipid number asymmetry and sphingomyelin contents, thereby showing that some reported asymmetries may naturally result from others and do not necessarily require being externally driven. We also show that plasmalogen lipids’ tendency to be highly unsaturated is also natural. Additionally, we tackle the problem of cholesterol and show that, while it is influenced by all asymmetries, the resulting cholesterol asymmetry tends to be fairly mild."

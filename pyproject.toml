@@ -2,7 +2,7 @@
 name = "my-scientific-profile"
 version = "0.1.0"
 description = ""
-authors = ["Tristan Bereau <tristan.bereau@gmail.com>"]
+authors = ["Tristan Bereau <bereau@thphys.uni-heidelberg.de>"]
 readme = "README.rst"
 packages = [{include = "my_scientific_profile"}]
 
@@ -21,17 +21,12 @@ xmltodict = "^0.13.0"
 pymongo = "^4.4.0"
 plotly = "^5.15.0"
 bokeh = "^3.2.0"
-flask = "^2.3.2"
-lunr = "^0.6.2"
 boto3 = "^1.26.165"
-flask-s3 = "^0.3.3"
-llvmlite = "^0.40.1"
-numba = "^0.57.1"
-bertopic = "^0.15.0"
-scikit-learn = "1.2.2"
 setuptools = "^68.0.0"
 nbformat = "^5.9.0"
 typing-extensions = "4.6.3"
+matplotlib = "^3.7.1"
+confuse = "^2.0.1"
 
 
 [build-system]
