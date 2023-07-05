@@ -1,8 +1,6 @@
 # My Scientific Profile
 
-Programmatically retrieve information about your scientific publications from APIs. The code is strongly based on ORCID as well as CrossRef. For best results, make sure that most of your publications are listed there.
-
-APIs supported:
+Programmatically retrieve information about your scientific publications from APIs. The code is strongly based on ORCID as well as CrossRef. For best results, make sure that most of your publications are listed there. APIs supported:
 
 - ORCID
 - CrossRef
@@ -53,8 +51,8 @@ Copy the file `my_scientific_profile/config_default.yaml` into your local config
 ## Misc
 
 * Free software: MIT license
-* Documentation: None.
-* Tests: None (living on the edge).
+* Documentation: None (living on the edge).
+* Tests: None (definitely living on the edge).
 
 ## Credits
 
