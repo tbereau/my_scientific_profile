@@ -3,7 +3,7 @@ name = "my-scientific-profile"
 version = "0.1.0"
 description = ""
 authors = ["Tristan Bereau <bereau@thphys.uni-heidelberg.de>"]
-readme = "README.rst"
+readme = "README.md"
 packages = [{include = "my_scientific_profile"}]
 
 [tool.poetry.dependencies]
