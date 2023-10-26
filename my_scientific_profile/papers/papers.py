@@ -141,6 +141,7 @@ def fetch_all_paper_infos() -> list[Paper]:
             papers.append(fetch_paper_info(doi))
         except AssertionError:
             logger.info(f"WARNING! Cannot parse doi {doi}")
+    papers = sorted(papers, key=lambda x: x.publication_date, reverse=True)
     return papers
 
 

@@ -41,12 +41,12 @@ class WorkSummary:
     title: TitleField
     external_ids: ExternalIdCollection
     type: str
-    publication_date: PublicationDate
     visibility: str
     path: str
     display_index: int
     url: Optional[UrlValue] = None
     journal_title: Optional[Title] = None
+    publication_date: Optional[PublicationDate] = None
 
 
 @dataclass(frozen=True)

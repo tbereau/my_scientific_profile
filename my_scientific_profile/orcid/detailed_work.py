@@ -99,10 +99,10 @@ class OrcidDetailedWork:
     path: str
     title: TitleField
     type: str
-    publication_date: PublicationDate
     external_ids: ExternalIdCollection
     contributors: Contributors
     journal_title: Title
+    publication_date: Optional[PublicationDate] = None
     url: Optional[StrValue] = None
     citation: Optional[Citation] = None
     language_code: Optional[str] = None
