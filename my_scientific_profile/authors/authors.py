@@ -173,7 +173,7 @@ def get_affiliation_from_orcid(orcid_organization: OrcidOrganization) -> Affilia
     )
 
 
-def search_author_from_config_info(author_info: dict) -> Author:
+def search_author_from_config_info(author_info: dict, allow_generic: bool = False) -> Author:
     if author := Author.get_existing_author(author_info):
         return author
     if author_info.get("orcid"):
@@ -187,5 +187,7 @@ def search_author_from_config_info(author_info: dict) -> Author:
             f"ORCID search results returned {len(orcid_search)} "
             f"results\n{orcid_search[:3]} {'...' if len(orcid_search) > 3 else ''}"
         )
+        if allow_generic and "given" in author_info.keys() and "family" in author_info.keys():
+            return Author(given=author_info["given"], family=author_info["family"])
         return None
     return convert_orcid_author_to_author(orcid_search[0])
