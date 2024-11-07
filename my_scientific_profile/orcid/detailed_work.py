@@ -101,7 +101,7 @@ class OrcidDetailedWork:
     type: str
     external_ids: ExternalIdCollection
     contributors: Contributors
-    journal_title: Title
+    journal_title: Optional[Title] = None
     publication_date: Optional[PublicationDate] = None
     url: Optional[StrValue] = None
     citation: Optional[Citation] = None

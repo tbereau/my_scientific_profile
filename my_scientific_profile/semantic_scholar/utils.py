@@ -45,8 +45,8 @@ class SemanticScholarAuthor:
 
 @dataclass(frozen=True)
 class SemanticScholarTldr:
-    model: str
-    text: str
+    model: str | None = None
+    text: str | None = None
 
 
 @dataclass(frozen=True)

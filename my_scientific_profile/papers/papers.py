@@ -104,6 +104,9 @@ def fetch_paper_info(doi: str) -> Paper | None:
     bib_info = fetch_bib(doi)
     orcid_url = orcid_info.url.value if orcid_info.url else None
     url = crossref_info.message.url or orcid_url or f"https://doi.org/{doi}"
+    if orcid_info.journal_title == None:
+        logger.warning(f"No journal title for doi {doi}")
+        return None
     journal_info = JournalInfo(
         name=crossref_info.message.container_title[0] or orcid_info.journal_title,
         issue=crossref_info.message.issue,
@@ -141,7 +144,12 @@ def fetch_all_paper_infos() -> list[Paper]:
             papers.append(fetch_paper_info(doi))
         except AssertionError:
             logger.info(f"WARNING! Cannot parse doi {doi}")
-    papers = sorted(papers, key=lambda x: x.publication_date, reverse=True)
+    papers = [paper for paper in papers if paper]
+    papers = sorted(
+        papers,
+        key=lambda x: x.publication_date.replace(tzinfo=None) if x.publication_date else datetime.min,
+        reverse=True
+    )
     return papers
 
 
