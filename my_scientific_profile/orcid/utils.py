@@ -137,7 +137,7 @@ def get_orcid_query(
     orcid_id: str | None = MY_ORCID,
     suffix: str = None,
 ) -> dict:
-    logger.info(f"fetching {query_type} {suffix}")
+    logger.info(f"fetching {query_type} {suffix} with ORCID {orcid_id}")
     endpoint = get_orcid_request_endpoint_template(orcid_id)
     endpoint += f"/{query_type}/{suffix}" if suffix else f"/{query_type}"
     logger.info(f"url {endpoint}")

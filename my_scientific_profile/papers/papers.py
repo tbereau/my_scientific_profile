@@ -95,12 +95,12 @@ class Paper(object, metaclass=PaperSingleton):
 
 
 @lru_cache
-def fetch_paper_info(doi: str) -> Paper | None:
+def fetch_paper_info(doi: str, orcid_id: str = None) -> Paper | None:
     if existing_paper := Paper.get_existing_paper(doi):
         return existing_paper
     crossref_info = get_crossref_work_by_doi(doi)
     semantic_info = get_semantic_scholar_paper_info(doi)
-    orcid_info = get_detailed_work(get_doi_to_put_code_map()[doi])
+    orcid_info = get_detailed_work(get_doi_to_put_code_map(orcid_id)[doi], orcid_id=orcid_id)
     bib_info = fetch_bib(doi)
     orcid_url = orcid_info.url.value if orcid_info.url else None
     url = crossref_info.message.url or orcid_url or f"https://doi.org/{doi}"
@@ -136,12 +136,12 @@ def fetch_paper_info(doi: str) -> Paper | None:
     )
 
 
-def fetch_all_paper_infos() -> list[Paper]:
-    dois = get_doi_to_put_code_map().keys()
+def fetch_all_paper_infos(orcid_id: str = None) -> list[Paper]:
+    dois = get_doi_to_put_code_map(orcid_id).keys()
     papers = []
     for doi in dois:
         try:
-            papers.append(fetch_paper_info(doi))
+            papers.append(fetch_paper_info(doi, orcid_id))
         except AssertionError:
             logger.info(f"WARNING! Cannot parse doi {doi}")
     papers = [paper for paper in papers if paper]

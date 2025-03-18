@@ -112,6 +112,6 @@ class OrcidDetailedWork:
 
 
 @lru_cache
-def get_detailed_work(put_code: int) -> OrcidDetailedWork:
-    response = get_orcid_query("work", suffix=str(put_code))
+def get_detailed_work(put_code: int, orcid_id: str = None) -> OrcidDetailedWork:
+    response = get_orcid_query("work", suffix=str(put_code), orcid_id=orcid_id)
     return OrcidDetailedWork(**dekebabize(response))

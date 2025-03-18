@@ -64,14 +64,14 @@ class OrcidWorks:
 
 
 @lru_cache
-def get_works() -> OrcidWorks:
-    response = get_orcid_query("works")
+def get_works(orcid_id: str = None) -> OrcidWorks:
+    response = get_orcid_query("works", orcid_id=orcid_id)
     return OrcidWorks(**dekebabize(response))
 
 
 @lru_cache
-def get_doi_to_put_code_map() -> Dict[str, int]:
-    works = get_works()
+def get_doi_to_put_code_map(orcid_id: str = None) -> Dict[str, int]:
+    works = get_works(orcid_id)
     work_summaries = [
         summary for work_group in works.group for summary in work_group.work_summary
     ]
@@ -82,8 +82,8 @@ def get_doi_to_put_code_map() -> Dict[str, int]:
 
 
 @lru_cache
-def get_put_code_to_doi_map() -> Dict[str, int]:
-    works = get_works()
+def get_put_code_to_doi_map(orcid_id: str = None) -> Dict[str, int]:
+    works = get_works(orcid_id)
     work_summaries = [
         summary for work_group in works.group for summary in work_group.work_summary
     ]
