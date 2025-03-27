@@ -18,6 +18,7 @@ from my_scientific_profile.orcid.utils import (
     Source,
     UrlValue,
     get_orcid_query,
+    get_my_orcid,
 )
 
 __all__ = [
@@ -65,6 +66,8 @@ class OrcidWorks:
 
 @lru_cache
 def get_works(orcid_id: str = None) -> OrcidWorks:
+    if not orcid_id:
+        orcid_id = get_my_orcid()
     response = get_orcid_query("works", orcid_id=orcid_id)
     return OrcidWorks(**dekebabize(response))
 

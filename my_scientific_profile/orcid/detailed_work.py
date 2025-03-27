@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
 class Title:
-    value: str
+    value: str = None
     subtitle: str = None
     translated_title: Optional[str] = None
 
