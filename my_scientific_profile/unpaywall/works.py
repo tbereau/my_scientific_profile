@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime as dt
 import logging
 
@@ -19,10 +21,14 @@ class UnpaywallAffiliation:
 
 @dataclass(frozen=True)
 class UnpaywallAuthor:
-    given: str
-    family: str
-    sequence: str
+    given: str | None = None
+    family: str | None = None
+    sequence: str | None = None
+    raw_name: str | None = None
     affiliation: list[UnpaywallAffiliation] | None = None
+
+    class Config:
+        extra = "ignore"
 
 
 @dataclass(frozen=True)
@@ -45,11 +51,26 @@ class UnpaywallOALocation:
         json_encoders = {
             dt.datetime: lambda v: v.isoformat(),
         }
+        extra = "ignore"
 
     @field_validator("updated", "oa_date", mode="before")
     def time_validate(cls, v):
         if v is not None:
             return dt.datetime.fromisoformat(v)
+
+    @field_validator("updated", "oa_date", mode="before")
+    def time_validate(cls, v):
+        if v in (None, "", "deprecated"):
+            return None
+        if isinstance(v, str):
+            s = v.strip()
+            if s.endswith("Z"):
+                s = s[:-1] + "+00:00"
+            try:
+                return dt.datetime.fromisoformat(s)
+            except ValueError:
+                return None
+        return v
 
 
 @dataclass(frozen=True)
@@ -69,15 +90,30 @@ class UnpaywallWork:
     is_oa: bool
     oa_status: str
     has_repository_copy: bool
-    updated: dt.datetime
+    updated: dt.datetime | None
     z_authors: list[UnpaywallAuthor]
     best_oa_location: UnpaywallOALocation | None = None
     first_oa_location: UnpaywallOALocation | None = None
     oa_locations: list[UnpaywallOALocation] | None = None
 
+    @field_validator("updated", mode="before")
+    def work_time_validate(cls, v):
+        if v in (None, "", "deprecated"):
+            return None
+        if isinstance(v, str):
+            s = v.strip()
+            if s.endswith("Z"):
+                s = s[:-1] + "+00:00"
+            try:
+                return dt.datetime.fromisoformat(s)
+            except ValueError:
+                return None
+        return v
+
 
 def get_unpaywall_work_by_doi(doi: str) -> UnpaywallWork:
     endpoint = f"https://api.unpaywall.org/v2/{doi}?email={EMAIL_ADDRESS}"
+    logger.info(f"url {endpoint}")
     response = get(endpoint)
     assert (
         response.status_code == 200
