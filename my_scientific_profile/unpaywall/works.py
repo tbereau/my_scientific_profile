@@ -36,7 +36,7 @@ class UnpaywallOALocation:
     url: str
     url_for_landing_page: str
     evidence: str
-    host_type: str
+    host_type: str | None = None
     is_best: bool
     updated: dt.datetime | None = None
     url_for_pdf: str | None = None
