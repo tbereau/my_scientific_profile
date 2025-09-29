@@ -14,6 +14,7 @@ from my_scientific_profile.crossref.works import get_crossref_work_by_doi
 from my_scientific_profile.doi2bib.doi2bib import fetch_bib
 from my_scientific_profile.orcid.detailed_work import get_detailed_work
 from my_scientific_profile.orcid.works import get_doi_to_put_code_map
+from my_scientific_profile.orcid.utils import get_my_orcid
 from my_scientific_profile.papers.open_access import (
     OpenAccessPaperInfo,
     get_open_access_paper_info,
@@ -139,6 +140,8 @@ def fetch_paper_info(doi: str, orcid_id: str = None) -> Paper | None:
 def fetch_all_paper_infos(orcid_id: str = None) -> list[Paper]:
     dois = get_doi_to_put_code_map(orcid_id).keys()
     papers = []
+    if not orcid_id:
+        orcid_id = get_my_orcid()
     for doi in dois:
         try:
             papers.append(fetch_paper_info(doi, orcid_id))
