@@ -33,11 +33,11 @@ class UnpaywallAuthor:
 
 @dataclass(frozen=True)
 class UnpaywallOALocation:
-    url: str
-    url_for_landing_page: str
-    evidence: str
+    url: str | None = None
+    url_for_landing_page: str | None = None
+    evidence: str | None = None
     host_type: str | None = None
-    is_best: bool
+    is_best: bool = True
     updated: dt.datetime | None = None
     url_for_pdf: str | None = None
     license: str | None = None
