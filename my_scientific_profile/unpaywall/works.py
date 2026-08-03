@@ -55,11 +55,6 @@ class UnpaywallOALocation:
 
     @field_validator("updated", "oa_date", mode="before")
     def time_validate(cls, v):
-        if v is not None:
-            return dt.datetime.fromisoformat(v)
-
-    @field_validator("updated", "oa_date", mode="before")
-    def time_validate(cls, v):
         if v in (None, "", "deprecated"):
             return None
         if isinstance(v, str):
@@ -95,6 +90,17 @@ class UnpaywallWork:
     best_oa_location: UnpaywallOALocation | None = None
     first_oa_location: UnpaywallOALocation | None = None
     oa_locations: list[UnpaywallOALocation] | None = None
+
+    @field_validator(
+        "is_paratext",
+        "journal_is_oa",
+        "journal_is_in_doaj",
+        "is_oa",
+        "has_repository_copy",
+        mode="before",
+    )
+    def bool_validate(cls, v):
+        return False if v is None else v
 
     @field_validator("updated", mode="before")
     def work_time_validate(cls, v):
