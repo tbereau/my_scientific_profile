@@ -1,8 +1,20 @@
+import logging
+
 from pydantic.dataclasses import dataclass
 
-from my_scientific_profile.unpaywall.works import get_unpaywall_work_by_doi
+from my_scientific_profile.unpaywall.works import (
+    UnpaywallWork,
+    get_unpaywall_work_by_doi,
+)
 
-__all__ = ["OpenAccessPaperInfo", "get_open_access_paper_info"]
+__all__ = [
+    "OpenAccessPaperInfo",
+    "get_open_access_paper_info",
+    "open_access_from_unpaywall",
+    "no_open_access_info",
+]
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -13,8 +25,21 @@ class OpenAccessPaperInfo:
     pdf_url: str | None
 
 
+def no_open_access_info() -> OpenAccessPaperInfo:
+    """What we report when no provider can speak to a work's availability."""
+    return OpenAccessPaperInfo(False, None, None, None)
+
+
 def get_open_access_paper_info(doi: str) -> OpenAccessPaperInfo:
-    unpaywall_info = get_unpaywall_work_by_doi(doi)
+    return open_access_from_unpaywall(get_unpaywall_work_by_doi(doi))
+
+
+def open_access_from_unpaywall(
+    unpaywall_info: UnpaywallWork | None,
+) -> OpenAccessPaperInfo:
+    if unpaywall_info is None:
+        logger.info("no Unpaywall record; reporting no open access info")
+        return no_open_access_info()
     oa_status, landing_page_url, pdf_url = None, None, None
     is_oa = unpaywall_info.is_oa
     if is_oa:

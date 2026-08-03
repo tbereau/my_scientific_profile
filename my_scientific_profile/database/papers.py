@@ -16,9 +16,20 @@ __all__ = [
 ]
 
 
-def save_all_papers_to_s3(s3_client: Any, s3_bucket: str) -> None:
-    papers = fetch_all_paper_infos()
-    save_dataclass_records_to_s3(papers, s3_client, s3_bucket)
+def save_all_papers_to_s3(
+    s3_client: Any, s3_bucket: str, papers: list[Paper] | None = None
+) -> None:
+    """Store papers, refetching only if none were handed over.
+
+    Callers that have mutated their papers — adding embeddings, say — must pass
+    them: a refetch used to return the same objects only because the singleton
+    cache happened to key them identically, which is a silent way to lose work.
+    """
+    save_dataclass_records_to_s3(
+        papers if papers is not None else fetch_all_paper_infos(),
+        s3_client,
+        s3_bucket,
+    )
 
 
 def load_all_papers_from_s3(s3_client: Any, s3_bucket: str) -> list[Paper]:

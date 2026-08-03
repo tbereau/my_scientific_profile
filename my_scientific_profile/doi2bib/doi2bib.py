@@ -1,25 +1,25 @@
 import logging
 from functools import lru_cache
-from urllib.error import HTTPError
-from urllib.request import Request, urlopen
 
 import my_scientific_profile.utils  # noqa
+from my_scientific_profile.utils.http import fetch_text
 
 logger = logging.getLogger(__name__)
 
 
 @lru_cache()
-def fetch_bib(doi: str) -> str:
-    logger.info(f"fetching doi2bib for {doi}")
-    url = f"https://dx.doi.org/{doi}"
-    request = Request(url)
-    request.add_header("Accept", "application/x-bibtex")
-    try:
-        with urlopen(request) as f:
-            bibtex = f.read().decode()
-    except HTTPError as e:
-        if e.code == 404:
-            raise ValueError("DOI not found.")
-        else:
-            raise ValueError("Service unavailable.")
-    return bibtex
+def fetch_bib(doi: str) -> str | None:
+    """Return a BibTeX entry via DOI content negotiation, or None if there is none.
+
+    Both Crossref and DataCite serve BibTeX this way, so arXiv and Zenodo DOIs
+    resolve too, though as @misc rather than a venue-aware entry type.
+    """
+    logger.info(f"fetching bibtex for {doi}")
+    bibtex = fetch_text(
+        f"https://dx.doi.org/{doi}",
+        provider="doi2bib",
+        headers={"Accept": "application/x-bibtex"},
+    )
+    if bibtex is None:
+        return None
+    return bibtex.strip() or None

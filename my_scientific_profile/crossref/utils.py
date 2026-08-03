@@ -12,6 +12,7 @@ __all__ = [
     "CrossrefContentDomain",
     "CrossrefAuthor",
     "CrossrefAffiliation",
+    "CrossrefInstitution",
     "CrossrefReference",
     "CrossrefLink",
     "CrossrefAssertion",
@@ -50,6 +51,14 @@ class CrossrefContentDomain:
 @dataclass(eq=True, frozen=True)
 class CrossrefAffiliation:
     name: str
+
+
+@dataclass(eq=True, frozen=True)
+class CrossrefInstitution:
+    name: str | None = None
+    acronym: list[str] | None = None
+    place: list[str] | None = None
+    department: list[str] | None = None
 
 
 @dataclass(eq=True, frozen=True)

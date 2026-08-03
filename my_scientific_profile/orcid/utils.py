@@ -14,6 +14,7 @@ from requests import get
 import my_scientific_profile.utils  # noqa
 from my_scientific_profile.config.required_environment_variables import assert_all_environment_variables
 from my_scientific_profile.config.config import get_my_orcid
+from my_scientific_profile.utils.http import ProviderUnavailable, fetch_json
 
 __all__ = [
     "OrcidDate",
@@ -138,13 +139,24 @@ def get_orcid_query(
     query_type: str,
     orcid_id: str | None = MY_ORCID,
     suffix: str = None,
-) -> dict:
+    allow_absent: bool = False,
+) -> dict | None:
+    """Query the public ORCID API.
+
+    Note that `orcid_id=None` is meaningful rather than a missing value: the
+    search endpoints must be addressed without one.
+
+    Returns None only when the record is absent and the caller said it could
+    live with that; otherwise absence is an error like any other.
+    """
     logger.info(f"fetching {query_type} {suffix} with ORCID {orcid_id}")
     endpoint = get_orcid_request_endpoint_template(orcid_id)
     endpoint += f"/{query_type}/{suffix}" if suffix else f"/{query_type}"
-    logger.info(f"url {endpoint}")
-    response = get(endpoint, headers=get_orcid_request_headers())
-    assert (
-        response.status_code == 200
-    ), f"unexpected status code {response.status_code}: {response.text}"
-    return dekebabize(response.json())
+    payload = fetch_json(
+        endpoint, provider="orcid", headers=get_orcid_request_headers()
+    )
+    if payload is None:
+        if allow_absent:
+            return None
+        raise ProviderUnavailable("orcid", f"{endpoint}: no such record")
+    return dekebabize(payload)

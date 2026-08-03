@@ -145,6 +145,10 @@ def search_crossref_author_in_orcid(author_info: CrossrefAuthor) -> Author | Non
         return author
     if author_info.orcid:
         orcid_search = search_for_author_by_orcid_id(author_info.orcid)
+    elif not (author_info.given and author_info.family):
+        # ORCID answers 500 to a name search with an empty half, and a
+        # single-name author cannot be told apart by one anyway.
+        return None
     else:
         orcid_search = search_for_author_by_name(author_info.given, author_info.family)
     if len(orcid_search) != 1:

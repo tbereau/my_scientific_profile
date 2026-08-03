@@ -3,9 +3,9 @@ from typing import List
 
 import humps
 from pydantic.dataclasses import dataclass
-from requests import get
 
 import my_scientific_profile.utils  # noqa
+from my_scientific_profile.utils.http import fetch_json
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +74,7 @@ def fetch_info_by_id(
     )
     if fields is not None:
         endpoint += "?fields=" + ",".join(fields)
-    response = get(endpoint)
-    if response.status_code != 200:
+    payload = fetch_json(endpoint, provider="semantic_scholar")
+    if not payload:
         return {}
-    return humps.decamelize(response.json())
+    return humps.decamelize(payload)

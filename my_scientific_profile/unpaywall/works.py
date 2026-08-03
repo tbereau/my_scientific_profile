@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import datetime as dt
 import logging
+from functools import lru_cache
 
 from pydantic import field_validator
 from pydantic.dataclasses import dataclass
-from requests import get
 
 from my_scientific_profile.config.config import get_email_address
+from my_scientific_profile.utils.http import fetch_json
 
 logger = logging.getLogger(__name__)
 
@@ -70,23 +71,25 @@ class UnpaywallOALocation:
 
 @dataclass(frozen=True)
 class UnpaywallWork:
+    # Only the identifiers are guaranteed. Everything else is absent for one
+    # genre or another: preprints carry no ISSN, datasets carry no journal.
     doi: str
     doi_url: str
-    title: str
-    genre: str
-    is_paratext: bool
-    published_date: str
-    year: int
-    journal_name: str
-    journal_issns: str
-    journal_issn_l: str
-    journal_is_oa: bool
-    journal_is_in_doaj: bool
-    is_oa: bool
-    oa_status: str
-    has_repository_copy: bool
-    updated: dt.datetime | None
-    z_authors: list[UnpaywallAuthor]
+    title: str | None = None
+    genre: str | None = None
+    is_paratext: bool = False
+    published_date: str | None = None
+    year: int | None = None
+    journal_name: str | None = None
+    journal_issns: str | None = None
+    journal_issn_l: str | None = None
+    journal_is_oa: bool = False
+    journal_is_in_doaj: bool = False
+    is_oa: bool = False
+    oa_status: str | None = None
+    has_repository_copy: bool = False
+    updated: dt.datetime | None = None
+    z_authors: list[UnpaywallAuthor] | None = None
     best_oa_location: UnpaywallOALocation | None = None
     first_oa_location: UnpaywallOALocation | None = None
     oa_locations: list[UnpaywallOALocation] | None = None
@@ -117,11 +120,16 @@ class UnpaywallWork:
         return v
 
 
-def get_unpaywall_work_by_doi(doi: str) -> UnpaywallWork:
+@lru_cache()
+def get_unpaywall_work_by_doi(doi: str) -> UnpaywallWork | None:
+    """Return the Unpaywall record, or None when it has no such DOI.
+
+    Unpaywall indexes Crossref DOIs only, so arXiv and DataCite identifiers
+    legitimately have no record here.
+    """
     endpoint = f"https://api.unpaywall.org/v2/{doi}?email={EMAIL_ADDRESS}"
     logger.info(f"url {endpoint}")
-    response = get(endpoint)
-    assert (
-        response.status_code == 200
-    ), f"unexpected status code {response.status_code}: {response.text}"
-    return UnpaywallWork(**response.json())
+    payload = fetch_json(endpoint, provider="unpaywall")
+    if payload is None:
+        return None
+    return UnpaywallWork(**payload)

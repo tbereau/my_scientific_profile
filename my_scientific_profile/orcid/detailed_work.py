@@ -20,6 +20,7 @@ from my_scientific_profile.orcid.utils import (
     Source,
     SourceClientId,
     StrValue,
+    get_my_orcid,
     get_orcid_query,
 )
 
@@ -74,7 +75,8 @@ class ContributorAttributes:
 
 @dataclass(frozen=True)
 class Contributor:
-    credit_name: StrValue
+    # ORCID leaves the credit name null for contributors added without one.
+    credit_name: Optional[StrValue] = None
     contributor_attributes: Optional[ContributorAttributes] = None
     contributor_email: Optional[str] = None
     contributor_orcid: Optional[SourceClientId | str] = None
@@ -147,6 +149,16 @@ class OrcidDetailedWork:
 
 
 @lru_cache
-def get_detailed_work(put_code: int, orcid_id: str = None) -> OrcidDetailedWork:
-    response = get_orcid_query("work", suffix=str(put_code), orcid_id=orcid_id)
+def get_detailed_work(put_code: int, orcid_id: str = None) -> OrcidDetailedWork | None:
+    # A put code is only meaningful under an ORCID id: without one the request
+    # addresses the API's search root and answers 404 for every work.
+    response = get_orcid_query(
+        "work",
+        suffix=str(put_code),
+        orcid_id=orcid_id or get_my_orcid(),
+        allow_absent=True,
+    )
+    if response is None:
+        logger.info(f"ORCID no longer holds work {put_code}")
+        return None
     return OrcidDetailedWork(**dekebabize(response))
