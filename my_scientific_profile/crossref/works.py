@@ -2,7 +2,8 @@ import logging
 from functools import lru_cache
 
 from humps import dekebabize
-from pydantic.dataclasses import Field, dataclass
+from pydantic import Field
+from pydantic.dataclasses import dataclass
 
 from my_scientific_profile.crossref.utils import (
     CrossrefAssertion,
