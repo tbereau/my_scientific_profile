@@ -10,7 +10,6 @@ packages = [{include = "my_scientific_profile"}]
 python = "^3.10"
 isort = "^5.12.0"
 ipyleaflet = "^0.17.2"
-nltk = "^3.8.1"
 pandas = "^2.0.3"
 # Floor, not a pin: the old ==2.0.2 / pydantic-core==2.1.2 / typing-extensions
 # ==4.6.3 freeze held torch at 2.1.x downstream and kept known-vulnerable
